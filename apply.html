@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Apply to Cohort 01 — SN20 Breeding Ground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #161a14; --bg-lift: #1d231a; --bg-panel: #212820; --bg-deep: #11150f;
+    --ink: #e9e7da; --ink-soft: #a8ad9c; --ink-mute: #6f7565;
+    --lime: #c5f04a; --lime-deep: #a4cc2f; --moss: #6f8f56; --sage: #4a5c3c;
+    --clay: #d98841;
+    --line: rgba(233,231,218,0.1); --line-soft: rgba(233,231,218,0.055); --line-strong: rgba(233,231,218,0.2);
+    --serif: 'Fraunces', Georgia, serif; --sans: 'Archivo', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--lime); color: var(--bg); }
+
+  .proto { background: var(--bg-deep); color: var(--ink-mute); text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 16px; border-bottom: 1px solid var(--line-soft); }
+  .proto b { color: var(--lime-deep); font-weight: 500; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(20px, 4vw, 56px);
+    background: rgba(22,26,20,0.92); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-mark { width: 34px; height: 34px; flex-shrink: 0; }
+  .brand-txt { line-height: 1.1; }
+  .brand-txt .bn { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; }
+  .brand-txt .bs { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; color: var(--ink-mute); display: block; margin-top: 1px; }
+  .nav-links { display: flex; align-items: center; gap: 2px; }
+  .nav-links a { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); padding: 8px 13px; border-radius: 6px; transition: background 0.16s, color 0.16s; }
+  .nav-links a:hover { background: var(--bg-panel); color: var(--ink); }
+  .nav-links a.active { color: var(--lime); }
+  .nav-links a.cta { background: var(--lime); color: var(--bg-deep); font-weight: 500; margin-left: 8px; border-radius: 999px; padding: 9px 18px; }
+  .nav-links a.cta:hover { background: #d4fb63; }
+  .nav-toggle { display: none; background: none; border: 1px solid var(--line); color: var(--ink); cursor: pointer; padding: 8px; border-radius: 6px; }
+  @media (max-width: 940px) {
+    .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 2px; background: var(--bg-lift); padding: 12px; border-bottom: 1px solid var(--line); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; }
+    .nav-links a.cta { margin-left: 0; text-align: center; margin-top: 6px; }
+    .nav-toggle { display: block; }
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+
+  /* hero */
+  .ahero { position: relative; padding: clamp(44px,6vw,72px) 0 clamp(30px,4vw,44px); }
+  .ahero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: linear-gradient(var(--line-soft) 1px, transparent 1px), linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 25%, #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 25%, #000 0%, transparent 78%);
+  }
+  .ahero-inner { position: relative; }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--lime-deep); display: inline-flex; align-items: center; gap: 9px; }
+  .eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--lime); flex-shrink: 0; }
+  .ahero h1 { font-family: var(--mono); font-weight: 700; font-size: clamp(32px,4.6vw,56px); line-height: 1.1; letter-spacing: -0.045em; margin: 20px 0 16px; max-width: 18ch; }
+  .ahero h1 em { font-style: normal; color: var(--lime); }
+  .ahero p { font-size: clamp(16px,1.6vw,18px); color: var(--ink-soft); max-width: 56ch; }
+
+  /* expectation strip */
+  .expect { display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 32px; }
+  @media (max-width: 680px) { .expect { grid-template-columns: 1fr 1fr; } }
+  .ex-item { padding: 18px 20px; border-right: 1px solid var(--line); background: var(--bg-lift); }
+  .ex-item:last-child { border-right: none; }
+  @media (max-width: 680px) {
+    .ex-item:nth-child(2) { border-right: none; }
+    .ex-item:nth-child(1), .ex-item:nth-child(2) { border-bottom: 1px solid var(--line); }
+  }
+  .ex-item .exv { font-family: var(--mono); font-size: 19px; font-weight: 700; color: var(--ink); }
+  .ex-item .exv em { font-style: normal; color: var(--lime); }
+  .ex-item .exl { font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em; color: var(--ink-mute); margin-top: 4px; text-transform: uppercase; }
+
+  /* layout: form + sticky progress */
+  .apply-grid { display: grid; grid-template-columns: 1fr 248px; gap: 36px; padding: 40px 0 80px; align-items: start; }
+  @media (max-width: 900px) { .apply-grid { grid-template-columns: 1fr; } .progress-rail { display: none; } }
+
+  /* progress rail */
+  .progress-rail { position: sticky; top: 88px; }
+  .pr-title { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 16px; }
+  .pr-step { display: flex; gap: 12px; align-items: center; padding: 9px 0; font-size: 13px; color: var(--ink-mute); cursor: pointer; transition: color 0.15s; }
+  .pr-step:hover { color: var(--ink-soft); }
+  .pr-step.active { color: var(--ink); }
+  .pr-dot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--line-strong); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.18s; }
+  .pr-step.active .pr-dot { border-color: var(--lime); }
+  .pr-step.active .pr-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); }
+  .pr-step.filled .pr-dot { background: var(--lime); border-color: var(--lime); }
+
+  /* form */
+  .form-card { display: flex; flex-direction: column; gap: 16px; }
+  .fsection {
+    border: 1px solid var(--line); border-radius: 14px; background: var(--bg-lift);
+    padding: 28px clamp(20px,3vw,32px); scroll-margin-top: 80px;
+  }
+  .fs-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+  .fs-num { font-family: var(--mono); font-size: 12px; color: var(--lime-deep); font-weight: 700; }
+  .fs-head h2 { font-family: var(--serif); font-size: 23px; font-weight: 600; letter-spacing: -0.015em; }
+  .fs-desc { font-size: 13.5px; color: var(--ink-mute); margin-bottom: 20px; }
+
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .field label .req { font-family: var(--mono); font-size: 10px; color: var(--clay); font-weight: 500; letter-spacing: 0.04em; }
+  .field label .opt { font-family: var(--mono); font-size: 10px; color: var(--ink-mute); font-weight: 400; letter-spacing: 0.04em; }
+  .input, .textarea, .select {
+    width: 100%; background: var(--bg-deep); border: 1px solid var(--line-strong);
+    border-radius: 9px; padding: 12px 14px; color: var(--ink);
+    font-family: var(--sans); font-size: 14.5px; outline: none; transition: border-color 0.15s;
+  }
+  .input::placeholder, .textarea::placeholder { color: var(--ink-mute); }
+  .input:focus, .textarea:focus, .select:focus { border-color: var(--lime); }
+  .textarea { resize: vertical; min-height: 92px; line-height: 1.55; }
+  .input-prefix { display: flex; align-items: stretch; }
+  .input-prefix .pfx {
+    font-family: var(--mono); font-size: 13px; color: var(--ink-mute);
+    background: var(--bg-panel); border: 1px solid var(--line-strong); border-right: none;
+    border-radius: 9px 0 0 9px; padding: 12px 12px; display: flex; align-items: center; white-space: nowrap;
+  }
+  .input-prefix .input { border-radius: 0 9px 9px 0; }
+  .char-hint { font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute); margin-top: 6px; text-align: right; }
+
+  /* two-col fields */
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+
+  /* category chips */
+  .cat-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .cat-chip {
+    font-family: var(--mono); font-size: 12px; padding: 8px 13px; border-radius: 999px;
+    border: 1px solid var(--line-strong); background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 0.14s;
+  }
+  .cat-chip:hover { border-color: var(--ink-soft); }
+  .cat-chip.on { background: var(--lime); color: var(--bg-deep); border-color: var(--lime); font-weight: 500; }
+
+  /* milestone repeater */
+  .miles-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+  .mile-row { display: flex; gap: 10px; align-items: center; }
+  .mile-row .input { flex: 1; }
+  .mile-del { background: var(--bg-panel); border: 1px solid var(--line-strong); border-radius: 8px; color: var(--ink-mute); cursor: pointer; padding: 11px 12px; transition: all 0.14s; flex-shrink: 0; }
+  .mile-del:hover { color: var(--clay); border-color: var(--clay); }
+  .add-mile {
+    font-family: var(--mono); font-size: 12.5px; color: var(--lime);
+    background: transparent; border: 1px dashed var(--line-strong); border-radius: 9px;
+    padding: 10px; width: 100%; cursor: pointer; transition: all 0.15s;
+  }
+  .add-mile:hover { border-color: var(--lime); background: rgba(197,240,74,0.05); }
+
+  /* upload zone */
+  .upload {
+    border: 1.5px dashed var(--line-strong); border-radius: 11px;
+    padding: 28px 20px; text-align: center; cursor: pointer; transition: all 0.15s;
+    background: var(--bg-deep);
+  }
+  .upload:hover { border-color: var(--lime); background: rgba(197,240,74,0.04); }
+  .upload.has-file { border-style: solid; border-color: var(--moss); }
+  .upload-ic { width: 40px; height: 40px; border-radius: 9px; background: var(--bg-panel); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+  .upload h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .upload p { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); }
+  .upload .fname { color: var(--lime); }
+
+  /* submit bar */
+  .submit-bar {
+    border: 1px solid var(--line-strong); border-radius: 14px; background: var(--bg-panel);
+    padding: 24px clamp(20px,3vw,32px); display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap;
+  }
+  .submit-bar .sb-text h4 { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+  .submit-bar .sb-text p { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); }
+  .btn-submit {
+    background: var(--lime); color: var(--bg-deep); border: none; border-radius: 999px;
+    padding: 14px 30px; cursor: pointer; font-family: var(--sans); font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; gap: 9px; transition: background 0.18s, transform 0.15s; white-space: nowrap;
+  }
+  .btn-submit:hover { background: #d4fb63; transform: translateY(-1px); }
+  .btn-submit .arrow { transition: transform 0.2s; }
+  .btn-submit:hover .arrow { transform: translateX(3px); }
+
+  /* modal */
+  .modal-scrim { position: fixed; inset: 0; background: rgba(10,12,9,0.82); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 200; padding: 24px; }
+  .modal-scrim.open { display: flex; }
+  .modal { background: var(--bg-lift); border: 1px solid var(--line-strong); border-radius: 18px; max-width: 430px; width: 100%; padding: 32px; position: relative; text-align: center; }
+  .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--ink-mute); cursor: pointer; padding: 4px; }
+  .modal-close:hover { color: var(--ink); }
+  .modal-ic { width: 56px; height: 56px; border-radius: 12px; background: var(--bg-panel); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+  .modal h3 { font-family: var(--serif); font-size: 24px; font-weight: 600; margin-bottom: 10px; }
+  .modal p { font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; }
+  .modal-receipt { background: var(--bg-deep); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 18px 0; text-align: left; }
+  .modal-receipt .mr-row { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; padding: 5px 0; }
+  .modal-receipt .mr-row .ml { color: var(--ink-mute); }
+  .modal-receipt .mr-row .mv { color: var(--ink); font-weight: 700; }
+  .modal-receipt .mr-row .mv.lime { color: var(--lime); }
+  .btn-modal { width: 100%; background: var(--lime); color: var(--bg-deep); border: none; border-radius: 999px; padding: 13px; cursor: pointer; font-family: var(--sans); font-weight: 700; font-size: 14px; }
+  .btn-modal:hover { background: #d4fb63; }
+  .btn-modal.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); margin-top: 8px; }
+  .spinner { width: 40px; height: 40px; border: 3px solid var(--line); border-top-color: var(--lime); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 8px auto 18px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  footer { background: var(--bg-deep); border-top: 1px solid var(--line); padding: 44px 0 30px; }
+  .foot-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; align-items: center; }
+  .foot-grid p { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); }
+
+  .js-anim .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(.2,.6,.2,1), transform 0.6s cubic-bezier(.2,.6,.2,1); }
+  .js-anim .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .js-anim .reveal { opacity: 1; transform: none; transition: none; } .spinner { animation: none; } }
+</style>
+</head>
+<body>
+
+<div class="proto">Prototype preview · <b>concept demonstration</b> · form submission is simulated</div>
+
+<nav>
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="11" fill="#c5f04a"/>
+      <path d="M24 36V26M24 26L15 18M24 26L33 18M15 18V13M33 18V13" stroke="#161a14" stroke-width="2.3" stroke-linecap="round"/>
+      <rect x="21.5" y="33.5" width="5" height="5" fill="#161a14"/>
+      <circle cx="24" cy="26" r="3" fill="#161a14"/>
+      <rect x="12.5" y="9.5" width="5" height="5" fill="#161a14"/>
+      <rect x="30.5" y="9.5" width="5" height="5" fill="#161a14"/>
+    </svg>
+    <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">/home</a>
+    <a href="index.html#how">/how-it-works</a>
+    <a href="flywheel.html">/flywheel</a>
+    <a href="incubations.html">/cohort-01</a>
+    <a href="apply.html" class="active">/apply</a>
+    <a href="incubations.html" class="cta">Back a team</a>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="ahero">
+  <div class="ahero-bg"></div>
+  <div class="wrap ahero-inner">
+    <span class="eyebrow reveal">Applications open</span>
+    <h1 class="reveal">Apply to grow inside <em>SN20</em>.</h1>
+    <p class="reveal">Cohort 01 takes eight teams. Bring a real idea for a Bittensor subnet — we bring the runway, the infrastructure, the support, and a crowdfunded path to your own subnet. Strong applications get an interview.</p>
+    <div class="expect reveal">
+      <div class="ex-item"><div class="exv">8</div><div class="exl">Slots in the cohort</div></div>
+      <div class="ex-item"><div class="exv">6–9<em>mo</em></div><div class="exl">Program length</div></div>
+      <div class="ex-item"><div class="exv">~15<em>min</em></div><div class="exl">To complete this form</div></div>
+      <div class="ex-item"><div class="exv">June 11</div><div class="exl">Applications close</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= APPLY ================= -->
+<div class="wrap apply-grid">
+
+  <!-- ===== FORM ===== -->
+  <form class="form-card" id="applyForm" autocomplete="off" onsubmit="return false;">
+
+    <!-- 01 project -->
+    <div class="fsection reveal" id="sec-1">
+      <div class="fs-head"><span class="fs-num">01</span><h2>Your project</h2></div>
+      <p class="fs-desc">The basics — what the project is called and where it fits.</p>
+      <div class="field">
+        <label>Team / project name <span class="req">REQUIRED</span></label>
+        <input class="input" type="text" placeholder="e.g. Helix Router" />
+      </div>
+      <div class="field">
+        <label>Category <span class="req">REQUIRED</span></label>
+        <div class="cat-chips" id="cats">
+          <button type="button" class="cat-chip">Inference</button>
+          <button type="button" class="cat-chip">Data &amp; labeling</button>
+          <button type="button" class="cat-chip">Compute</button>
+          <button type="button" class="cat-chip">Finance</button>
+          <button type="button" class="cat-chip">Agents</button>
+          <button type="button" class="cat-chip">Science</button>
+          <button type="button" class="cat-chip">Other</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 what it does -->
+    <div class="fsection reveal" id="sec-2">
+      <div class="fs-head"><span class="fs-num">02</span><h2>What it does</h2></div>
+      <p class="fs-desc">What you're building, and the problem it solves. Be concrete — clarity beats jargon.</p>
+      <div class="field">
+        <label>What it does / what it solves <span class="req">REQUIRED</span></label>
+        <textarea class="textarea" id="ta-what" maxlength="600" placeholder="Describe the subnet in plain terms. What does it produce, and who needs it?"></textarea>
+        <div class="char-hint"><span id="cc-what">0</span> / 600</div>
+      </div>
+    </div>
+
+    <!-- 03 incentive mechanism -->
+    <div class="fsection reveal" id="sec-3">
+      <div class="fs-head"><span class="fs-num">03</span><h2>Incentive mechanism</h2></div>
+      <p class="fs-desc">The most important question. How are miners rewarded for good work, and how do validators score it?</p>
+      <div class="field">
+        <label>How the incentive mechanism works <span class="req">REQUIRED</span></label>
+        <textarea class="textarea" id="ta-inc" maxlength="800" style="min-height:120px" placeholder="What do miners produce? How do validators measure quality? What stops gaming or low-effort responses?"></textarea>
+        <div class="char-hint"><span id="cc-inc">0</span> / 800</div>
+      </div>
+    </div>
+
+    <!-- 04 team -->
+    <div class="fsection reveal" id="sec-4">
+      <div class="fs-head"><span class="fs-num">04</span><h2>The team</h2></div>
+      <p class="fs-desc">Who is building this, and how to reach you.</p>
+      <div class="field">
+        <label>Team members &amp; background <span class="req">REQUIRED</span></label>
+        <textarea class="textarea" placeholder="Names, roles, and relevant background. Prior Bittensor or ML experience is a plus — not a requirement."></textarea>
+      </div>
+      <div class="field-row">
+        <div class="field" style="margin-bottom:0">
+          <label>Primary contact email <span class="req">REQUIRED</span></label>
+          <input class="input" type="email" placeholder="you@project.xyz" />
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>X / Discord handle <span class="opt">OPTIONAL</span></label>
+          <input class="input" type="text" placeholder="@yourhandle" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 progress -->
+    <div class="fsection reveal" id="sec-5">
+      <div class="fs-head"><span class="fs-num">05</span><h2>Progress &amp; milestones</h2></div>
+      <p class="fs-desc">What exists today, and the milestones you'd target during incubation.</p>
+      <div class="field">
+        <label>Where the project stands today <span class="req">REQUIRED</span></label>
+        <textarea class="textarea" placeholder="Idea stage, prototype, working testnet? Describe what's actually built."></textarea>
+      </div>
+      <div class="field">
+        <label>Planned milestones <span class="opt">OPTIONAL</span></label>
+        <div class="miles-list" id="milesList">
+          <div class="mile-row">
+            <input class="input" type="text" placeholder="Milestone 1 — e.g. working prototype" />
+            <button type="button" class="mile-del" aria-label="Remove">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+          </div>
+          <div class="mile-row">
+            <input class="input" type="text" placeholder="Milestone 2 — e.g. validator scoring live" />
+            <button type="button" class="mile-del" aria-label="Remove">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+          </div>
+        </div>
+        <button type="button" class="add-mile" id="addMile">+ Add another milestone</button>
+      </div>
+    </div>
+
+    <!-- 06 github -->
+    <div class="fsection reveal" id="sec-6">
+      <div class="fs-head"><span class="fs-num">06</span><h2>Code</h2></div>
+      <p class="fs-desc">A repository we can look at. If your repo is private, link it and note access is available on request.</p>
+      <div class="field">
+        <label>GitHub repository <span class="req">REQUIRED</span></label>
+        <div class="input-prefix">
+          <span class="pfx">github.com/</span>
+          <input class="input" type="text" placeholder="your-org/your-repo" />
+        </div>
+        <div class="char-hint" style="text-align:left;color:var(--ink-mute)">Private repo? Enter it anyway — note "private, access on request" in section 08.</div>
+      </div>
+    </div>
+
+    <!-- 07 video -->
+    <div class="fsection reveal" id="sec-7">
+      <div class="fs-head"><span class="fs-num">07</span><h2>Walkthrough video</h2></div>
+      <p class="fs-desc">Optional, but it helps. A short demo or pitch — upload a file or link one.</p>
+      <div class="field">
+        <label>Video upload <span class="opt">OPTIONAL</span></label>
+        <div class="upload" id="upload">
+          <div class="upload-ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+          </div>
+          <h4 id="upload-title">Drag a video here, or click to choose</h4>
+          <p id="upload-sub">MP4 or MOV · up to 200 MB</p>
+        </div>
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label>…or paste a video link <span class="opt">OPTIONAL</span></label>
+        <input class="input" type="text" placeholder="YouTube, Loom, or Vimeo URL" />
+      </div>
+    </div>
+
+    <!-- 08 references -->
+    <div class="fsection reveal" id="sec-8">
+      <div class="fs-head"><span class="fs-num">08</span><h2>References &amp; proof</h2></div>
+      <p class="fs-desc">Optional — but strong signals here help. Anyone who vouches for the team, or links that prove traction and progress.</p>
+      <div class="field">
+        <label>References &amp; proof of progress <span class="opt">OPTIONAL</span></label>
+        <textarea class="textarea" placeholder="People who can vouch for you (with contact), prior work, traction metrics, testnet links, or anything that backs up your claims."></textarea>
+      </div>
+    </div>
+
+    <!-- 09 additional -->
+    <div class="fsection reveal" id="sec-9">
+      <div class="fs-head"><span class="fs-num">09</span><h2>Anything else</h2></div>
+      <p class="fs-desc">Optional — anything that would help the selection committee decide to interview you.</p>
+      <div class="field">
+        <label>Additional info <span class="opt">OPTIONAL</span></label>
+        <textarea class="textarea" placeholder="Why SN20, what you'd need most from the program, anything the questions above didn't cover."></textarea>
+      </div>
+    </div>
+
+    <!-- submit -->
+    <div class="submit-bar reveal">
+      <div class="sb-text">
+        <h4>Ready to submit?</h4>
+        <p>You'll get a confirmation — strong applications are contacted for an interview.</p>
+      </div>
+      <button type="button" class="btn-submit" id="submitBtn">Submit application <span class="arrow">→</span></button>
+    </div>
+
+  </form>
+
+  <!-- ===== PROGRESS RAIL ===== -->
+  <aside class="progress-rail">
+    <div class="pr-title">// Application</div>
+    <div class="pr-step active" data-target="sec-1"><span class="pr-dot"></span> Your project</div>
+    <div class="pr-step" data-target="sec-2"><span class="pr-dot"></span> What it does</div>
+    <div class="pr-step" data-target="sec-3"><span class="pr-dot"></span> Incentive mechanism</div>
+    <div class="pr-step" data-target="sec-4"><span class="pr-dot"></span> The team</div>
+    <div class="pr-step" data-target="sec-5"><span class="pr-dot"></span> Progress</div>
+    <div class="pr-step" data-target="sec-6"><span class="pr-dot"></span> Code</div>
+    <div class="pr-step" data-target="sec-7"><span class="pr-dot"></span> Video</div>
+    <div class="pr-step" data-target="sec-8"><span class="pr-dot"></span> References</div>
+    <div class="pr-step" data-target="sec-9"><span class="pr-dot"></span> Anything else</div>
+  </aside>
+
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal-scrim" id="modal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot-grid">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="48" height="48" rx="11" fill="#c5f04a"/>
+        <path d="M24 36V26M24 26L15 18M24 26L33 18M15 18V13M33 18V13" stroke="#161a14" stroke-width="2.3" stroke-linecap="round"/>
+        <rect x="21.5" y="33.5" width="5" height="5" fill="#161a14"/>
+        <circle cx="24" cy="26" r="3" fill="#161a14"/>
+        <rect x="12.5" y="9.5" width="5" height="5" fill="#161a14"/>
+        <rect x="30.5" y="9.5" width="5" height="5" fill="#161a14"/>
+      </svg>
+      <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+    </a>
+    <p>© 2026 SN20 BREEDING GROUND · PROTOTYPE — FORM SUBMISSION IS SIMULATED</p>
+  </div>
+</footer>
+
+<script>
+  document.body.classList.add('js-anim');
+  const $ = (id) => document.getElementById(id);
+
+  // category chips (single select)
+  document.querySelectorAll('#cats .cat-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#cats .cat-chip').forEach(c => c.classList.remove('on'));
+      chip.classList.add('on');
+    });
+  });
+
+  // char counters
+  function counter(taId, ccId) {
+    const ta = $(taId), cc = $(ccId);
+    ta.addEventListener('input', () => { cc.textContent = ta.value.length; });
+  }
+  counter('ta-what', 'cc-what');
+  counter('ta-inc', 'cc-inc');
+
+  // milestone repeater
+  $('addMile').addEventListener('click', () => {
+    const list = $('milesList');
+    const n = list.children.length + 1;
+    const row = document.createElement('div');
+    row.className = 'mile-row';
+    row.innerHTML = '<input class="input" type="text" placeholder="Milestone ' + n + '" />' +
+      '<button type="button" class="mile-del" aria-label="Remove"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
+    list.appendChild(row);
+    bindDel(row.querySelector('.mile-del'));
+  });
+  function bindDel(btn) {
+    btn.addEventListener('click', () => {
+      const list = $('milesList');
+      if (list.children.length > 1) btn.closest('.mile-row').remove();
+    });
+  }
+  document.querySelectorAll('.mile-del').forEach(bindDel);
+
+  // simulated upload
+  const upload = $('upload');
+  upload.addEventListener('click', () => {
+    // simulate a file being chosen
+    upload.classList.add('has-file');
+    $('upload-title').innerHTML = '<span class="fname">demo-walkthrough.mp4</span> selected';
+    $('upload-sub').textContent = '24.6 MB · simulated for prototype — not uploaded';
+  });
+  upload.addEventListener('dragover', (e) => { e.preventDefault(); });
+  upload.addEventListener('drop', (e) => {
+    e.preventDefault();
+    upload.classList.add('has-file');
+    $('upload-title').innerHTML = '<span class="fname">demo-walkthrough.mp4</span> selected';
+    $('upload-sub').textContent = '24.6 MB · simulated for prototype — not uploaded';
+  });
+
+  // progress rail — scrollspy + click to scroll
+  const steps = [...document.querySelectorAll('.pr-step')];
+  steps.forEach(step => {
+    step.addEventListener('click', () => {
+      const t = $(step.dataset.target);
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+  const secObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        steps.forEach(s => s.classList.toggle('active', s.dataset.target === id));
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-20% 0px -55% 0px' });
+  document.querySelectorAll('.fsection').forEach(sec => secObserver.observe(sec));
+
+  // simulated submit
+  const modal = $('modal'), modalContent = $('modalContent');
+  function openModal(html) { modalContent.innerHTML = html; modal.classList.add('open'); }
+  function closeModal() { modal.classList.remove('open'); }
+  $('modalClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+  $('submitBtn').addEventListener('click', () => {
+    openModal('<div class="spinner"></div><h3>Submitting application…</h3><p>Sending your application to the SN20 selection committee.</p>');
+    setTimeout(() => {
+      const ref = 'SN20-A' + Math.floor(1000 + Math.random() * 9000);
+      openModal(
+        '<div class="modal-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>' +
+        '<h3>Application received</h3>' +
+        '<p>This submission is simulated for the prototype — no data was sent. In the live product, your application would now be queued for review.</p>' +
+        '<div class="modal-receipt">' +
+          '<div class="mr-row"><span class="ml">Reference</span><span class="mv lime">' + ref + '</span></div>' +
+          '<div class="mr-row"><span class="ml">Cohort</span><span class="mv">Cohort 01</span></div>' +
+          '<div class="mr-row"><span class="ml">Status</span><span class="mv">Queued for review</span></div>' +
+          '<div class="mr-row"><span class="ml">Next step</span><span class="mv">Interview if shortlisted</span></div>' +
+        '</div>' +
+        '<button class="btn-modal" id="closeDone">Done</button>' +
+        '<button class="btn-modal ghost" id="goCohort">View Cohort 01</button>'
+      );
+      $('closeDone').addEventListener('click', closeModal);
+      $('goCohort').addEventListener('click', () => { window.location.href = 'incubations.html'; });
+    }, 1600);
+  });
+
+  // reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        const sibs = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = Math.max(0, sibs.indexOf(e.target));
+        e.target.style.transitionDelay = (Math.min(idx,6) * 0.06) + 's';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -5% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
+  document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+</script>
+
+</body>
+</html>

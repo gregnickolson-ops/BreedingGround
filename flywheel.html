@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The SN20 Flywheel — How holding SN20 pays you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400;9..144,1,500&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #161a14;
+    --bg-lift: #1d231a;
+    --bg-panel: #212820;
+    --bg-deep: #11150f;
+    --ink: #e9e7da;
+    --ink-soft: #a8ad9c;
+    --ink-mute: #6f7565;
+    --lime: #c5f04a;
+    --lime-deep: #a4cc2f;
+    --moss: #6f8f56;
+    --sage: #4a5c3c;
+    --clay: #d98841;
+    --line: rgba(233,231,218,0.1);
+    --line-soft: rgba(233,231,218,0.055);
+    --line-strong: rgba(233,231,218,0.2);
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Archivo', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--lime); color: var(--bg); }
+
+  .proto {
+    background: var(--bg-deep); color: var(--ink-mute);
+    text-align: center; font-family: var(--mono);
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 8px 16px; border-bottom: 1px solid var(--line-soft);
+  }
+  .proto b { color: var(--lime-deep); font-weight: 500; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(20px, 4vw, 56px);
+    background: rgba(22,26,20,0.92); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-mark { width: 34px; height: 34px; flex-shrink: 0; }
+  .brand-txt { line-height: 1.1; }
+  .brand-txt .bn { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; }
+  .brand-txt .bs {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em;
+    color: var(--ink-mute); display: block; margin-top: 1px;
+  }
+  .nav-links { display: flex; align-items: center; gap: 2px; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 13px; color: var(--ink-soft);
+    padding: 8px 13px; border-radius: 6px; transition: background 0.16s, color 0.16s;
+  }
+  .nav-links a:hover { background: var(--bg-panel); color: var(--ink); }
+  .nav-links a.active { color: var(--lime); }
+  .nav-links a.cta {
+    background: var(--lime); color: var(--bg-deep); font-weight: 500;
+    margin-left: 8px; border-radius: 999px; padding: 9px 18px;
+  }
+  .nav-links a.cta:hover { background: #d4fb63; }
+  .nav-toggle { display: none; background: none; border: 1px solid var(--line); color: var(--ink); cursor: pointer; padding: 8px; border-radius: 6px; }
+  @media (max-width: 940px) {
+    .nav-links {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 2px;
+      background: var(--bg-lift); padding: 12px; border-bottom: 1px solid var(--line);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; }
+    .nav-links a.cta { margin-left: 0; text-align: center; margin-top: 6px; }
+    .nav-toggle { display: block; }
+  }
+
+  .wrap { max-width: 1220px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+  .wrap-narrow { max-width: 920px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--lime-deep);
+    display: inline-flex; align-items: center; gap: 9px;
+  }
+  .eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--lime); flex-shrink: 0; }
+
+  /* ---------- hero ---------- */
+  .fhero { position: relative; padding: clamp(52px, 7vw, 92px) 0 clamp(40px, 5vw, 64px); }
+  .fhero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 62% 60% at 50% 30%, #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 62% 60% at 50% 30%, #000 0%, transparent 78%);
+  }
+  .fhero-inner { position: relative; max-width: 880px; }
+  .fhero h1 {
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(32px, 4.6vw, 58px); line-height: 1.12;
+    letter-spacing: -0.045em; margin: 22px 0 22px; max-width: 18ch;
+  }
+  .fhero h1 em { font-style: normal; color: var(--lime); }
+  .fhero p { font-size: clamp(16px, 1.7vw, 19px); color: var(--ink-soft); max-width: 56ch; }
+
+  /* ---------- the loop diagram ---------- */
+  .loop-sec { padding: clamp(28px, 4vw, 56px) 0 clamp(48px, 7vw, 86px); }
+  .loop-panel {
+    border: 1px solid var(--line); border-radius: 18px;
+    background: var(--bg-lift); padding: clamp(24px, 4vw, 52px);
+    position: relative; overflow: hidden;
+  }
+  .loop-panel::before {
+    content: 'FIG_01 — THE FLYWHEEL'; position: absolute; top: 18px; left: clamp(24px,4vw,52px);
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; color: var(--ink-mute);
+  }
+  .loop-svg { width: 100%; max-width: 760px; margin: 30px auto 0; display: block; }
+  .loop-legend {
+    display: flex; gap: 26px; flex-wrap: wrap; justify-content: center;
+    margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line);
+  }
+  .lg-item { display: flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); }
+  .lg-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+  /* ---------- party cards ---------- */
+  .party-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 760px) { .party-grid { grid-template-columns: 1fr; } }
+  .party {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: var(--bg-lift); padding: 28px 26px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .party:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+  .party.holder { border-color: var(--lime); background: var(--bg-panel); }
+  .party-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+  .party-ix { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; color: var(--ink-mute); }
+  .party.holder .party-ix { color: var(--lime-deep); }
+  .party-badge {
+    font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+    background: var(--lime); color: var(--bg-deep); padding: 3px 7px; border-radius: 4px;
+  }
+  .party h3 { font-family: var(--serif); font-size: 25px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 16px; }
+  .party.holder h3 { color: var(--lime); }
+  .party-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .party-list li {
+    font-size: 14px; color: var(--ink-soft); line-height: 1.55;
+    display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 9px; align-items: start;
+  }
+  .party-list li::before { content: '→'; color: var(--moss); font-weight: 700; }
+  .party.holder .party-list li::before { color: var(--lime); }
+  .party-list li b { color: var(--ink); font-weight: 600; }
+
+
+  .sec { padding: clamp(62px, 9vw, 116px) 0; position: relative; }
+  .sec-head { max-width: 700px; margin-bottom: 50px; }
+  .sec-head h2 {
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(28px, 3.8vw, 46px); line-height: 1.13;
+    letter-spacing: -0.04em; margin: 16px 0 16px;
+  }
+  .sec-head h2 em { font-style: normal; color: var(--lime); }
+  .sec-head p { color: var(--ink-soft); font-size: 17px; }
+
+  .streams { background: var(--bg-deep); }
+  .stream-rows {
+    border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  }
+  .srow {
+    display: grid; grid-template-columns: 128px 1fr 230px; gap: 26px;
+    align-items: center; padding: 30px clamp(22px,3vw,38px);
+    background: var(--bg-lift); border-bottom: 1px solid var(--line);
+    transition: background 0.2s;
+  }
+  .srow:last-child { border-bottom: none; }
+  .srow:hover { background: var(--bg-panel); }
+  @media (max-width: 820px) {
+    .srow { grid-template-columns: 1fr; gap: 14px; }
+    .srow .sflow { justify-self: start; }
+  }
+  .spct {
+    font-family: var(--mono); font-weight: 700; font-size: clamp(36px,5vw,52px);
+    color: var(--lime); line-height: 1; letter-spacing: -0.04em;
+  }
+  .sbody h3 { font-family: var(--sans); font-size: 19px; font-weight: 600; margin-bottom: 6px; }
+  .sbody p { font-size: 14.5px; color: var(--ink-soft); }
+  .sflow {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-soft);
+    border: 1px solid var(--line-strong); border-radius: 8px; padding: 11px 13px;
+    display: flex; align-items: center; gap: 7px; flex-wrap: wrap; line-height: 1.5;
+  }
+  .sflow .a { color: var(--lime); }
+  .sflow .end { color: var(--lime-deep); }
+
+  /* ---------- holder payoff highlight ---------- */
+  .payoff { }
+  .payoff-box {
+    border: 1px solid var(--lime); border-radius: 18px;
+    background: var(--bg-panel); padding: clamp(28px,4vw,52px);
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px,4vw,52px); align-items: center;
+  }
+  @media (max-width: 820px) { .payoff-box { grid-template-columns: 1fr; gap: 28px; } }
+  .payoff-box .eyebrow { color: var(--lime-deep); }
+  .payoff-box h2 {
+    font-family: var(--mono); font-weight: 700; font-size: clamp(24px,3vw,36px);
+    line-height: 1.18; letter-spacing: -0.04em; margin: 14px 0 14px;
+  }
+  .payoff-box p { font-size: 15px; color: var(--ink-soft); }
+  .payoff-list { display: flex; flex-direction: column; gap: 2px; }
+  .pl-item {
+    display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start;
+    padding: 16px 0; border-bottom: 1px solid var(--line);
+  }
+  .pl-item:last-child { border-bottom: none; }
+  .pl-ic {
+    width: 40px; height: 40px; border-radius: 9px; border: 1px solid var(--line-strong);
+    display: flex; align-items: center; justify-content: center; color: var(--lime);
+  }
+  .pl-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+  .pl-item p { font-size: 13px; color: var(--ink-soft); }
+
+  /* ---------- calculator ---------- */
+  .calc-wrap {
+    border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+    display: grid; grid-template-columns: 0.92fr 1.08fr;
+  }
+  @media (max-width: 900px) { .calc-wrap { grid-template-columns: 1fr; } }
+  .calc-controls {
+    background: var(--bg-lift); padding: clamp(26px,3vw,38px);
+    border-right: 1px solid var(--line);
+  }
+  @media (max-width: 900px) { .calc-controls { border-right: none; border-bottom: 1px solid var(--line); } }
+  .calc-controls-hd {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-mute); margin-bottom: 26px;
+  }
+  .ctrl { margin-bottom: 26px; }
+  .ctrl:last-child { margin-bottom: 0; }
+  .ctrl-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .ctrl-label { font-size: 13.5px; color: var(--ink); }
+  .ctrl-val { font-family: var(--mono); font-size: 17px; font-weight: 700; color: var(--lime); }
+  input[type=range] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 4px;
+    background: var(--bg-panel); border-radius: 999px; outline: none; border: 1px solid var(--line);
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; width: 20px; height: 20px;
+    border-radius: 4px; background: var(--lime); cursor: pointer;
+    border: 2px solid var(--bg-deep);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 20px; height: 20px; border-radius: 4px; background: var(--lime);
+    cursor: pointer; border: 2px solid var(--bg-deep);
+  }
+  .ctrl-hint { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); margin-top: 9px; }
+  .seg { display: flex; gap: 6px; }
+  .seg button {
+    flex: 1; padding: 9px 6px; border-radius: 7px; cursor: pointer;
+    font-family: var(--mono); font-size: 12.5px; font-weight: 500;
+    border: 1px solid var(--line-strong); background: var(--bg-panel); color: var(--ink-soft);
+    transition: all 0.15s;
+  }
+  .seg button.on { background: var(--lime); color: var(--bg-deep); border-color: var(--lime); }
+
+  .calc-results { background: var(--bg-panel); padding: clamp(26px,3vw,38px); }
+  .res-hero {
+    border: 1px solid var(--lime); border-radius: 12px; padding: 24px;
+    margin-bottom: 14px;
+  }
+  .res-hero-lbl { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-mute); }
+  .res-hero-num {
+    font-family: var(--mono); font-weight: 700; font-size: clamp(38px,5vw,56px);
+    line-height: 1; letter-spacing: -0.04em; color: var(--lime); margin: 12px 0 6px;
+  }
+  .res-hero-sub { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+  .res-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .res-card {
+    background: var(--bg-lift); border: 1px solid var(--line);
+    border-radius: 10px; padding: 16px;
+  }
+  .res-card .rc-l { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px; }
+  .res-card .rc-n { font-family: var(--mono); font-size: 21px; font-weight: 700; color: var(--ink); }
+  .res-card .rc-n.lime { color: var(--lime); }
+  .compound {
+    margin-top: 14px; background: var(--bg-lift); border: 1px solid var(--line);
+    border-radius: 10px; padding: 18px;
+  }
+  .compound-l { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 16px; }
+  .bars { display: flex; align-items: flex-end; gap: 8px; height: 96px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 7px; height: 100%; justify-content: flex-end; }
+  .bar { width: 100%; background: var(--moss); border-radius: 3px 3px 0 0; transition: height 0.5s cubic-bezier(.2,.7,.2,1); min-height: 3px; }
+  .bar.peak { background: var(--lime); }
+  .bar-tag { font-family: var(--mono); font-size: 9.5px; color: var(--ink-mute); }
+  .res-note {
+    margin-top: 14px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute);
+    line-height: 1.6; border-left: 2px solid var(--lime-deep); padding-left: 12px;
+  }
+
+  /* ---------- why genius ---------- */
+  .proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .proof-grid { grid-template-columns: 1fr; } }
+  .pcard {
+    border: 1px solid var(--line); border-radius: 14px; padding: 28px 26px;
+    background: var(--bg-lift); transition: transform 0.2s, border-color 0.2s;
+  }
+  .pcard:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+  .pcard-ix { font-family: var(--mono); font-size: 11px; color: var(--lime-deep); }
+  .pcard h3 { font-family: var(--sans); font-size: 19px; font-weight: 600; margin: 12px 0 10px; line-height: 1.2; }
+  .pcard p { font-size: 14px; color: var(--ink-soft); }
+
+  /* ---------- risk ---------- */
+  .risk-box {
+    border: 1px solid var(--line-strong); border-radius: 16px;
+    background: var(--bg-lift); padding: clamp(26px,4vw,46px);
+  }
+  .risk-box .eyebrow { color: var(--clay); }
+  .risk-box .eyebrow::before { background: var(--clay); }
+  .risk-box h2 {
+    font-family: var(--mono); font-weight: 700; font-size: clamp(22px,2.8vw,32px);
+    letter-spacing: -0.035em; margin: 14px 0 22px; line-height: 1.2;
+  }
+  .risk-list { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 38px; }
+  @media (max-width: 720px) { .risk-list { grid-template-columns: 1fr; } }
+  .risk-item { display: grid; grid-template-columns: auto 1fr; gap: 13px; align-items: start; }
+  .risk-item .rd { width: 7px; height: 7px; background: var(--clay); margin-top: 8px; flex-shrink: 0; }
+  .risk-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .risk-item p { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* ---------- cta ---------- */
+  .cta-box {
+    border: 1px solid var(--line-strong); border-radius: 22px;
+    background: var(--bg-lift); padding: clamp(40px,6vw,78px);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-box .eyebrow { justify-content: center; }
+  .cta-box h2 {
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(28px,4vw,48px); line-height: 1.12;
+    letter-spacing: -0.04em; margin: 16px auto 18px; max-width: 20ch;
+  }
+  .cta-box h2 em { font-style: normal; color: var(--lime); }
+  .cta-box p { font-size: 16.5px; color: var(--ink-soft); max-width: 50ch; margin: 0 auto 30px; }
+  .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 14px 24px; border-radius: 999px;
+    font-family: var(--sans); font-weight: 600; font-size: 14.5px; cursor: pointer;
+    transition: transform 0.15s, background 0.2s, border-color 0.2s, color 0.2s;
+    border: 1.5px solid transparent;
+  }
+  .btn-primary { background: var(--lime); color: var(--bg-deep); }
+  .btn-primary:hover { background: #d4fb63; transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--lime); color: var(--lime); transform: translateY(-2px); }
+  .btn .arrow { transition: transform 0.2s; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  footer { background: var(--bg-deep); border-top: 1px solid var(--line); padding: 48px 0 32px; }
+  .foot-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; align-items: center; }
+  .foot-grid p { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); }
+
+  .js-anim .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(.2,.6,.2,1), transform 0.7s cubic-bezier(.2,.6,.2,1); }
+  .js-anim .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .js-anim .reveal { opacity: 1; transform: none; transition: none; }
+    .flowdash, .loop-spin { animation: none !important; }
+  }
+
+  /* loop animation */
+  @keyframes dash { to { stroke-dashoffset: -200; } }
+  .flowdash { stroke-dasharray: 7 11; animation: dash 3.4s linear infinite; }
+</style>
+</head>
+<body>
+
+<div class="proto">Prototype preview · <b>concept demonstration</b> · figures are illustrative models, not financial advice</div>
+
+<nav>
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="34" height="34" rx="8" fill="#c5f04a"/>
+      <path d="M17 26V13M17 17C13 14.5 9.5 16 9.5 16M17 19.5C21 17 24.5 18.5 24.5 18.5" stroke="#161a14" stroke-width="2.1" stroke-linecap="round"/>
+      <circle cx="17" cy="10.5" r="2.6" fill="#161a14"/>
+    </svg>
+    <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">/home</a>
+    <a href="index.html#how">/how-it-works</a>
+    <a href="flywheel.html" class="active">/flywheel</a>
+    <a href="index.html#sides">/who-its-for</a>
+    <a href="incubations.html">/cohort-01</a>
+    <a href="apply.html">/apply</a>
+    <a href="index.html#cta" class="cta">Back a team</a>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="fhero">
+  <div class="fhero-bg"></div>
+  <div class="wrap fhero-inner">
+    <span class="eyebrow reveal">The SN20 engine</span>
+    <h1 class="reveal">One engine. <em>Four winners</em>.</h1>
+    <p class="reveal">SN20 isn't a one-time launch. Every subnet it graduates feeds a single self-reinforcing engine — and that engine pays out to four distinct parties at once: the subnet, its holders, its crowd funders, and its incubation teams.</p>
+  </div>
+</section>
+
+<!-- ================= LOOP DIAGRAM ================= -->
+<section class="loop-sec">
+  <div class="wrap">
+    <div class="loop-panel reveal">
+      <svg class="loop-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A diagram of the SN20 flywheel showing what each of the four parties receives">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="5.5" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#c5f04a"/>
+          </marker>
+        </defs>
+
+        <!-- central engine -->
+        <circle cx="400" cy="250" r="86" fill="#212820" stroke="#c5f04a" stroke-width="2"/>
+        <text x="400" y="238" text-anchor="middle" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="22" font-weight="700">SN20</text>
+        <text x="400" y="258" text-anchor="middle" fill="#a4cc2f" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1.5">BREEDING GROUND</text>
+        <text x="400" y="274" text-anchor="middle" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="9.5">the flywheel</text>
+
+        <!-- four radial connectors -->
+        <g stroke="#c5f04a" stroke-width="1.6" fill="none" stroke-dasharray="5 7" opacity="0.55">
+          <line x1="330" y1="200" x2="222" y2="124"/>
+          <line x1="470" y1="200" x2="578" y2="124"/>
+          <line x1="330" y1="300" x2="222" y2="376"/>
+          <line x1="470" y1="300" x2="578" y2="376"/>
+        </g>
+        <g fill="#c5f04a">
+          <circle cx="330" cy="200" r="3"/><circle cx="470" cy="200" r="3"/>
+          <circle cx="330" cy="300" r="3"/><circle cx="470" cy="300" r="3"/>
+        </g>
+
+        <!-- ===== party 1: SN20 the subnet (top-left) ===== -->
+        <g>
+          <rect x="34" y="40" width="262" height="92" rx="6" fill="#1d231a" stroke="#6f8f56" stroke-width="1.5"/>
+          <text x="52" y="66" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.1em">PARTY_01</text>
+          <text x="52" y="86" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700">SN20 — the subnet</text>
+          <text x="52" y="106" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ multi-source permanent buy &amp; burn</text>
+          <text x="52" y="121" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ graduate subnet emissions</text>
+        </g>
+
+        <!-- ===== party 2: token holders (top-right) ===== -->
+        <g>
+          <rect x="504" y="40" width="262" height="92" rx="6" fill="#212820" stroke="#c5f04a" stroke-width="2"/>
+          <text x="522" y="66" fill="#a4cc2f" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.1em">PARTY_02 · THE ANGEL SEAT</text>
+          <text x="522" y="86" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700">SN20 token holders</text>
+          <text x="522" y="106" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ monthly airdrops from all graduates</text>
+          <text x="522" y="121" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ in perpetuity, no picking winners</text>
+        </g>
+
+        <!-- ===== party 3: crowd funders (bottom-left) ===== -->
+        <g>
+          <rect x="34" y="368" width="262" height="92" rx="6" fill="#1d231a" stroke="#6f8f56" stroke-width="1.5"/>
+          <text x="52" y="394" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.1em">PARTY_03</text>
+          <text x="52" y="414" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700">Crowd funders</text>
+          <text x="52" y="434" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ permanent per-block emissions</text>
+          <text x="52" y="449" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ from the proven subnet they backed</text>
+        </g>
+
+        <!-- ===== party 4: incubation teams (bottom-right) ===== -->
+        <g>
+          <rect x="504" y="368" width="262" height="92" rx="6" fill="#1d231a" stroke="#6f8f56" stroke-width="1.5"/>
+          <text x="522" y="394" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.1em">PARTY_04</text>
+          <text x="522" y="414" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700">Incubation teams</text>
+          <text x="522" y="434" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ slot, runway &amp; full program support</text>
+          <text x="522" y="449" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ crowdfunded launch at graduation</text>
+        </g>
+      </svg>
+      <div class="loop-legend">
+        <div class="lg-item"><span class="lg-dot" style="background:#212820;border:1px solid #c5f04a"></span> SN20 engine &amp; token holders</div>
+        <div class="lg-item"><span class="lg-dot" style="background:#1d231a;border:1px solid #6f8f56"></span> Participating party</div>
+        <div class="lg-item"><span class="lg-dot" style="background:#c5f04a"></span> Value distribution</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STREAMS ================= -->
+<!-- ================= FOUR PARTIES ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Who gets what</span>
+      <h2>Four parties. One <em>engine</em>.</h2>
+      <p>The SN20 flywheel isn't zero-sum. Each turn of the engine pays out to four distinct groups at the same time — here is exactly what each one receives.</p>
+    </div>
+    <div class="party-grid">
+      <div class="party reveal">
+        <div class="party-hd">
+          <span class="party-ix">PARTY_01</span>
+        </div>
+        <h3>SN20 — the subnet</h3>
+        <ul class="party-list">
+          <li><span><b>Multi-source permanent buy &amp; burn</b> — selection fees and graduate carry continuously buy SN20 on-market and destroy it.</span></li>
+          <li><span><b>Graduate subnet emissions</b> — SN20's carry position in every graduate pays emissions back to the engine, forever.</span></li>
+        </ul>
+      </div>
+      <div class="party holder reveal">
+        <div class="party-hd">
+          <span class="party-ix">PARTY_02</span>
+          <span class="party-badge">THE ANGEL SEAT</span>
+        </div>
+        <h3>SN20 token holders</h3>
+        <ul class="party-list">
+          <li><span><b>Monthly airdrops from every graduate</b> — distributions from all graduating subnets land directly with holders.</span></li>
+          <li><span><b>In perpetuity</b> — the airdrops never stop, and the portfolio of graduates only grows.</span></li>
+          <li><span><b>No picking winners</b> — one position is exposure to every subnet the program ever graduates.</span></li>
+        </ul>
+      </div>
+      <div class="party reveal">
+        <div class="party-hd">
+          <span class="party-ix">PARTY_03</span>
+        </div>
+        <h3>Crowd funders</h3>
+        <ul class="party-list">
+          <li><span><b>Permanent per-block emissions</b> — backing a team through its crowdloan earns a continuous on-chain emissions stream.</span></li>
+          <li><span><b>From a proven subnet</b> — funders earn from a graduated, validated subnet, not a speculative idea.</span></li>
+        </ul>
+      </div>
+      <div class="party reveal">
+        <div class="party-hd">
+          <span class="party-ix">PARTY_04</span>
+        </div>
+        <h3>Incubation teams</h3>
+        <ul class="party-list">
+          <li><span><b>A slice of SN20</b> — one of eight slots, giving an idea a real foothold on the network.</span></li>
+          <li><span><b>SN20 mining emissions</b> — a share of SN20's own emissions provides operating runway during incubation.</span></li>
+          <li><span><b>Full support</b> — advisory, validator, dev and marketing help across the program.</span></li>
+          <li><span><b>A crowdfunded launch</b> — graduation delivers both the subnet slot and the capital to run it.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STREAMS ================= -->
+<section class="sec streams">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The burn mechanics</span>
+      <h2>How the engine <em>tightens supply</em>.</h2>
+      <p>Two of the engine's streams don't just move value — they permanently shrink the SN20 supply. Here is exactly how the buy &amp; burn is fed.</p>
+    </div>
+    <div class="stream-rows reveal">
+      <div class="srow">
+        <div class="spct">50%</div>
+        <div class="sbody">
+          <h3>Selection fees → buy &amp; burn</h3>
+          <p>Teams that pay the $50K selection fee feed the burn. Half of every fee buys SN20 on-market and destroys it — permanent supply reduction.</p>
+        </div>
+        <div class="sflow"><span>$50K fee</span><span class="a">→</span><span>buy SN20</span><span class="a">→</span><span class="end">burn</span></div>
+      </div>
+      <div class="srow">
+        <div class="spct">10%</div>
+        <div class="sbody">
+          <h3>Graduate carry → buy &amp; burn</h3>
+          <p>SN20 holds a 15–25% carry of every subnet it graduates. A tenth of that carry's emissions routes into the same buy-and-burn engine — forever.</p>
+        </div>
+        <div class="sflow"><span>carry yield</span><span class="a">→</span><span>buy SN20</span><span class="a">→</span><span class="end">burn</span></div>
+      </div>
+      <div class="srow">
+        <div class="spct">40%</div>
+        <div class="sbody">
+          <h3>New emissions → holder airdrop</h3>
+          <p>Forty percent of every graduated subnet's total emissions is airdropped to SN20 holders monthly — turning the whole portfolio of graduates into a yield stream.</p>
+        </div>
+        <div class="sflow"><span>new subnet</span><span class="a">→</span><span>airdrop</span><span class="a">→</span><span class="end">SN20 holders</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CALCULATOR ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Model it yourself</span>
+      <h2>Watch the flywheel <em>compound</em>.</h2>
+      <p>Move the inputs. See what a year of graduations does to the value returned to SN20 holders. These are illustrative figures, not guarantees.</p>
+    </div>
+    <div class="calc-wrap reveal">
+      <div class="calc-controls">
+        <div class="calc-controls-hd">// Inputs</div>
+        <div class="ctrl">
+          <div class="ctrl-top">
+            <span class="ctrl-label">Graduating subnets / year</span>
+            <span class="ctrl-val" id="v-grads">6</span>
+          </div>
+          <input type="range" id="grads" min="1" max="8" step="1" value="6" />
+          <div class="ctrl-hint">A full cohort is 8. Not every team graduates — model conservatively.</div>
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top">
+            <span class="ctrl-label">Teams paying the $50K fee</span>
+            <span class="ctrl-val" id="v-payers">4</span>
+          </div>
+          <input type="range" id="payers" min="0" max="8" step="1" value="4" />
+          <div class="ctrl-hint">Fee-payers give SN20 a 15% carry; non-payers give 25%.</div>
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top">
+            <span class="ctrl-label">Avg. emissions / subnet / yr</span>
+            <span class="ctrl-val" id="v-emis">$2.0M</span>
+          </div>
+          <input type="range" id="emis" min="500000" max="6000000" step="250000" value="2000000" />
+          <div class="ctrl-hint">Total yearly emissions a typical graduated subnet produces.</div>
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="ctrl-label">TAO price assumption</span></div>
+          <div class="seg" id="tao-seg">
+            <button data-tao="200">$200</button>
+            <button data-tao="310" class="on">$310</button>
+            <button data-tao="500">$500</button>
+          </div>
+        </div>
+      </div>
+      <div class="calc-results">
+        <div class="res-hero">
+          <div class="res-hero-lbl">Annual value returned to SN20 holders</div>
+          <div class="res-hero-num" id="r-total">$1.6M</div>
+          <div class="res-hero-sub" id="r-total-sub">airdrop + buy &amp; burn pressure, per year</div>
+        </div>
+        <div class="res-cards">
+          <div class="res-card">
+            <div class="rc-l">Holder airdrop / yr</div>
+            <div class="rc-n lime" id="r-air">$1.2M</div>
+          </div>
+          <div class="res-card">
+            <div class="rc-l">Buy &amp; burn / yr</div>
+            <div class="rc-n" id="r-burn">$385K</div>
+          </div>
+        </div>
+        <div class="compound">
+          <div class="compound-l">Cumulative value to holders — years 1–4 (carry compounds as graduates stack)</div>
+          <div class="bars" id="bars"></div>
+        </div>
+        <div class="res-note" id="r-note">// carry from every prior cohort keeps paying — year 4 collects from years 1 through 4 at once.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY IT WORKS ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Why it works</span>
+      <h2>What makes this a genuinely rare design.</h2>
+      <p>Most subnet tokens accrue value one way. SN20 stacks three reinforcing streams — and offloads its single biggest cost to the market.</p>
+    </div>
+    <div class="proof-grid">
+      <div class="pcard reveal">
+        <div class="pcard-ix">01 — CAPITAL EFFICIENCY</div>
+        <h3>The market pays the $1.2M, not SN20.</h3>
+        <p>Investor crowdloans fund each subnet registration. SN20 captures carry and upside without fronting the network's most expensive line item.</p>
+      </div>
+      <div class="pcard reveal">
+        <div class="pcard-ix">02 — COMPOUNDING</div>
+        <h3>Carry stacks; it never resets.</h3>
+        <p>Every graduate adds a permanent 15–25% carry position. Year four collects from every subnet of years one through four — at once.</p>
+      </div>
+      <div class="pcard reveal">
+        <div class="pcard-ix">03 — ALIGNED INCENTIVES</div>
+        <h3>Holders, builders, backers all win.</h3>
+        <p>Burns reward holders, lease shares reward backers, runway rewards builders. No side wins at another's expense — the network just gets more good subnets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RISK ================= -->
+<section class="sec streams">
+  <div class="wrap-narrow">
+    <div class="risk-box reveal">
+      <span class="eyebrow">Honest disclosure</span>
+      <h2>What has to go right — and what can't be guaranteed.</h2>
+      <div class="risk-list">
+        <div class="risk-item">
+          <span class="rd"></span>
+          <div>
+            <h4>Subnets can fail</h4>
+            <p>Graduated subnets can underperform or be deregistered. Carry and airdrop value depend on real emissions.</p>
+          </div>
+        </div>
+        <div class="risk-item">
+          <span class="rd"></span>
+          <div>
+            <h4>Crowdloans can fall short</h4>
+            <p>If a team's crowdloan target isn't met, contributors are fully refunded — but that team doesn't graduate on schedule.</p>
+          </div>
+        </div>
+        <div class="risk-item">
+          <span class="rd"></span>
+          <div>
+            <h4>Registration cost is dynamic</h4>
+            <p>The TAO burn to register a subnet moves with demand. Crowdloan targets must be sized with a live buffer.</p>
+          </div>
+        </div>
+        <div class="risk-item">
+          <span class="rd"></span>
+          <div>
+            <h4>Models are not forecasts</h4>
+            <p>The calculator above is an illustrative tool. Real outcomes depend on cohort quality, emissions, and TAO price.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <span class="eyebrow">The wheel is built</span>
+      <h2>It just needs its <em>first push</em>.</h2>
+      <p>SN20 launches Cohort 01 on June 11, 2026. Partners, backers, and builders who move early shape the engine.</p>
+      <div class="cta-actions">
+        <a href="index.html#cta" class="btn btn-primary">Become a partner <span class="arrow">→</span></a>
+        <a href="index.html" class="btn btn-ghost">Back to overview</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="8" fill="#c5f04a"/>
+        <path d="M17 26V13M17 17C13 14.5 9.5 16 9.5 16M17 19.5C21 17 24.5 18.5 24.5 18.5" stroke="#161a14" stroke-width="2.1" stroke-linecap="round"/>
+        <circle cx="17" cy="10.5" r="2.6" fill="#161a14"/>
+      </svg>
+      <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+    </a>
+    <p>© 2026 SN20 BREEDING GROUND · PROTOTYPE — FIGURES ILLUSTRATIVE</p>
+  </div>
+</footer>
+
+<script>
+  document.body.classList.add('js-anim');
+  const fmt = (n) => {
+    if (n >= 1e6) return '$' + (n/1e6).toFixed(n/1e6 >= 10 ? 0 : 1) + 'M';
+    if (n >= 1e3) return '$' + Math.round(n/1e3) + 'K';
+    return '$' + Math.round(n);
+  };
+  let tao = 310;
+  const REG_TAO = 4007;
+  const $ = (id) => document.getElementById(id);
+
+  function compute() {
+    const grads = +$('grads').value;
+    let payers = Math.min(+$('payers').value, grads);
+    const emis = +$('emis').value;
+
+    $('v-grads').textContent = grads;
+    $('v-payers').textContent = payers;
+    $('v-emis').textContent = '$' + (emis/1e6).toFixed(1) + 'M';
+
+    const nonPayers = grads - payers;
+    const feeBurn = payers * 50000 * 0.50;
+    const carryValue = (payers * emis * 0.15) + (nonPayers * emis * 0.25);
+    const carryBurn = carryValue * 0.10;
+    const totalBurn = feeBurn + carryBurn;
+    const airdrop = grads * emis * 0.40;
+    const total = airdrop + totalBurn;
+
+    $('r-total').textContent = fmt(total);
+    $('r-total-sub').textContent = fmt(airdrop) + ' airdrop + ' + fmt(totalBurn) + ' burn, per year';
+    $('r-air').textContent = fmt(airdrop);
+    $('r-burn').textContent = fmt(totalBurn);
+
+    const bars = [];
+    let cumulative = 0;
+    for (let y = 1; y <= 4; y++) {
+      const activeCarry = carryValue * y;
+      const activeBurn = feeBurn + (activeCarry * 0.10);
+      const activeAir = grads * emis * 0.40 * y;
+      cumulative += activeBurn + activeAir;
+      bars.push(cumulative);
+    }
+    const max = Math.max(...bars, 1);
+    $('bars').innerHTML = bars.map((v, i) => {
+      const h = Math.max(6, (v / max) * 100);
+      return '<div class="bar-col"><div class="bar ' + (i === 3 ? 'peak' : '') + '" style="height:' + h + '%"></div><div class="bar-tag">Y' + (i+1) + ' · ' + fmt(v) + '</div></div>';
+    }).join('');
+
+    if (total > 4000000) {
+      $('r-note').textContent = '// strongly self-reinforcing — value to holders compounds well beyond the cost of running each new cohort.';
+    } else if (grads <= 2) {
+      $('r-note').textContent = '// a lean year — even 1\u20132 graduations start the airdrop and the burn. the wheel turns slowly until volume builds.';
+    } else {
+      $('r-note').textContent = '// carry from every prior cohort keeps paying \u2014 year 4 collects from years 1 through 4 at once.';
+    }
+  }
+
+  ['grads','payers','emis'].forEach(id => $(id).addEventListener('input', compute));
+  document.querySelectorAll('#tao-seg button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#tao-seg button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      tao = +b.dataset.tao;
+      compute();
+    });
+  });
+  compute();
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        const sibs = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = Math.max(0, sibs.indexOf(e.target));
+        e.target.style.transitionDelay = (idx * 0.08) + 's';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -7% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
+  document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+</script>
+
+</body>
+</html>

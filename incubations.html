@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Active Incubations — SN20 Cohort 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #161a14; --bg-lift: #1d231a; --bg-panel: #212820; --bg-deep: #11150f;
+    --ink: #e9e7da; --ink-soft: #a8ad9c; --ink-mute: #6f7565;
+    --lime: #c5f04a; --lime-deep: #a4cc2f; --moss: #6f8f56; --sage: #4a5c3c;
+    --clay: #d98841;
+    --line: rgba(233,231,218,0.1); --line-soft: rgba(233,231,218,0.055); --line-strong: rgba(233,231,218,0.2);
+    --serif: 'Fraunces', Georgia, serif; --sans: 'Archivo', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--lime); color: var(--bg); }
+
+  .proto { background: var(--bg-deep); color: var(--ink-mute); text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 16px; border-bottom: 1px solid var(--line-soft); }
+  .proto b { color: var(--lime-deep); font-weight: 500; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(20px, 4vw, 56px);
+    background: rgba(22,26,20,0.92); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-mark { width: 34px; height: 34px; flex-shrink: 0; }
+  .brand-txt { line-height: 1.1; }
+  .brand-txt .bn { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; }
+  .brand-txt .bs { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; color: var(--ink-mute); display: block; margin-top: 1px; }
+  .nav-links { display: flex; align-items: center; gap: 2px; }
+  .nav-links a { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); padding: 8px 13px; border-radius: 6px; transition: background 0.16s, color 0.16s; }
+  .nav-links a:hover { background: var(--bg-panel); color: var(--ink); }
+  .nav-links a.active { color: var(--lime); }
+  .nav-links a.cta { background: var(--lime); color: var(--bg-deep); font-weight: 500; margin-left: 8px; border-radius: 999px; padding: 9px 18px; }
+  .nav-links a.cta:hover { background: #d4fb63; }
+  .nav-toggle { display: none; background: none; border: 1px solid var(--line); color: var(--ink); cursor: pointer; padding: 8px; border-radius: 6px; }
+  @media (max-width: 940px) {
+    .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 2px; background: var(--bg-lift); padding: 12px; border-bottom: 1px solid var(--line); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; }
+    .nav-links a.cta { margin-left: 0; text-align: center; margin-top: 6px; }
+    .nav-toggle { display: block; }
+  }
+
+  .wrap { max-width: 1220px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--lime-deep); display: inline-flex; align-items: center; gap: 9px; }
+  .eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--lime); flex-shrink: 0; }
+
+  /* hero */
+  .ihero { position: relative; padding: clamp(44px,6vw,76px) 0 clamp(32px,4vw,44px); }
+  .ihero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: linear-gradient(var(--line-soft) 1px, transparent 1px), linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 25%, #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 25%, #000 0%, transparent 78%);
+  }
+  .ihero-inner { position: relative; }
+  .ihero h1 { font-family: var(--mono); font-weight: 700; font-size: clamp(32px,4.6vw,56px); line-height: 1.1; letter-spacing: -0.045em; margin: 20px 0 18px; max-width: 20ch; }
+  .ihero h1 em { font-style: normal; color: var(--lime); }
+  .ihero p { font-size: clamp(16px,1.6vw,18px); color: var(--ink-soft); max-width: 56ch; }
+
+  /* cohort status bar */
+  .cohort-bar {
+    display: flex; flex-wrap: wrap; gap: 0; margin-top: 34px;
+    border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+  }
+  .cb-item { flex: 1; min-width: 150px; padding: 18px 22px; border-right: 1px solid var(--line); }
+  .cb-item:last-child { border-right: none; }
+  .cb-item .v { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--ink); }
+  .cb-item .v em { font-style: normal; color: var(--lime); }
+  .cb-item .l { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; color: var(--ink-mute); margin-top: 4px; text-transform: uppercase; }
+  @media (max-width: 620px) { .cb-item { min-width: 50%; } .cb-item:nth-child(2) { border-right: none; } .cb-item:nth-child(1),.cb-item:nth-child(2) { border-bottom: 1px solid var(--line); } }
+
+  /* filter row */
+  .filter-row {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    padding: 28px 0 30px;
+  }
+  .filter-row .fl-label { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: 0.1em; margin-right: 6px; }
+  .chip {
+    font-family: var(--mono); font-size: 12px; padding: 7px 13px; border-radius: 999px;
+    border: 1px solid var(--line-strong); background: transparent; color: var(--ink-soft);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .chip:hover { border-color: var(--ink-soft); }
+  .chip.on { background: var(--lime); color: var(--bg-deep); border-color: var(--lime); font-weight: 500; }
+
+  /* grid */
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding-bottom: 40px; }
+  @media (max-width: 1080px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 820px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--bg-lift); border: 1px solid var(--line);
+    border-radius: 14px; padding: 22px; display: flex; flex-direction: column;
+    transition: transform 0.2s, border-color 0.2s; position: relative;
+  }
+  .card.live { cursor: pointer; }
+  .card.live:hover { transform: translateY(-5px); border-color: var(--lime); }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+  .card-slot {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute); letter-spacing: 0.08em;
+    border: 1px solid var(--line); border-radius: 5px; padding: 4px 8px;
+  }
+  .status {
+    font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: 0.07em;
+    padding: 4px 8px; border-radius: 5px;
+  }
+  .status.graduating { background: var(--lime); color: var(--bg-deep); }
+  .status.incubating { background: rgba(111,143,86,0.22); color: var(--moss); border: 1px solid var(--moss); }
+  .status.early { background: transparent; color: var(--ink-mute); border: 1px solid var(--line-strong); }
+
+  .card-logo {
+    width: 44px; height: 44px; border-radius: 10px; background: var(--bg-panel);
+    border: 1px solid var(--line); display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+  }
+  .card h3 { font-family: var(--serif); font-size: 22px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 4px; }
+  .card-cat { font-family: var(--mono); font-size: 11px; color: var(--lime-deep); margin-bottom: 12px; }
+  .card-desc { font-size: 14px; color: var(--ink-soft); margin-bottom: 20px; flex-grow: 1; }
+
+  /* crowdloan progress */
+  .pool { margin-top: auto; }
+  .pool-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+  .pool-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; color: var(--ink-mute); text-transform: uppercase; }
+  .pool-pct { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--lime); }
+  .pool-bar { height: 6px; border-radius: 3px; background: var(--bg-panel); overflow: hidden; }
+  .pool-bar i { display: block; height: 100%; background: var(--lime); border-radius: 3px; }
+  .pool-meta { display: flex; justify-content: space-between; margin-top: 8px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute); }
+
+  .card-foot {
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 12px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-foot .view { color: var(--lime); display: flex; align-items: center; gap: 6px; }
+  .card-foot .locked { color: var(--ink-mute); }
+  .card .arrow { transition: transform 0.2s; }
+  .card.live:hover .arrow { transform: translateX(3px); }
+
+  /* footer */
+  footer { background: var(--bg-deep); border-top: 1px solid var(--line); padding: 48px 0 32px; margin-top: 30px; }
+  .foot-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; align-items: center; }
+  .foot-grid p { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); }
+
+  .js-anim .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s cubic-bezier(.2,.6,.2,1), transform 0.6s cubic-bezier(.2,.6,.2,1); }
+  .js-anim .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .js-anim .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+
+<div class="proto">Prototype preview · <b>concept demonstration</b> · teams below are illustrative sample data</div>
+
+<nav>
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="11" fill="#c5f04a"/>
+      <path d="M24 36V26M24 26L15 18M24 26L33 18M15 18V13M33 18V13" stroke="#161a14" stroke-width="2.3" stroke-linecap="round"/>
+      <rect x="21.5" y="33.5" width="5" height="5" fill="#161a14"/>
+      <circle cx="24" cy="26" r="3" fill="#161a14"/>
+      <rect x="12.5" y="9.5" width="5" height="5" fill="#161a14"/>
+      <rect x="30.5" y="9.5" width="5" height="5" fill="#161a14"/>
+    </svg>
+    <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">/home</a>
+    <a href="index.html#how">/how-it-works</a>
+    <a href="flywheel.html">/flywheel</a>
+    <a href="index.html#sides">/who-its-for</a>
+    <a href="incubations.html" class="active">/cohort-01</a>
+    <a href="apply.html">/apply</a>
+    <a href="#" class="cta">Back a team</a>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="ihero">
+  <div class="ihero-bg"></div>
+  <div class="wrap ihero-inner">
+    <span class="eyebrow reveal">Cohort 01 · live</span>
+    <h1 class="reveal">Eight teams. <em>One growing season</em>.</h1>
+    <p class="reveal">These are the teams currently incubating inside SN20 — each working toward graduation into its own Bittensor subnet. Browse them, follow their progress, and back the ones you believe in.</p>
+    <div class="cohort-bar reveal">
+      <div class="cb-item"><div class="v">8 / 8</div><div class="l">Slots filled</div></div>
+      <div class="cb-item"><div class="v"><em>2</em></div><div class="l">Nearing graduation</div></div>
+      <div class="cb-item"><div class="v">14,200<em>τ</em></div><div class="l">Total locked across teams</div></div>
+      <div class="cb-item"><div class="v">June 2026</div><div class="l">Cohort start</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FILTER + GRID ================= -->
+<section class="wrap">
+  <div class="filter-row reveal">
+    <span class="fl-label">// FILTER</span>
+    <button class="chip on" data-filter="all">All teams · 8</button>
+    <button class="chip" data-filter="graduating">Graduating · 2</button>
+    <button class="chip" data-filter="incubating">Incubating · 4</button>
+    <button class="chip" data-filter="early">Early stage · 2</button>
+  </div>
+
+  <div class="grid" id="grid">
+
+    <!-- 01 Helix Router — LIVE dashboard -->
+    <a href="team-helix.html" class="card live reveal" data-stage="graduating">
+      <div class="card-top">
+        <span class="card-slot">SLOT_01</span>
+        <span class="status graduating">GRADUATING</span>
+      </div>
+      <div class="card-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M5 12h14M12 5v14" opacity="0.3"/><path d="M4 8c4 0 4 8 8 8s4-8 8-8"/><circle cx="4" cy="8" r="2" fill="#c5f04a"/><circle cx="20" cy="8" r="2" fill="#c5f04a"/></svg>
+      </div>
+      <h3>Helix Router</h3>
+      <div class="card-cat">decentralized inference routing</div>
+      <p class="card-desc">A routing layer that directs inference requests to the best-priced, lowest-latency model across the network.</p>
+      <div class="pool">
+        <div class="pool-top"><span class="pool-label">Crowdloan pool</span><span class="pool-pct">87%</span></div>
+        <div class="pool-bar"><i style="width:87%"></i></div>
+        <div class="pool-meta"><span>4,180 / 4,800 τ</span><span>11 days left</span></div>
+      </div>
+      <div class="card-foot">
+        <span class="view">View dashboard <span class="arrow">→</span></span>
+        <span class="locked">142 backers</span>
+      </div>
+    </a>
+
+    <!-- 02 Verdict — LIVE dashboard -->
+    <a href="team-verdict.html" class="card live reveal" data-stage="incubating">
+      <div class="card-top">
+        <span class="card-slot">SLOT_02</span>
+        <span class="status incubating">INCUBATING</span>
+      </div>
+      <div class="card-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <h3>Verdict</h3>
+      <div class="card-cat">verifiable compute attestation</div>
+      <p class="card-desc">Cryptographic proofs that a model actually ran the computation it claims — trust for off-chain inference.</p>
+      <div class="pool">
+        <div class="pool-top"><span class="pool-label">Crowdloan pool</span><span class="pool-pct">54%</span></div>
+        <div class="pool-bar"><i style="width:54%"></i></div>
+        <div class="pool-meta"><span>2,592 / 4,800 τ</span><span>~3 mo left</span></div>
+      </div>
+      <div class="card-foot">
+        <span class="view">View dashboard <span class="arrow">→</span></span>
+        <span class="locked">88 backers</span>
+      </div>
+    </a>
+
+    <!-- 03 Cropmind -->
+    <a href="team-cropmind.html" class="card live reveal" data-stage="incubating">
+      <div class="card-top">
+        <span class="card-slot">SLOT_03</span>
+        <span class="status incubating">INCUBATING</span>
+      </div>
+      <div class="card-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M12 21V9M12 13c-3-2-6 0-6 0M12 16c3-2 6 0 6 0M12 9c0-3 3-5 3-5"/><circle cx="12" cy="6" r="2.4" fill="#c5f04a"/></svg>
+      </div>
+      <h3>Cropmind</h3>
+      <div class="card-cat">agritech sensor intelligence</div>
+      <p class="card-desc">Turns raw farm sensor feeds into yield predictions and irrigation guidance through a network of specialist models.</p>
+      <div class="pool">
+        <div class="pool-top"><span class="pool-label">Crowdloan pool</span><span class="pool-pct">41%</span></div>
+        <div class="pool-bar"><i style="width:41%"></i></div>
+        <div class="pool-meta"><span>1,968 / 4,800 τ</span><span>~4 mo left</span></div>
+      </div>
+      <div class="card-foot">
+        <span class="view">View dashboard <span class="arrow">→</span></span>
+        <span class="locked">63 backers</span>
+      </div>
+    </a>
+
+    <!-- 04 Loom — GRADUATING -->
+    <div class="card reveal" data-stage="graduating">
+      <div class="card-top">
+        <span class="card-slot">SLOT_04</span>
+        <span class="status graduating">GRADUATING</span>
+      </div>
+      <div class="card-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16M8 3v18M16 3v18" opacity="0.6"/></svg>
+      </div>
+      <h3>Loom</h3>
+      <div class="card-cat">data-labeling marketplace</div>
+      <p class="card-desc">An on-chain market where labelers are scored and paid for high-quality annotations on training datasets.</p>
+      <div class="pool">
+        <div class="pool-top"><span class="pool-label">Crowdloan pool</span><span class="pool-pct">92%</span></div>
+        <div class="pool-bar"><i style="width:92%"></i></div>
+        <div class="pool-meta"><span>4,416 / 4,800 τ</span><span>6 days left</span></div>
+      </div>
+      <div class="card-foot">
+        <span class="locked">Dashboard — sample</span>
+        <span class="locked">171 backers</span>
+      </div>
+    </div>
+
+    <!-- 05 Sentinel AI -->
+    <div class="card reveal" data-stage="incubating">
+      <div class="card-top">
+        <span class="card-slot">SLOT_05</span>
+        <span class="status incubating">INCUBATING</span>
+      </div>
+      <div class="card-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/><path d="M12 8v4M12 15v.5"/></svg>
+      </div>
+      <h3>Sentinel AI</h3>
+      <div class="card-cat">real-time fraud detection</div>
+      <p class="card-desc">Streaming transaction-risk models that flag fraud in milliseconds across payment and DeFi rails.</p>
+      <div class="pool">
+        <div class="pool-top"><span class="pool-label">Crowdloan pool</span><span class="pool-pct">33%</span></div>
+        <div class="pool-bar"><i style="width:33%"></i></div>
+        <div class="pool-meta"><span>1,584 / 4,800 τ</span><span>~5 mo left</span></div>
+      </div>
+      <div class="card-foot">
+        <span class="locked">Dashboard — sample</span>
+        <span class="locked">47 backers</span>
+      </div>
+    </div>
+
+    <!-- 06 Polyglot — EARLY -->
+    <div class="card reveal" data-stage="early">
+      <div class="card-top">
+        <span class="card-slot">SLOT_06</span>
+        <span class="status early">EARLY STAGE</span>
+      </div>
+      <div class="card-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+      </div>
+      <h3>Polyglot</h3>
+      <div class="card-cat">low-resource translation</div>
+      <p class="card-desc">Translation models for languages the big providers ignore — built by native-speaker miners.</p>
+      <div class="pool">
+        <div class="pool-top"><span class="pool-label">Crowdloan pool</span><span class="pool-pct">18%</span></div>
+        <div class="pool-bar"><i style="width:18%"></i></div>
+        <div class="pool-meta"><span>864 / 4,800 τ</span><span>~7 mo left</span></div>
+      </div>
+      <div class="card-foot">
+        <span class="locked">Dashboard — sample</span>
+        <span class="locked">29 backers</span>
+      </div>
+    </div>
+
+    <!-- 07 Foundry -->
+    <div class="card reveal" data-stage="incubating">
+      <div class="card-top">
+        <span class="card-slot">SLOT_07</span>
+        <span class="status incubating">INCUBATING</span>
+      </div>
+      <div class="card-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M5 8l7-4 7 4-7 4-7-4Z"/><path d="M5 12l7 4 7-4M5 16l7 4 7-4"/></svg>
+      </div>
+      <h3>Foundry</h3>
+      <div class="card-cat">synthetic training data</div>
+      <p class="card-desc">Generates and validates synthetic datasets on demand — clean training data without the scraping.</p>
+      <div class="pool">
+        <div class="pool-top"><span class="pool-label">Crowdloan pool</span><span class="pool-pct">61%</span></div>
+        <div class="pool-bar"><i style="width:61%"></i></div>
+        <div class="pool-meta"><span>2,928 / 4,800 τ</span><span>~3 mo left</span></div>
+      </div>
+      <div class="card-foot">
+        <span class="locked">Dashboard — sample</span>
+        <span class="locked">104 backers</span>
+      </div>
+    </div>
+
+    <!-- 08 Tempo — EARLY -->
+    <div class="card reveal" data-stage="early">
+      <div class="card-top">
+        <span class="card-slot">SLOT_08</span>
+        <span class="status early">EARLY STAGE</span>
+      </div>
+      <div class="card-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </div>
+      <h3>Tempo</h3>
+      <div class="card-cat">time-series forecasting</div>
+      <p class="card-desc">A forecasting subnet for demand, energy and market signals — competitive miners ranked on accuracy.</p>
+      <div class="pool">
+        <div class="pool-top"><span class="pool-label">Crowdloan pool</span><span class="pool-pct">9%</span></div>
+        <div class="pool-bar"><i style="width:9%"></i></div>
+        <div class="pool-meta"><span>432 / 4,800 τ</span><span>~8 mo left</span></div>
+      </div>
+      <div class="card-foot">
+        <span class="locked">Dashboard — sample</span>
+        <span class="locked">12 backers</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="48" height="48" rx="11" fill="#c5f04a"/>
+        <path d="M24 36V26M24 26L15 18M24 26L33 18M15 18V13M33 18V13" stroke="#161a14" stroke-width="2.3" stroke-linecap="round"/>
+        <rect x="21.5" y="33.5" width="5" height="5" fill="#161a14"/>
+        <circle cx="24" cy="26" r="3" fill="#161a14"/>
+        <rect x="12.5" y="9.5" width="5" height="5" fill="#161a14"/>
+        <rect x="30.5" y="9.5" width="5" height="5" fill="#161a14"/>
+      </svg>
+      <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+    </a>
+    <p>© 2026 SN20 BREEDING GROUND · PROTOTYPE — TEAMS ARE ILLUSTRATIVE SAMPLE DATA</p>
+  </div>
+</footer>
+
+<script>
+  document.body.classList.add('js-anim');
+  // filter
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+      chip.classList.add('on');
+      const f = chip.dataset.filter;
+      document.querySelectorAll('#grid .card').forEach(card => {
+        const show = f === 'all' || card.dataset.stage === f;
+        card.style.display = show ? 'flex' : 'none';
+      });
+    });
+  });
+  // reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        const sibs = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = Math.max(0, sibs.indexOf(e.target));
+        e.target.style.transitionDelay = (Math.min(idx,8) * 0.06) + 's';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -5% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
+  document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SN20 Breeding Ground — The Bittensor subnet incubator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400;9..144,1,500&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* deep warm-dark — forest charcoal, never flat black */
+    --bg: #161a14;
+    --bg-lift: #1d231a;
+    --bg-panel: #212820;
+    --bg-deep: #11150f;
+    --ink: #e9e7da;
+    --ink-soft: #a8ad9c;
+    --ink-mute: #6f7565;
+    --lime: #c5f04a;
+    --lime-deep: #a4cc2f;
+    --moss: #6f8f56;
+    --sage: #4a5c3c;
+    --line: rgba(233,231,218,0.1);
+    --line-soft: rgba(233,231,218,0.055);
+    --line-strong: rgba(233,231,218,0.2);
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Archivo', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--lime); color: var(--bg); }
+
+  /* ---------- proto banner ---------- */
+  .proto {
+    background: var(--bg-deep); color: var(--ink-mute);
+    text-align: center; font-family: var(--mono);
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 8px 16px; border-bottom: 1px solid var(--line-soft);
+  }
+  .proto b { color: var(--lime-deep); font-weight: 500; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(20px, 4vw, 56px);
+    background: rgba(22,26,20,0.92); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-mark { width: 34px; height: 34px; flex-shrink: 0; }
+  .brand-txt { line-height: 1.1; }
+  .brand-txt .bn { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; }
+  .brand-txt .bs {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em;
+    color: var(--ink-mute); display: block; margin-top: 1px;
+  }
+  .nav-links { display: flex; align-items: center; gap: 2px; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 13px; color: var(--ink-soft);
+    padding: 8px 13px; border-radius: 6px; transition: background 0.16s, color 0.16s;
+  }
+  .nav-links a:hover { background: var(--bg-panel); color: var(--ink); }
+  .nav-links a.cta {
+    background: var(--lime); color: var(--bg-deep); font-weight: 500;
+    margin-left: 8px; border-radius: 999px; padding: 9px 18px;
+  }
+  .nav-links a.cta:hover { background: #d4fb63; }
+  .nav-toggle { display: none; background: none; border: 1px solid var(--line); color: var(--ink); cursor: pointer; padding: 8px; border-radius: 6px; }
+  @media (max-width: 940px) {
+    .nav-links {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 2px;
+      background: var(--bg-lift); padding: 12px; border-bottom: 1px solid var(--line);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; }
+    .nav-links a.cta { margin-left: 0; text-align: center; margin-top: 6px; }
+    .nav-toggle { display: block; }
+  }
+
+  /* ---------- layout ---------- */
+  .wrap { max-width: 1220px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--lime-deep);
+    display: inline-flex; align-items: center; gap: 9px;
+  }
+  .eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--lime); flex-shrink: 0; }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; padding: clamp(48px, 7vw, 96px) 0 clamp(54px, 8vw, 104px); }
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 75% 65% at 60% 35%, #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 65% at 60% 35%, #000 0%, transparent 78%);
+  }
+  .hero-inner { position: relative; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: clamp(34px, 5vw, 68px); align-items: center; }
+  @media (max-width: 940px) { .hero-inner { grid-template-columns: 1fr; gap: 40px; } }
+  .hero h1 {
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(33px, 4.7vw, 60px); line-height: 1.12;
+    letter-spacing: -0.045em; margin: 24px 0 24px;
+    max-width: 13ch;
+  }
+  .hero h1 em {
+    font-style: normal; font-weight: 700; color: var(--lime);
+  }
+  .hero h1 .cursor {
+    display: inline-block; width: 0.5em; height: 0.88em;
+    background: var(--lime); margin-left: 0.08em; vertical-align: -0.08em;
+    animation: blink 1.15s steps(1) infinite;
+  }
+  @keyframes blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+  .hero-sub { font-size: clamp(16px, 1.6vw, 19px); color: var(--ink-soft); max-width: 42ch; }
+  .hero-actions { display: flex; gap: 12px; margin-top: 34px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 14px 24px; border-radius: 999px;
+    font-family: var(--sans); font-weight: 600; font-size: 14.5px; cursor: pointer;
+    transition: transform 0.15s, background 0.2s, border-color 0.2s, color 0.2s;
+    border: 1.5px solid transparent;
+  }
+  .btn-primary { background: var(--lime); color: var(--bg-deep); }
+  .btn-primary:hover { background: #d4fb63; transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--lime); color: var(--lime); transform: translateY(-2px); }
+  .btn .arrow { transition: transform 0.2s; }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .hero-meta {
+    margin-top: 30px; display: flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink-mute);
+  }
+  .live-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--lime);
+    box-shadow: 0 0 0 0 rgba(197,240,74,0.5); animation: pulse 2.5s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(197,240,74,0.5); }
+    70% { box-shadow: 0 0 0 9px rgba(197,240,74,0); }
+    100% { box-shadow: 0 0 0 0 rgba(197,240,74,0); }
+  }
+
+  /* ---------- hero growth diagram (the one organic motif) ---------- */
+  .hero-art { position: relative; }
+  .hero-art svg { width: 100%; height: auto; display: block; overflow: visible; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes pop { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.18); } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes drift { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes glow { 0%,100% { opacity: 0.3; } 50% { opacity: 0.85; } }
+  .branch { stroke-dasharray: 360; stroke-dashoffset: 360; animation: draw 2s ease-out forwards; }
+  .branch.b2 { animation-delay: 0.4s; } .branch.b3 { animation-delay: 0.7s; }
+  .branch.b4 { animation-delay: 1s; } .branch.b5 { animation-delay: 1.3s; }
+  .node { transform-box: fill-box; transform-origin: center; opacity: 0; animation: pop 0.7s cubic-bezier(.2,.8,.3,1.3) forwards; }
+  .drifter { animation: drift 6s ease-in-out infinite; }
+  .glower { animation: glow 3.6s ease-in-out infinite; }
+
+  /* ---------- ticker ---------- */
+  .ticker {
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    padding: 16px 0; overflow: hidden; background: var(--bg-deep);
+  }
+  .ticker-track {
+    display: flex; white-space: nowrap; animation: scroll 38s linear infinite;
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink-mute);
+  }
+  .ticker-track span { display: flex; align-items: center; }
+  .ticker-track b { color: var(--ink-soft); font-weight: 400; margin: 0 16px; }
+  .ticker-track i { color: var(--lime-deep); font-style: normal; }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  /* ---------- sections ---------- */
+  .sec { padding: clamp(64px, 9vw, 124px) 0; position: relative; }
+  .sec-head { max-width: 700px; margin-bottom: 54px; }
+  .sec-head h2 {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(32px, 4.5vw, 54px); line-height: 1.05;
+    letter-spacing: -0.028em; margin: 16px 0 16px;
+  }
+  .sec-head h2 em { font-style: italic; font-weight: 500; color: var(--lime); }
+  .sec-head p { color: var(--ink-soft); font-size: 17.5px; }
+
+  /* ---------- problem ---------- */
+  .problem-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(36px,6vw,76px); align-items: center; }
+  @media (max-width: 880px) { .problem-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .cost-panel {
+    border: 1px solid var(--line); border-radius: 16px;
+    background: var(--bg-lift); padding: 38px 34px; position: relative;
+  }
+  .cost-panel::before {
+    content: 'REGISTRATION COST'; position: absolute; top: 18px; left: 34px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; color: var(--ink-mute);
+  }
+  .cost-fig {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(64px, 9vw, 116px); line-height: 0.9;
+    letter-spacing: -0.04em; color: var(--lime); margin-top: 26px;
+  }
+  .cost-panel p { font-size: 14.5px; color: var(--ink-soft); margin-top: 18px; line-height: 1.6; }
+  .cost-bar {
+    margin-top: 22px; height: 6px; border-radius: 3px; background: var(--bg-panel);
+    overflow: hidden; position: relative;
+  }
+  .cost-bar i { position: absolute; inset: 0 22% 0 0; background: var(--lime); border-radius: 3px; display: block; }
+  .cost-bar-lbl { font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute); margin-top: 8px; display: flex; justify-content: space-between; }
+  .pain-list { display: flex; flex-direction: column; }
+  .pain {
+    padding: 24px 0; border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: 52px 1fr; gap: 20px; align-items: start;
+  }
+  .pain:first-child { padding-top: 0; }
+  .pain:last-child { border-bottom: none; padding-bottom: 0; }
+  .pain-ix {
+    font-family: var(--mono); font-size: 12px; color: var(--lime-deep);
+    border: 1px solid var(--line-strong); border-radius: 6px;
+    padding: 6px 0; text-align: center; font-weight: 500;
+  }
+  .pain h4 { font-size: 17px; font-weight: 600; margin-bottom: 5px; }
+  .pain p { font-size: 14.5px; color: var(--ink-soft); }
+
+  /* ---------- how it works ---------- */
+  .how { background: var(--bg-deep); }
+  .how-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  }
+  @media (max-width: 920px) { .how-steps { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 540px) { .how-steps { grid-template-columns: 1fr; } }
+  .hstep {
+    background: var(--bg-lift); padding: 30px 26px;
+    border-right: 1px solid var(--line); transition: background 0.2s;
+    position: relative;
+  }
+  .hstep:last-child { border-right: none; }
+  .hstep:hover { background: var(--bg-panel); }
+  @media (max-width: 920px) {
+    .hstep:nth-child(2) { border-right: none; }
+    .hstep:nth-child(1), .hstep:nth-child(2) { border-bottom: 1px solid var(--line); }
+  }
+  .hstep-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .hstep-ix { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); }
+  .hstep-dot { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--moss); }
+  .hstep.done .hstep-dot { background: var(--lime); border-color: var(--lime); }
+  .hstep h3 { font-family: var(--serif); font-size: 23px; font-weight: 600; margin-bottom: 9px; letter-spacing: -0.01em; }
+  .hstep p { font-size: 14px; color: var(--ink-soft); }
+  .hstep-tag {
+    margin-top: 18px; font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.08em; color: var(--lime-deep);
+  }
+
+  /* ---------- who / angel seat ---------- */
+  .sides-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+  @media (max-width: 880px) { .sides-grid { grid-template-columns: 1fr; } }
+  .side {
+    background: var(--bg-lift); border: 1px solid var(--line);
+    border-radius: 14px; padding: 30px 28px;
+    display: flex; flex-direction: column; transition: transform 0.2s, border-color 0.2s;
+  }
+  .side:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+  .side.feature {
+    background: var(--bg-panel); border-color: var(--lime);
+  }
+  .side-tag {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-mute);
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .side.feature .side-tag { color: var(--lime-deep); }
+  .side-badge {
+    background: var(--lime); color: var(--bg-deep);
+    font-family: var(--mono); font-size: 9.5px; font-weight: 700;
+    letter-spacing: 0.06em; padding: 3px 7px; border-radius: 4px;
+  }
+  .side h3 { font-family: var(--serif); font-size: 25px; font-weight: 600; margin: 14px 0 11px; line-height: 1.13; }
+  .side > p { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 22px; }
+  .side ul { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-top: auto; }
+  .side li {
+    font-size: 13.5px; color: var(--ink-soft);
+    display: grid; grid-template-columns: 16px 1fr; gap: 9px; align-items: start;
+  }
+  .side li::before { content: '→'; color: var(--moss); font-weight: 600; }
+  .side.feature li::before { color: var(--lime); }
+
+  /* ---------- figures ---------- */
+  .figures { background: var(--bg-deep); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .fig-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 720px) { .fig-grid { grid-template-columns: 1fr 1fr; } }
+  .fig {
+    padding: 14px clamp(14px,3vw,32px) 14px 0;
+    border-right: 1px solid var(--line);
+  }
+  .fig:last-child { border-right: none; padding-right: 0; }
+  @media (max-width: 720px) {
+    .fig:nth-child(2) { border-right: none; padding-right: 0; }
+    .fig:nth-child(1), .fig:nth-child(2) { padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid var(--line); }
+    .fig:nth-child(3), .fig:nth-child(4) { padding-right: clamp(14px,3vw,32px); }
+    .fig:nth-child(4) { padding-right: 0; }
+  }
+  .fig .n {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(40px, 5vw, 60px);
+    line-height: 1; letter-spacing: -0.03em; color: var(--ink);
+  }
+  .fig .n em { font-style: normal; color: var(--lime); }
+  .fig .l { margin-top: 11px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); letter-spacing: 0.04em; }
+
+  /* ---------- flywheel teaser ---------- */
+  .ftease-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(36px,5vw,70px); align-items: center; }
+  @media (max-width: 880px) { .ftease-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .ftease-art { width: 100%; max-width: 400px; margin: 0 auto; }
+  .ftease-art svg { width: 100%; height: auto; }
+  .ftw-spin { transform-origin: 200px 200px; animation: rot 46s linear infinite; }
+  @keyframes rot { to { transform: rotate(360deg); } }
+
+  /* ---------- cta ---------- */
+  .cta-box {
+    border: 1px solid var(--line-strong); border-radius: 22px;
+    background: var(--bg-lift); padding: clamp(40px, 6vw, 80px);
+    position: relative; overflow: hidden;
+  }
+  .cta-box::after {
+    content: ''; position: absolute; right: -120px; top: -120px;
+    width: 360px; height: 360px; border-radius: 50%;
+    border: 1px solid var(--line); 
+  }
+  .cta-box h2 {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(32px, 4.6vw, 58px); line-height: 1.04;
+    letter-spacing: -0.03em; margin: 16px 0 18px; max-width: 18ch; position: relative;
+  }
+  .cta-box h2 em { font-style: italic; font-weight: 500; color: var(--lime); }
+  .cta-box p { font-size: 17px; max-width: 48ch; color: var(--ink-soft); position: relative; }
+  .cta-actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; position: relative; }
+
+  /* ---------- footer ---------- */
+  footer { background: var(--bg-deep); border-top: 1px solid var(--line); padding: 56px 0 34px; }
+  .foot-grid { display: flex; justify-content: space-between; gap: 44px; flex-wrap: wrap; }
+  .foot-brand { max-width: 290px; }
+  .foot-brand p { font-size: 13.5px; color: var(--ink-mute); margin-top: 15px; }
+  .foot-cols { display: flex; gap: 56px; flex-wrap: wrap; }
+  .foot-col h5 {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-mute); margin-bottom: 15px;
+  }
+  .foot-col a { display: block; font-size: 13.5px; color: var(--ink-soft); margin-bottom: 10px; transition: color 0.16s; }
+  .foot-col a:hover { color: var(--lime); }
+  .foot-bottom {
+    margin-top: 50px; padding-top: 26px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute);
+  }
+
+  /* ---------- reveal ---------- */
+  .js-anim .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(.2,.6,.2,1), transform 0.7s cubic-bezier(.2,.6,.2,1); }
+  .js-anim .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .js-anim .reveal { opacity: 1; transform: none; transition: none; }
+    .branch, .node, .drifter, .glower, .ftw-spin, .ticker-track { animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="proto">Prototype preview · <b>concept demonstration</b> · figures illustrative, not financial advice</div>
+
+<nav>
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="34" height="34" rx="8" fill="#c5f04a"/>
+      <path d="M17 26V13M17 17C13 14.5 9.5 16 9.5 16M17 19.5C21 17 24.5 18.5 24.5 18.5" stroke="#161a14" stroke-width="2.1" stroke-linecap="round"/>
+      <circle cx="17" cy="10.5" r="2.6" fill="#161a14"/>
+    </svg>
+    <span class="brand-txt">
+      <span class="bn">SN20</span>
+      <span class="bs">BREEDING&nbsp;GROUND</span>
+    </span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">/home</a>
+    <a href="#how">/how-it-works</a>
+    <a href="flywheel.html">/flywheel</a>
+    <a href="#sides">/who-its-for</a>
+    <a href="incubations.html">/cohort-01</a>
+    <a href="apply.html">/apply</a>
+    <a href="#cta" class="cta">Back a team</a>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <span class="eyebrow reveal">SN20 · the subnet incubator</span>
+      <h1 class="reveal">We grow the subnets <em>Bittensor</em> needs next.<span class="cursor"></span></h1>
+      <p class="hero-sub reveal">SN20 is an on-chain accelerator. It funds, supports and launches the strongest new Bittensor subnets — and rewards everyone who holds SN20 along the way.</p>
+      <div class="hero-actions reveal">
+        <a href="#how" class="btn btn-primary">See how it works <span class="arrow">→</span></a>
+        <a href="flywheel.html" class="btn btn-ghost">The flywheel</a>
+      </div>
+      <div class="hero-meta reveal">
+        <span class="live-dot"></span> COHORT_01 — APPLICATIONS OPEN 2026.06.11
+      </div>
+    </div>
+
+    <div class="hero-art reveal">
+      <svg viewBox="0 0 520 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A network graph showing ideas propagating from a root node up into a graduated subnet">
+        <!-- structural backdrop grid -->
+        <g stroke="rgba(233,231,218,0.06)" stroke-width="1">
+          <line x1="0" y1="120" x2="520" y2="120"/>
+          <line x1="0" y1="250" x2="520" y2="250"/>
+          <line x1="0" y1="380" x2="520" y2="380"/>
+        </g>
+
+        <!-- ===== connector edges (drawn first, behind nodes) ===== -->
+        <g fill="none" stroke-linecap="round">
+          <path class="branch"    d="M260 412 L260 322" stroke="#6f8f56" stroke-width="2"/>
+          <path class="branch b2" d="M260 322 L150 230" stroke="#5d7a48" stroke-width="1.8"/>
+          <path class="branch b3" d="M260 322 L356 236" stroke="#5d7a48" stroke-width="1.8"/>
+          <path class="branch b4" d="M260 322 L270 150" stroke="#c5f04a" stroke-width="2.4"/>
+          <path class="branch b5" d="M150 230 L110 132" stroke="#5d7a48" stroke-width="1.6"/>
+          <path class="branch b5" d="M356 236 L412 142" stroke="#5d7a48" stroke-width="1.6"/>
+        </g>
+
+        <!-- ===== root node (square marker) ===== -->
+        <g class="node" style="animation-delay:0.2s">
+          <rect x="252" y="404" width="16" height="16" fill="none" stroke="#6f8f56" stroke-width="2"/>
+          <rect x="257" y="409" width="6" height="6" fill="#6f8f56"/>
+        </g>
+        <text x="260" y="446" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#6f7565">root_idea</text>
+
+        <!-- ===== hub node ===== -->
+        <g class="node" style="animation-delay:0.9s">
+          <rect x="250" y="312" width="20" height="20" fill="#1d231a" stroke="#6f8f56" stroke-width="2"/>
+          <circle cx="260" cy="322" r="4" fill="#6f8f56"/>
+        </g>
+
+        <!-- ===== incubating node (left) ===== -->
+        <g class="node" style="animation-delay:1.3s">
+          <rect x="138" y="218" width="24" height="24" fill="#1d231a" stroke="#8aa86a" stroke-width="2"/>
+          <rect x="146" y="226" width="8" height="8" fill="#8aa86a"/>
+        </g>
+        <text x="150" y="204" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#6f7565">incubating</text>
+
+        <!-- ===== incubating node (right) ===== -->
+        <g class="node" style="animation-delay:1.5s">
+          <rect x="344" y="224" width="24" height="24" fill="#1d231a" stroke="#8aa86a" stroke-width="2"/>
+          <rect x="352" y="232" width="8" height="8" fill="#8aa86a"/>
+        </g>
+        <text x="356" y="210" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#6f7565">incubating</text>
+
+        <!-- ===== small leaf nodes ===== -->
+        <g class="node" style="animation-delay:2.1s">
+          <rect x="103" y="125" width="14" height="14" fill="none" stroke="#5d7a48" stroke-width="1.8"/>
+        </g>
+        <g class="node" style="animation-delay:2.3s">
+          <rect x="405" y="135" width="14" height="14" fill="none" stroke="#5d7a48" stroke-width="1.8"/>
+        </g>
+
+        <!-- ===== the GRADUATE node — largest, glowing, the destination ===== -->
+        <g class="drifter">
+          <circle class="glower" cx="270" cy="120" r="46" fill="#c5f04a" opacity="0.14"/>
+          <g class="node" style="animation-delay:1.9s">
+            <rect x="234" y="84" width="72" height="72" rx="3" fill="#1d231a" stroke="#c5f04a" stroke-width="2.5"/>
+            <rect x="252" y="102" width="36" height="36" rx="2" fill="#c5f04a"/>
+            <rect x="264" y="114" width="12" height="12" fill="#161a14"/>
+          </g>
+        </g>
+        <text x="270" y="68" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#c5f04a" font-weight="500">graduated_subnet</text>
+
+        <!-- ===== floating data points ===== -->
+        <circle class="glower" cx="448" cy="300" r="3" fill="#8aa86a" style="animation-delay:1.4s"/>
+        <circle class="glower" cx="70" cy="320" r="3" fill="#8aa86a" style="animation-delay:2.2s"/>
+        <circle class="glower" cx="430" cy="60" r="3.5" fill="#c5f04a" style="animation-delay:0.6s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TICKER ================= -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span><b>An incubator for subnets</b><i>///</i><b>Market-funded launches</b><i>///</i><b>Native Bittensor crowdloans</b><i>///</i><b>8 teams per cohort</b><i>///</i><b>Real emissions from block one</b><i>///</i><b>Hold SN20, grow with every graduate</b><i>///</i></span>
+    <span aria-hidden="true"><b>An incubator for subnets</b><i>///</i><b>Market-funded launches</b><i>///</i><b>Native Bittensor crowdloans</b><i>///</i><b>8 teams per cohort</b><i>///</i><b>Real emissions from block one</b><i>///</i><b>Hold SN20, grow with every graduate</b><i>///</i></span>
+  </div>
+</div>
+
+<!-- ================= PROBLEM ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The problem</span>
+      <h2>The best ideas never break ground.</h2>
+      <p>Launching a Bittensor subnet is one of the most expensive first steps in crypto. Strong teams are turned away before they ever begin.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="cost-panel reveal">
+        <div class="cost-fig">~$1.2M</div>
+        <p>The approximate cost — paid in TAO — to register a single new subnet today.</p>
+        <div class="cost-bar"><i></i></div>
+        <div class="cost-bar-lbl"><span>DYNAMIC BURN</span><span>RISES WITH EACH REGISTRATION</span></div>
+      </div>
+      <div class="pain-list reveal">
+        <div class="pain">
+          <span class="pain-ix">01</span>
+          <div>
+            <h4>Capital is the gatekeeper</h4>
+            <p>Strong builders are filtered out by registration cost — not by the quality of their idea.</p>
+          </div>
+        </div>
+        <div class="pain">
+          <span class="pain-ix">02</span>
+          <div>
+            <h4>No runway, no support</h4>
+            <p>New teams face infrastructure, validation and marketing alone — and most quietly stall out.</p>
+          </div>
+        </div>
+        <div class="pain">
+          <span class="pain-ix">03</span>
+          <div>
+            <h4>Believers have no way in</h4>
+            <p>There is no clean, on-chain way to back a promising subnet early and grow alongside it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="sec how" id="how">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The cycle</span>
+      <h2>From a seed of an idea to its own <em>subnet</em>.</h2>
+      <p>SN20 runs like a startup accelerator — but every stage is native to Bittensor and settled on-chain.</p>
+    </div>
+    <div class="how-steps">
+      <div class="hstep done reveal">
+        <div class="hstep-top"><span class="hstep-ix">STAGE_01</span><span class="hstep-dot"></span></div>
+        <h3>Plant</h3>
+        <p>Teams register their idea on the SN20 site. A hybrid community vote selects the cohort of eight.</p>
+        <div class="hstep-tag">→ 8 SLOTS PER COHORT</div>
+      </div>
+      <div class="hstep done reveal">
+        <div class="hstep-top"><span class="hstep-ix">STAGE_02</span><span class="hstep-dot"></span></div>
+        <h3>Nurture</h3>
+        <p>Selected teams get a temporary slot, infrastructure, validation, marketing and milestone funding.</p>
+        <div class="hstep-tag">→ 6–9 MONTH PROGRAM</div>
+      </div>
+      <div class="hstep done reveal">
+        <div class="hstep-top"><span class="hstep-ix">STAGE_03</span><span class="hstep-dot"></span></div>
+        <h3>Back</h3>
+        <p>Believers lock TAO behind the teams they trust. At graduation, a native crowdloan funds the subnet.</p>
+        <div class="hstep-tag">→ MARKET-FUNDED</div>
+      </div>
+      <div class="hstep done reveal">
+        <div class="hstep-top"><span class="hstep-ix">STAGE_04</span><span class="hstep-dot"></span></div>
+        <h3>Graduate</h3>
+        <p>The team launches its own leased subnet. Backers receive lease shares — real emissions from day one.</p>
+        <div class="hstep-tag">→ OWN SUBNET SLOT</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHO IT'S FOR ================= -->
+<section class="sec" id="sides">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Who it's for</span>
+      <h2>Three ways to grow with SN20.</h2>
+      <p>The system is built so builders, backers, and the people who simply hold SN20 all gain at the same time.</p>
+    </div>
+    <div class="sides-grid">
+      <div class="side reveal">
+        <span class="side-tag">For builders</span>
+        <h3>Reach the network without chasing VC.</h3>
+        <p>Bring the idea. SN20 provides the runway, the rails, and a fully funded launch.</p>
+        <ul>
+          <li>6–9 months of infrastructure, validation &amp; marketing</li>
+          <li>Milestone-based runway from the crowdloan pool</li>
+          <li>Graduation into your own leased subnet</li>
+        </ul>
+      </div>
+      <div class="side feature reveal">
+        <span class="side-tag">For SN20 holders <span class="side-badge">THE ANGEL SEAT</span></span>
+        <h3>Hold one token. Grow with every graduate.</h3>
+        <p>Holding SN20 makes you a passive angel investor in the entire program — no picking winners required.</p>
+        <ul>
+          <li>Airdrops from every subnet SN20 ever graduates</li>
+          <li>Buy &amp; burn from fees and carry tightens supply</li>
+          <li>One position — exposure to every future cohort</li>
+        </ul>
+      </div>
+      <div class="side reveal">
+        <span class="side-tag">For backers</span>
+        <h3>Back a single team you believe in.</h3>
+        <p>Lock TAO behind one specific team and own a direct share of its emissions.</p>
+        <ul>
+          <li>Pro-rata lease shares, paid on-chain</li>
+          <li>Real emissions from the new subnet's first day</li>
+          <li>Full refund if a crowdloan target isn't met</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FIGURES ================= -->
+<section class="sec figures">
+  <div class="wrap fig-grid">
+    <div class="fig reveal"><div class="n">8</div><div class="l">TEAMS PER COHORT</div></div>
+    <div class="fig reveal"><div class="n">6–9<em>mo</em></div><div class="l">SEED TO GRADUATION</div></div>
+    <div class="fig reveal"><div class="n">~18<em>%</em></div><div class="l">OWNER EMISSIONS SHARED</div></div>
+    <div class="fig reveal"><div class="n">∞</div><div class="l">GRADUATES FEEDING HOLDERS</div></div>
+  </div>
+</section>
+
+<!-- ================= FLYWHEEL TEASER ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="ftease-grid">
+      <div class="ftease-art reveal">
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A flywheel diagram">
+          <g class="ftw-spin">
+            <circle cx="200" cy="200" r="158" stroke="rgba(233,231,218,0.1)" stroke-width="1.5" fill="none"/>
+            <circle cx="200" cy="200" r="158" stroke="#c5f04a" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="118 875"/>
+            <circle cx="358" cy="200" r="7" fill="#c5f04a"/>
+            <circle cx="200" cy="200" r="114" stroke="rgba(233,231,218,0.1)" stroke-width="1.5" fill="none"/>
+            <circle cx="200" cy="200" r="114" stroke="#6f8f56" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="86 630" stroke-dashoffset="150"/>
+            <circle cx="86" cy="200" r="6" fill="#6f8f56"/>
+          </g>
+          <circle cx="200" cy="200" r="72" fill="#212820" stroke="rgba(233,231,218,0.12)" stroke-width="1"/>
+          <text x="200" y="192" text-anchor="middle" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="24" font-weight="500">SN20</text>
+          <text x="200" y="212" text-anchor="middle" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="1.5">THE FLYWHEEL</text>
+        </svg>
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">The engine</span>
+        <h2 style="font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.2vw,48px);line-height:1.05;letter-spacing:-0.025em;margin:16px 0 16px;">A flywheel that turns faster with every graduate.</h2>
+        <p style="color:var(--ink-soft);font-size:16.5px;margin-bottom:24px;">Each subnet SN20 grows sends fees, carry and emissions back through the system — funding the next cohort and rewarding everyone who holds SN20.</p>
+        <a href="flywheel.html" class="btn btn-primary">Explore the full flywheel <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="sec" id="cta">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <span class="eyebrow">Join the first cohort</span>
+      <h2>Help us grow the next wave of <em>Bittensor</em>.</h2>
+      <p>SN20 is gathering the builders, backers and strategic partners who will shape Cohort 01. Whatever you bring to the table — let's plant something.</p>
+      <div class="cta-actions">
+        <a href="apply.html" class="btn btn-primary">Apply as a team <span class="arrow">→</span></a>
+        <a href="#" class="btn btn-ghost">Become a partner</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="brand">
+          <svg class="brand-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="34" height="34" rx="8" fill="#c5f04a"/>
+            <path d="M17 26V13M17 17C13 14.5 9.5 16 9.5 16M17 19.5C21 17 24.5 18.5 24.5 18.5" stroke="#161a14" stroke-width="2.1" stroke-linecap="round"/>
+            <circle cx="17" cy="10.5" r="2.6" fill="#161a14"/>
+          </svg>
+          <span class="brand-txt">
+            <span class="bn">SN20</span>
+            <span class="bs">BREEDING&nbsp;GROUND</span>
+          </span>
+        </a>
+        <p>The Bittensor-native subnet incubator. We don't just register subnets — we grow them.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h5>Platform</h5>
+          <a href="#how">How it works</a>
+          <a href="flywheel.html">The flywheel</a>
+          <a href="#sides">Who it's for</a>
+          <a href="incubations.html">Cohort 01</a>
+        </div>
+        <div class="foot-col">
+          <h5>Get involved</h5>
+          <a href="apply.html">Apply as a team</a>
+          <a href="#cta">Back a team</a>
+          <a href="#">Become a partner</a>
+        </div>
+        <div class="foot-col">
+          <h5>Connect</h5>
+          <a href="#">X / Twitter</a>
+          <a href="#">Discord</a>
+          <a href="#">Documentation</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 SN20 BREEDING GROUND · BUILT FOR BITTENSOR</span>
+      <span>PROTOTYPE — FIGURES ILLUSTRATIVE</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.body.classList.add('js-anim');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        const sibs = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = Math.max(0, sibs.indexOf(e.target));
+        e.target.style.transitionDelay = (idx * 0.08) + 's';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -7% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
+  document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+</script>
+
+</body>
+</html>

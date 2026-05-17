@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verdict — SN20 Incubation Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #161a14; --bg-lift: #1d231a; --bg-panel: #212820; --bg-deep: #11150f;
+    --ink: #e9e7da; --ink-soft: #a8ad9c; --ink-mute: #6f7565;
+    --lime: #c5f04a; --lime-deep: #a4cc2f; --moss: #6f8f56; --sage: #4a5c3c;
+    --clay: #d98841;
+    --line: rgba(233,231,218,0.1); --line-soft: rgba(233,231,218,0.055); --line-strong: rgba(233,231,218,0.2);
+    --serif: 'Fraunces', Georgia, serif; --sans: 'Archivo', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--lime); color: var(--bg); }
+
+  .proto { background: var(--bg-deep); color: var(--ink-mute); text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 16px; border-bottom: 1px solid var(--line-soft); }
+  .proto b { color: var(--lime-deep); font-weight: 500; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(20px, 4vw, 56px);
+    background: rgba(22,26,20,0.92); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-mark { width: 34px; height: 34px; flex-shrink: 0; }
+  .brand-txt { line-height: 1.1; }
+  .brand-txt .bn { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; }
+  .brand-txt .bs { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; color: var(--ink-mute); display: block; margin-top: 1px; }
+  .nav-links { display: flex; align-items: center; gap: 2px; }
+  .nav-links a { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); padding: 8px 13px; border-radius: 6px; transition: background 0.16s, color 0.16s; }
+  .nav-links a:hover { background: var(--bg-panel); color: var(--ink); }
+  .nav-links a.cta { background: var(--lime); color: var(--bg-deep); font-weight: 500; margin-left: 8px; border-radius: 999px; padding: 9px 18px; }
+  .nav-links a.cta:hover { background: #d4fb63; }
+  .nav-toggle { display: none; background: none; border: 1px solid var(--line); color: var(--ink); cursor: pointer; padding: 8px; border-radius: 6px; }
+  @media (max-width: 940px) {
+    .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 2px; background: var(--bg-lift); padding: 12px; border-bottom: 1px solid var(--line); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; }
+    .nav-links a.cta { margin-left: 0; text-align: center; margin-top: 6px; }
+    .nav-toggle { display: block; }
+  }
+
+  .wrap { max-width: 1220px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+
+  /* breadcrumb */
+  .crumb { padding: 20px 0 0; font-family: var(--mono); font-size: 12px; color: var(--ink-mute); }
+  .crumb a { color: var(--ink-soft); }
+  .crumb a:hover { color: var(--lime); }
+
+  /* team header */
+  .thead { padding: 22px 0 30px; border-bottom: 1px solid var(--line); }
+  .thead-top { display: flex; align-items: flex-start; gap: 22px; flex-wrap: wrap; }
+  .thead-logo {
+    width: 70px; height: 70px; border-radius: 15px; background: var(--bg-panel);
+    border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .thead-main { flex: 1; min-width: 240px; }
+  .thead-badges { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+  .badge { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.07em; padding: 4px 9px; border-radius: 5px; }
+  .badge.graduating { background: var(--lime); color: var(--bg-deep); }
+  .badge.slot { background: transparent; border: 1px solid var(--line-strong); color: var(--ink-mute); }
+  .badge.cat { background: rgba(111,143,86,0.2); color: var(--moss); border: 1px solid var(--moss); }
+  .thead h1 { font-family: var(--serif); font-size: clamp(34px,4.6vw,52px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.02; }
+  .thead-tag { font-size: 16px; color: var(--ink-soft); margin-top: 8px; max-width: 54ch; }
+
+  /* layout: main + sticky aside */
+  .dash { display: grid; grid-template-columns: 1fr 372px; gap: 32px; padding: 36px 0 70px; align-items: start; }
+  @media (max-width: 960px) { .dash { grid-template-columns: 1fr; } }
+
+  /* section blocks */
+  .block { margin-bottom: 36px; }
+  .block-h {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--lime-deep); margin-bottom: 16px; display: flex; align-items: center; gap: 9px;
+  }
+  .block-h::before { content: ''; width: 7px; height: 7px; background: var(--lime); }
+  .block p { color: var(--ink-soft); font-size: 15.5px; }
+  .block p + p { margin-top: 12px; }
+
+  /* metric strip */
+  .metrics { display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  @media (max-width: 620px) { .metrics { grid-template-columns: 1fr 1fr; } }
+  .metric { padding: 18px 20px; border-right: 1px solid var(--line); background: var(--bg-lift); }
+  .metric:last-child { border-right: none; }
+  @media (max-width: 620px) {
+    .metric:nth-child(2) { border-right: none; }
+    .metric:nth-child(1), .metric:nth-child(2) { border-bottom: 1px solid var(--line); }
+  }
+  .metric .mv { font-family: var(--mono); font-size: 21px; font-weight: 700; color: var(--ink); }
+  .metric .mv em { font-style: normal; color: var(--lime); }
+  .metric .ml { font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em; color: var(--ink-mute); margin-top: 4px; text-transform: uppercase; }
+
+  /* milestones */
+  .miles { display: flex; flex-direction: column; }
+  .mile {
+    display: grid; grid-template-columns: 30px 1fr auto; gap: 16px; align-items: start;
+    padding: 18px 0; border-bottom: 1px solid var(--line); position: relative;
+  }
+  .mile:last-child { border-bottom: none; }
+  .mile-dot {
+    width: 18px; height: 18px; border-radius: 50%; margin-top: 3px;
+    border: 2px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
+  }
+  .mile.done .mile-dot { background: var(--lime); border-color: var(--lime); }
+  .mile.active .mile-dot { border-color: var(--lime); }
+  .mile.active .mile-dot::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); }
+  .mile-body h4 { font-size: 15.5px; font-weight: 600; }
+  .mile.done .mile-body h4 { color: var(--ink-soft); }
+  .mile-body p { font-size: 13.5px; color: var(--ink-mute); margin-top: 3px; }
+  .mile-status { font-family: var(--mono); font-size: 10.5px; padding: 4px 9px; border-radius: 5px; white-space: nowrap; }
+  .mile.done .mile-status { color: var(--moss); }
+  .mile.active .mile-status { background: var(--lime); color: var(--bg-deep); font-weight: 700; }
+  .mile.todo .mile-status { color: var(--ink-mute); border: 1px solid var(--line); }
+
+  /* progress chart */
+  .chart-card { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-lift); padding: 24px; }
+  .chart-card .cc-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+  .chart-card .cc-title { font-size: 14px; font-weight: 600; }
+  .chart-card .cc-delta { font-family: var(--mono); font-size: 12px; color: var(--lime); }
+  .spark { width: 100%; height: 90px; display: block; }
+  .chart-x { display: flex; justify-content: space-between; margin-top: 10px; font-family: var(--mono); font-size: 10px; color: var(--ink-mute); }
+
+  /* team members */
+  .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 560px) { .team-grid { grid-template-columns: 1fr; } }
+  .member { border: 1px solid var(--line); border-radius: 10px; padding: 16px; background: var(--bg-lift); display: flex; gap: 12px; align-items: center; }
+  .member-av {
+    width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0;
+    background: var(--bg-panel); border: 1px solid var(--line-strong);
+    font-family: var(--mono); font-weight: 700; font-size: 14px; color: var(--lime);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .member h4 { font-size: 14.5px; font-weight: 600; }
+  .member p { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); }
+
+  /* updates */
+  .update { border-left: 2px solid var(--line-strong); padding: 0 0 20px 18px; position: relative; }
+  .update:last-child { padding-bottom: 0; }
+  .update::before { content: ''; position: absolute; left: -5px; top: 4px; width: 8px; height: 8px; border-radius: 50%; background: var(--moss); }
+  .update:first-child::before { background: var(--lime); }
+  .update .u-date { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); }
+  .update h4 { font-size: 14.5px; font-weight: 600; margin: 3px 0 4px; }
+  .update p { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* ===== ASIDE: the invest panel ===== */
+  .aside { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 16px; }
+  .invest {
+    border: 1px solid var(--lime); border-radius: 16px; background: var(--bg-panel);
+    overflow: hidden;
+  }
+  .invest-hd { padding: 22px 24px 0; }
+  .invest-hd .ih-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lime-deep); }
+  .invest-hd h3 { font-family: var(--serif); font-size: 24px; font-weight: 600; margin-top: 6px; letter-spacing: -0.015em; }
+  .invest-body { padding: 18px 24px 24px; }
+
+  .pool-stat { margin-bottom: 18px; }
+  .pool-stat-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .pool-stat-pct { font-family: var(--mono); font-size: 30px; font-weight: 700; color: var(--lime); line-height: 1; }
+  .pool-stat-target { font-family: var(--mono); font-size: 12px; color: var(--ink-mute); }
+  .pool-track { height: 9px; border-radius: 5px; background: var(--bg-deep); overflow: hidden; }
+  .pool-fill { height: 100%; background: var(--lime); border-radius: 5px; transition: width 0.8s cubic-bezier(.2,.7,.2,1); }
+  .pool-figures { display: flex; justify-content: space-between; margin-top: 9px; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+
+  .invest-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 9px; overflow: hidden; margin-bottom: 20px; }
+  .im-cell { background: var(--bg-lift); padding: 12px 14px; }
+  .im-cell .imv { font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--ink); }
+  .im-cell .iml { font-family: var(--mono); font-size: 9.5px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+  .field-label { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-bottom: 8px; display: flex; justify-content: space-between; }
+  .field-label span { color: var(--ink-mute); }
+  .amount-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .amount-input {
+    flex: 1; background: var(--bg-deep); border: 1px solid var(--line-strong);
+    border-radius: 9px; padding: 13px 15px; color: var(--ink);
+    font-family: var(--mono); font-size: 17px; font-weight: 700; outline: none; min-width: 0;
+  }
+  .amount-input:focus { border-color: var(--lime); }
+  .amount-unit { font-family: var(--mono); font-weight: 700; color: var(--lime); padding: 13px 14px; background: var(--bg-deep); border: 1px solid var(--line-strong); border-radius: 9px; }
+  .quick-row { display: flex; gap: 6px; margin-bottom: 18px; }
+  .quick {
+    flex: 1; font-family: var(--mono); font-size: 11.5px; padding: 8px 4px; border-radius: 7px;
+    border: 1px solid var(--line-strong); background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 0.14s;
+  }
+  .quick:hover { border-color: var(--lime); color: var(--lime); }
+
+  .return-est {
+    background: var(--bg-deep); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 16px; margin-bottom: 18px;
+  }
+  .return-est .re-row { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; padding: 4px 0; }
+  .return-est .re-row .rl { color: var(--ink-mute); }
+  .return-est .re-row .rv { color: var(--ink); font-weight: 700; }
+  .return-est .re-row.hl .rv { color: var(--lime); }
+
+  .btn-lock {
+    width: 100%; background: var(--lime); color: var(--bg-deep);
+    border: none; border-radius: 999px; padding: 15px; cursor: pointer;
+    font-family: var(--sans); font-weight: 700; font-size: 15px;
+    transition: background 0.18s, transform 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 9px;
+  }
+  .btn-lock:hover { background: #d4fb63; transform: translateY(-1px); }
+  .btn-lock.connect { background: transparent; color: var(--lime); border: 1.5px solid var(--lime); }
+  .btn-lock.connect:hover { background: rgba(197,240,74,0.08); }
+
+  .invest-note { font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute); margin-top: 12px; line-height: 1.6; text-align: center; }
+
+  /* risk mini */
+  .risk-mini { border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; background: var(--bg-lift); }
+  .risk-mini h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clay); margin-bottom: 10px; }
+  .risk-mini ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .risk-mini li { font-size: 12.5px; color: var(--ink-soft); display: grid; grid-template-columns: 14px 1fr; gap: 8px; }
+  .risk-mini li::before { content: '!'; font-family: var(--mono); color: var(--clay); font-weight: 700; }
+
+  /* ===== modal ===== */
+  .modal-scrim {
+    position: fixed; inset: 0; background: rgba(10,12,9,0.82); backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center; z-index: 200; padding: 24px;
+  }
+  .modal-scrim.open { display: flex; }
+  .modal {
+    background: var(--bg-lift); border: 1px solid var(--line-strong);
+    border-radius: 18px; max-width: 420px; width: 100%; padding: 32px; position: relative;
+  }
+  .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--ink-mute); cursor: pointer; padding: 4px; }
+  .modal-close:hover { color: var(--ink); }
+  .modal-ic { width: 56px; height: 56px; border-radius: 12px; background: var(--bg-panel); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .modal h3 { font-family: var(--serif); font-size: 24px; font-weight: 600; margin-bottom: 10px; }
+  .modal p { font-size: 14px; color: var(--ink-soft); margin-bottom: 10px; }
+  .modal-steps { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+  .mstep { display: flex; gap: 12px; align-items: center; font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); }
+  .mstep .mn { width: 24px; height: 24px; border-radius: 6px; background: var(--bg-panel); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+  .mstep.ok .mn { background: var(--lime); color: var(--bg-deep); border-color: var(--lime); }
+  .modal-receipt { background: var(--bg-deep); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 18px 0; }
+  .modal-receipt .mr-row { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; padding: 5px 0; }
+  .modal-receipt .mr-row .ml { color: var(--ink-mute); }
+  .modal-receipt .mr-row .mv { color: var(--ink); font-weight: 700; }
+  .modal-receipt .mr-row .mv.lime { color: var(--lime); }
+  .btn-modal { width: 100%; background: var(--lime); color: var(--bg-deep); border: none; border-radius: 999px; padding: 13px; cursor: pointer; font-family: var(--sans); font-weight: 700; font-size: 14px; }
+  .btn-modal:hover { background: #d4fb63; }
+  .btn-modal.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); margin-top: 8px; }
+
+  .spinner { width: 40px; height: 40px; border: 3px solid var(--line); border-top-color: var(--lime); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 8px 0 18px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  footer { background: var(--bg-deep); border-top: 1px solid var(--line); padding: 44px 0 30px; }
+  .foot-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; align-items: center; }
+  .foot-grid p { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); }
+
+  .js-anim .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(.2,.6,.2,1), transform 0.6s cubic-bezier(.2,.6,.2,1); }
+  .js-anim .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .js-anim .reveal { opacity: 1; transform: none; transition: none; } .spinner { animation: none; } }
+</style>
+</head>
+<body>
+
+<div class="proto">Prototype preview · <b>concept demonstration</b> · sample team · wallet flow is simulated</div>
+
+<nav>
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="11" fill="#c5f04a"/>
+      <path d="M24 36V26M24 26L15 18M24 26L33 18M15 18V13M33 18V13" stroke="#161a14" stroke-width="2.3" stroke-linecap="round"/>
+      <rect x="21.5" y="33.5" width="5" height="5" fill="#161a14"/>
+      <circle cx="24" cy="26" r="3" fill="#161a14"/>
+      <rect x="12.5" y="9.5" width="5" height="5" fill="#161a14"/>
+      <rect x="30.5" y="9.5" width="5" height="5" fill="#161a14"/>
+    </svg>
+    <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">/home</a>
+    <a href="index.html#how">/how-it-works</a>
+    <a href="flywheel.html">/flywheel</a>
+    <a href="incubations.html">/cohort-01</a>
+    <a href="apply.html">/apply</a>
+    <a href="#invest" class="cta">Back this team</a>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</nav>
+
+<div class="wrap">
+  <div class="crumb"><a href="incubations.html">/cohort-01</a> &nbsp;/&nbsp; <span style="color:var(--ink-soft)">verdict</span></div>
+</div>
+
+<!-- ================= TEAM HEADER ================= -->
+<header class="wrap thead">
+  <div class="thead-top">
+    <div class="thead-logo">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/><path d="M9 12l2 2 4-4"/></svg>
+    </div>
+    <div class="thead-main">
+      <div class="thead-badges">
+        <span class="badge slot">SLOT_02</span>
+        <span class="badge" style="background:rgba(111,143,86,0.2);color:var(--moss);border:1px solid var(--moss)">INCUBATING</span>
+        <span class="badge cat">VERIFIABLE COMPUTE</span>
+      </div>
+      <h1>Verdict</h1>
+      <p class="thead-tag">Cryptographic attestation that a model actually ran the computation it claims — verifiable trust for off-chain inference on Bittensor.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ================= DASHBOARD ================= -->
+<div class="wrap dash">
+
+  <!-- ===== MAIN COLUMN ===== -->
+  <main>
+    <!-- metrics -->
+    <div class="block reveal">
+      <div class="metrics">
+        <div class="metric"><div class="mv">54<em>%</em></div><div class="ml">Crowdloan filled</div></div>
+        <div class="metric"><div class="mv">88</div><div class="ml">Backers</div></div>
+        <div class="metric"><div class="mv">~3<em>mo</em></div><div class="ml">To graduation</div></div>
+        <div class="metric"><div class="mv">3 / 6</div><div class="ml">Milestones cleared</div></div>
+      </div>
+    </div>
+
+    <!-- about -->
+    <div class="block reveal">
+      <div class="block-h">The pitch</div>
+      <p>When a model runs off-chain, you are trusting that it ran at all — and ran honestly. Verdict removes that trust assumption. It produces compact cryptographic proofs that a specific model executed a specific computation, verifiable by anyone, without re-running the work.</p>
+      <p>The team is mid-incubation: the proof system is designed and a prototype verifier is running against a single model class. Graduation funds the production subnet — miners generate attestations, validators check them, and any subnet on Bittensor can plug in verifiable compute.</p>
+    </div>
+
+    <!-- progress chart -->
+    <div class="block reveal">
+      <div class="block-h">Traction — proofs verified / week</div>
+      <div class="chart-card">
+        <div class="cc-top">
+          <span class="cc-title">Prototype verifier throughput</span>
+          <span class="cc-delta">▲ early test data</span>
+        </div>
+        <svg class="spark" viewBox="0 0 600 90" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#c5f04a" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#c5f04a" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0 80 L75 78 L150 74 L225 72 L300 64 L375 60 L450 54 L525 50 L600 44"
+                fill="none" stroke="#c5f04a" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M0 80 L75 78 L150 74 L225 72 L300 64 L375 60 L450 54 L525 50 L600 44 L600 90 L0 90 Z" fill="url(#g)"/>
+          <circle cx="600" cy="44" r="4" fill="#c5f04a"/>
+        </svg>
+        <div class="chart-x"><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span></div>
+      </div>
+    </div>
+
+    <!-- milestones -->
+    <div class="block reveal">
+      <div class="block-h">Incubation milestones</div>
+      <div class="miles">
+        <div class="mile done">
+          <span class="mile-dot"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#161a14" stroke-width="2.4"><path d="M2 6l3 3 5-6"/></svg></span>
+          <div class="mile-body"><h4>Team selected into Cohort 01</h4><p>Passed the hybrid community vote · Slot 02 assigned</p></div>
+          <span class="mile-status">CLEARED</span>
+        </div>
+        <div class="mile done">
+          <span class="mile-dot"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#161a14" stroke-width="2.4"><path d="M2 6l3 3 5-6"/></svg></span>
+          <div class="mile-body"><h4>Proof system design</h4><p>Attestation scheme specified and peer-reviewed</p></div>
+          <span class="mile-status">CLEARED</span>
+        </div>
+        <div class="mile done">
+          <span class="mile-dot"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#161a14" stroke-width="2.4"><path d="M2 6l3 3 5-6"/></svg></span>
+          <div class="mile-body"><h4>Prototype verifier</h4><p>Working verifier running against a single model class</p></div>
+          <span class="mile-status">CLEARED</span>
+        </div>
+        <div class="mile active">
+          <span class="mile-dot"></span>
+          <div class="mile-body"><h4>Multi-model generalization</h4><p>Extend attestation across diverse model architectures</p></div>
+          <span class="mile-status">IN PROGRESS</span>
+        </div>
+        <div class="mile todo">
+          <span class="mile-dot"></span>
+          <div class="mile-body"><h4>Security review</h4><p>External audit of the proof and verification path</p></div>
+          <span class="mile-status">UPCOMING</span>
+        </div>
+        <div class="mile todo">
+          <span class="mile-dot"></span>
+          <div class="mile-body"><h4>Crowdloan &amp; subnet registration</h4><p>Fill the crowdloan, register the leased subnet, go live</p></div>
+          <span class="mile-status">UPCOMING</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- team -->
+    <div class="block reveal">
+      <div class="block-h">The team</div>
+      <div class="team-grid">
+        <div class="member"><div class="member-av">ET</div><div><h4>E. Tran</h4><p>founder · cryptography</p></div></div>
+        <div class="member"><div class="member-av">DM</div><div><h4>D. Mwangi</h4><p>proof systems</p></div></div>
+        <div class="member"><div class="member-av">SK</div><div><h4>S. Kowalski</h4><p>verifier engineering</p></div></div>
+      </div>
+    </div>
+
+    <!-- updates -->
+    <div class="block reveal">
+      <div class="block-h">Recent updates</div>
+      <div class="update">
+        <div class="u-date">2026.05.09</div>
+        <h4>Prototype verifier live</h4>
+        <p>Our verifier now confirms attestations for a first model class end to end. Multi-model generalization is the next milestone.</p>
+      </div>
+      <div class="update">
+        <div class="u-date">2026.04.21</div>
+        <h4>Proof scheme peer-reviewed</h4>
+        <p>Two external cryptographers reviewed the attestation design. Notes incorporated; the spec is published in the docs.</p>
+      </div>
+      <div class="update">
+        <div class="u-date">2026.04.02</div>
+        <h4>Crowdloan opened</h4>
+        <p>The Verdict crowdloan is live. Backers who lock TAO now receive pro-rata lease shares at graduation.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== ASIDE: INVEST PANEL ===== -->
+  <aside class="aside">
+    <div class="invest" id="invest">
+      <div class="invest-hd">
+        <div class="ih-label">Back this team</div>
+        <h3>Lock TAO into Verdict</h3>
+      </div>
+      <div class="invest-body">
+        <div class="pool-stat">
+          <div class="pool-stat-top">
+            <span class="pool-stat-pct">54%</span>
+            <span class="pool-stat-target">of 4,800 τ target</span>
+          </div>
+          <div class="pool-track"><div class="pool-fill" style="width:54%"></div></div>
+          <div class="pool-figures"><span>2,592 τ locked</span><span>2,208 τ to go</span></div>
+        </div>
+
+        <div class="invest-meta">
+          <div class="im-cell"><div class="imv">~3 mo</div><div class="iml">Until graduation</div></div>
+          <div class="im-cell"><div class="imv">88</div><div class="iml">Backers</div></div>
+          <div class="im-cell"><div class="imv">15%</div><div class="iml">SN20 carry</div></div>
+          <div class="im-cell"><div class="imv">10 τ</div><div class="iml">Minimum lock</div></div>
+        </div>
+
+        <div class="field-label">Amount to lock <span>balance: 240 τ</span></div>
+        <div class="amount-row">
+          <input class="amount-input" id="amt" type="text" inputmode="decimal" value="100" />
+          <span class="amount-unit">τ</span>
+        </div>
+        <div class="quick-row">
+          <button class="quick" data-amt="25">25 τ</button>
+          <button class="quick" data-amt="100">100 τ</button>
+          <button class="quick" data-amt="500">500 τ</button>
+          <button class="quick" data-amt="2208">Fill pool</button>
+        </div>
+
+        <div class="return-est">
+          <div class="re-row"><span class="rl">Your pool share</span><span class="rv" id="re-share">2.33%</span></div>
+          <div class="re-row"><span class="rl">Lease shares at graduation</span><span class="rv" id="re-shares">~2.33%</span></div>
+          <div class="re-row hl"><span class="rl">Est. emissions / yr*</span><span class="rv" id="re-emis">~6.4 τ</span></div>
+        </div>
+
+        <button class="btn-lock connect" id="lockBtn">Connect wallet to lock</button>
+        <div class="invest-note">
+          Funds are escrowed in a native Bittensor crowdloan. If the 4,800 τ target isn't met, every backer is fully refunded. *Emissions are illustrative, not guaranteed.
+        </div>
+      </div>
+    </div>
+
+    <div class="risk-mini">
+      <h4>Before you back</h4>
+      <ul>
+        <li>Subnet performance after graduation is not guaranteed.</li>
+        <li>Locked TAO is committed until the crowdloan resolves.</li>
+        <li>Registration cost is dynamic; the target carries a buffer.</li>
+      </ul>
+    </div>
+  </aside>
+
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal-scrim" id="modal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div id="modalContent"><!-- filled by JS --></div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot-grid">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="48" height="48" rx="11" fill="#c5f04a"/>
+        <path d="M24 36V26M24 26L15 18M24 26L33 18M15 18V13M33 18V13" stroke="#161a14" stroke-width="2.3" stroke-linecap="round"/>
+        <rect x="21.5" y="33.5" width="5" height="5" fill="#161a14"/>
+        <circle cx="24" cy="26" r="3" fill="#161a14"/>
+        <rect x="12.5" y="9.5" width="5" height="5" fill="#161a14"/>
+        <rect x="30.5" y="9.5" width="5" height="5" fill="#161a14"/>
+      </svg>
+      <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+    </a>
+    <p>© 2026 SN20 BREEDING GROUND · PROTOTYPE — SAMPLE TEAM, SIMULATED WALLET FLOW</p>
+  </div>
+</footer>
+
+<script>
+  document.body.classList.add('js-anim');
+  const $ = (id) => document.getElementById(id);
+  const TARGET = 4800, LOCKED = 2592;
+
+  // ----- return estimator -----
+  const amt = $('amt');
+  function recalc() {
+    let v = parseFloat(amt.value) || 0;
+    if (v < 0) v = 0;
+    const newPool = LOCKED + v;
+    const share = v > 0 ? (v / newPool) * 100 : 0;
+    $('re-share').textContent = share.toFixed(2) + '%';
+    $('re-shares').textContent = '~' + share.toFixed(2) + '%';
+    // illustrative: assume subnet owner emissions pool ~275 TAO/yr to contributors
+    const emis = share / 100 * 275;
+    $('re-emis').textContent = '~' + emis.toFixed(1) + ' τ';
+  }
+  amt.addEventListener('input', recalc);
+  document.querySelectorAll('.quick').forEach(q => {
+    q.addEventListener('click', () => { amt.value = q.dataset.amt; recalc(); });
+  });
+  recalc();
+
+  // ----- simulated wallet + lock flow -----
+  const modal = $('modal'), modalContent = $('modalContent'), lockBtn = $('lockBtn');
+  let walletConnected = false;
+
+  function openModal(html) { modalContent.innerHTML = html; modal.classList.add('open'); }
+  function closeModal() { modal.classList.remove('open'); }
+  $('modalClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+  function connectFlow() {
+    openModal(`
+      <div class="modal-ic">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14h2"/></svg>
+      </div>
+      <h3>Connect a wallet</h3>
+      <p>This is a simulated connection for the prototype — no real wallet, keys, or TAO are involved.</p>
+      <div class="modal-steps">
+        <div class="mstep"><span class="mn">1</span> Select a Bittensor wallet</div>
+        <div class="mstep"><span class="mn">2</span> Approve the connection</div>
+        <div class="mstep"><span class="mn">3</span> Return to lock TAO</div>
+      </div>
+      <button class="btn-modal" id="doConnect">Simulate wallet connect</button>
+      <button class="btn-modal ghost" id="cancelC">Cancel</button>
+    `);
+    $('doConnect').addEventListener('click', () => {
+      openModal(`<div style="text-align:center"><div class="spinner" style="margin:8px auto 18px"></div><h3>Connecting…</h3><p>Waiting for wallet approval.</p></div>`);
+      setTimeout(() => {
+        walletConnected = true;
+        lockBtn.textContent = 'Lock ' + (amt.value || 0) + ' τ into Verdict';
+        lockBtn.classList.remove('connect');
+        openModal(`
+          <div class="modal-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h3>Wallet connected</h3>
+          <p>Simulated wallet <b style="font-family:var(--mono);color:var(--ink)">5Hb…tGpX</b> is connected. You can now lock TAO into this team's crowdloan.</p>
+          <button class="btn-modal" id="closeOk">Continue</button>
+        `);
+        $('closeOk').addEventListener('click', closeModal);
+      }, 1400);
+    });
+    $('cancelC').addEventListener('click', closeModal);
+  }
+
+  function lockFlow() {
+    const v = parseFloat(amt.value) || 0;
+    if (v < 10) {
+      openModal(`
+        <div class="modal-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d98841" stroke-width="2"><path d="M12 8v5M12 16v.5"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3>Minimum is 10 τ</h3>
+        <p>Crowdloan locks start at 10 τ. Increase your amount and try again.</p>
+        <button class="btn-modal" id="closeMin">Got it</button>
+      `);
+      $('closeMin').addEventListener('click', closeModal);
+      return;
+    }
+    const share = (v / (LOCKED + v) * 100).toFixed(2);
+    // confirm step
+    openModal(`
+      <div class="modal-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V8a5 5 0 0110 0v3"/></svg></div>
+      <h3>Confirm your lock</h3>
+      <p>Review before locking. This is a simulated transaction.</p>
+      <div class="modal-receipt">
+        <div class="mr-row"><span class="ml">Team</span><span class="mv">Verdict</span></div>
+        <div class="mr-row"><span class="ml">Amount to lock</span><span class="mv lime">${v} τ</span></div>
+        <div class="mr-row"><span class="ml">Your pool share</span><span class="mv">${share}%</span></div>
+        <div class="mr-row"><span class="ml">Refund if target missed</span><span class="mv">100%</span></div>
+      </div>
+      <button class="btn-modal" id="doLock">Lock ${v} τ</button>
+      <button class="btn-modal ghost" id="cancelL">Cancel</button>
+    `);
+    $('doLock').addEventListener('click', () => {
+      openModal(`<div style="text-align:center"><div class="spinner" style="margin:8px auto 18px"></div><h3>Locking ${v} τ…</h3><p>Submitting to the crowdloan escrow.</p></div>`);
+      setTimeout(() => {
+        openModal(`
+          <div class="modal-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h3>You're backing Verdict</h3>
+          <p>Your lock is simulated and recorded for this demo. At graduation you'd receive pro-rata lease shares.</p>
+          <div class="modal-receipt">
+            <div class="mr-row"><span class="ml">Locked</span><span class="mv lime">${v} τ</span></div>
+            <div class="mr-row"><span class="ml">Pool share</span><span class="mv">${share}%</span></div>
+            <div class="mr-row"><span class="ml">Lease shares at graduation</span><span class="mv">~${share}%</span></div>
+            <div class="mr-row"><span class="ml">Status</span><span class="mv">Escrowed</span></div>
+          </div>
+          <button class="btn-modal" id="closeDone">Done</button>
+        `);
+        $('closeDone').addEventListener('click', closeModal);
+      }, 1600);
+    });
+    $('cancelL').addEventListener('click', closeModal);
+  }
+
+  lockBtn.addEventListener('click', () => {
+    if (!walletConnected) connectFlow();
+    else lockFlow();
+  });
+
+  // reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        const sibs = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = Math.max(0, sibs.indexOf(e.target));
+        e.target.style.transitionDelay = (idx * 0.07) + 's';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -5% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
+  document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+</script>
+
+</body>
+</html>
