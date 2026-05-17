@@ -211,13 +211,14 @@
 
   /* ---------- sections ---------- */
   .sec { padding: clamp(64px, 9vw, 124px) 0; position: relative; }
+  .sec.deep { background: var(--bg-deep); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .sec-head { max-width: 700px; margin-bottom: 54px; }
   .sec-head h2 {
-    font-family: var(--serif); font-weight: 600;
-    font-size: clamp(32px, 4.5vw, 54px); line-height: 1.05;
-    letter-spacing: -0.028em; margin: 16px 0 16px;
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(28px, 3.8vw, 46px); line-height: 1.13;
+    letter-spacing: -0.04em; margin: 16px 0 16px;
   }
-  .sec-head h2 em { font-style: italic; font-weight: 500; color: var(--lime); }
+  .sec-head h2 em { font-style: normal; font-weight: 700; color: var(--lime); }
   .sec-head p { color: var(--ink-soft); font-size: 17.5px; }
 
   /* ---------- problem ---------- */
@@ -363,11 +364,11 @@
     border: 1px solid var(--line); 
   }
   .cta-box h2 {
-    font-family: var(--serif); font-weight: 600;
-    font-size: clamp(32px, 4.6vw, 58px); line-height: 1.04;
-    letter-spacing: -0.03em; margin: 16px 0 18px; max-width: 18ch; position: relative;
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(28px, 4vw, 50px); line-height: 1.12;
+    letter-spacing: -0.04em; margin: 16px 0 18px; max-width: 20ch; position: relative;
   }
-  .cta-box h2 em { font-style: italic; font-weight: 500; color: var(--lime); }
+  .cta-box h2 em { font-style: normal; font-weight: 700; color: var(--lime); }
   .cta-box p { font-size: 17px; max-width: 48ch; color: var(--ink-soft); position: relative; }
   .cta-actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; position: relative; }
 
@@ -419,7 +420,7 @@
     <a href="#how">/how-it-works</a>
     <a href="flywheel.html">/flywheel</a>
     <a href="team.html">/team</a>
-    <a href="#sides">/who-its-for</a>
+    <a href="#paths">/who-its-for</a>
     <a href="incubations.html">/cohort-01</a>
     <a href="apply.html">/apply</a>
     <a href="#cta" class="cta">Back a team</a>
@@ -529,7 +530,7 @@
 </div>
 
 <!-- ================= TWO-AUDIENCE FORK ================= -->
-<section class="sec">
+<section class="sec deep" id="paths">
   <div class="wrap">
     <div class="sec-head reveal" style="max-width:660px">
       <span class="eyebrow">Find your place</span>
@@ -649,49 +650,6 @@
   </div>
 </section>
 
-<!-- ================= WHO IT'S FOR ================= -->
-<section class="sec" id="sides">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Who it's for</span>
-      <h2>Three ways to grow with SN20.</h2>
-      <p>The system is built so builders, backers, and the people who simply hold SN20 all gain at the same time.</p>
-    </div>
-    <div class="sides-grid">
-      <div class="side reveal">
-        <span class="side-tag">For builders</span>
-        <h3>Reach the network without chasing VC.</h3>
-        <p>Bring the idea. SN20 provides the runway, the rails, and a fully funded launch.</p>
-        <ul>
-          <li>6 months of infrastructure, validation &amp; marketing</li>
-          <li>Milestone-based runway from the crowdloan pool</li>
-          <li>Graduation into your own leased subnet</li>
-        </ul>
-      </div>
-      <div class="side feature reveal">
-        <span class="side-tag">For SN20 holders <span class="side-badge">THE ANGEL SEAT</span></span>
-        <h3>Hold one token. Grow with every graduate.</h3>
-        <p>Holding SN20 makes you a passive angel investor in the entire program — no picking winners required.</p>
-        <ul>
-          <li>Airdrops from every subnet SN20 ever graduates</li>
-          <li>Buy &amp; burn from fees and carry tightens supply</li>
-          <li>One position — exposure to every future cohort</li>
-        </ul>
-      </div>
-      <div class="side reveal">
-        <span class="side-tag">For backers</span>
-        <h3>Back a single team you believe in.</h3>
-        <p>Lock TAO behind one specific team and own a direct share of its emissions.</p>
-        <ul>
-          <li>Pro-rata lease shares, paid on-chain</li>
-          <li>Real emissions from the new subnet's first day</li>
-          <li>Full refund if a crowdloan target isn't met</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= FIGURES ================= -->
 <section class="sec figures">
   <div class="wrap fig-grid">
@@ -703,7 +661,7 @@
 </section>
 
 <!-- ================= FLYWHEEL TEASER ================= -->
-<section class="sec">
+<section class="sec deep">
   <div class="wrap">
     <div class="ftease-grid">
       <div class="ftease-art reveal">
@@ -765,7 +723,7 @@
       </div>
       <div class="reveal">
         <span class="eyebrow">The engine</span>
-        <h2 style="font-family:var(--serif);font-weight:600;font-size:clamp(34px,4.8vw,56px);line-height:1.05;letter-spacing:-0.025em;margin:18px 0 18px;">A flywheel that turns faster with every graduate.</h2>
+        <h2 style="font-family:var(--mono);font-weight:700;font-size:clamp(30px,4vw,48px);line-height:1.13;letter-spacing:-0.04em;margin:18px 0 18px;">A flywheel that turns faster with every graduate.</h2>
         <p style="color:var(--ink-soft);font-size:clamp(17px,1.7vw,20px);margin-bottom:28px;line-height:1.6;">Each subnet SN20 graduates sends fees, carry and emissions back through one engine — funding the next cohort and rewarding all four parties: the subnet, its token holders, its crowd funders, and its incubation teams.</p>
         <a href="flywheel.html" class="btn btn-primary" style="font-size:16px;padding:16px 28px;">Explore the full flywheel <span class="arrow">→</span></a>
       </div>
@@ -782,7 +740,7 @@
       <p>SN20 is gathering the builders, backers and strategic partners who will shape Cohort 01. Whatever you bring to the table — let's plant something.</p>
       <div class="cta-actions">
         <a href="apply.html" class="btn btn-primary">Apply as a team <span class="arrow">→</span></a>
-        <a href="#" class="btn btn-ghost">Become a partner</a>
+        <a href="team.html" class="btn btn-ghost">Become a partner</a>
       </div>
     </div>
   </div>
@@ -811,14 +769,14 @@
           <h5>Platform</h5>
           <a href="#how">How it works</a>
           <a href="flywheel.html">The flywheel</a>
-          <a href="#sides">Who it's for</a>
+          <a href="#paths">Who it's for</a>
           <a href="incubations.html">Cohort 01</a>
         </div>
         <div class="foot-col">
           <h5>Get involved</h5>
           <a href="apply.html">Apply as a team</a>
           <a href="#cta">Back a team</a>
-          <a href="#">Become a partner</a>
+          <a href="team.html">Become a partner</a>
         </div>
         <div class="foot-col">
           <h5>Connect</h5>
