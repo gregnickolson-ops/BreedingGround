@@ -126,13 +126,20 @@
     content: 'FIG_01 — THE FLYWHEEL'; position: absolute; top: 18px; left: clamp(24px,4vw,52px);
     font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; color: var(--ink-mute);
   }
-  .loop-svg { width: 100%; max-width: 760px; margin: 30px auto 0; display: block; }
+  .loop-svg { width: 100%; max-width: 880px; margin: 34px auto 0; display: block; }
+  .loop-mobile-note {
+    display: none; text-align: center; margin-top: 18px;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mute);
+  }
   .loop-legend {
     display: flex; gap: 26px; flex-wrap: wrap; justify-content: center;
     margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line);
   }
   .lg-item { display: flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); }
   .lg-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+  @media (max-width: 720px) {
+    .loop-sec { display: none; }
+  }
 
   /* ---------- party cards ---------- */
   .party-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -399,6 +406,7 @@
     <a href="index.html">/home</a>
     <a href="index.html#how">/how-it-works</a>
     <a href="flywheel.html" class="active">/flywheel</a>
+    <a href="team.html">/team</a>
     <a href="index.html#sides">/who-its-for</a>
     <a href="incubations.html">/cohort-01</a>
     <a href="apply.html">/apply</a>
@@ -423,67 +431,58 @@
 <section class="loop-sec">
   <div class="wrap">
     <div class="loop-panel reveal">
-      <svg class="loop-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A diagram of the SN20 flywheel showing what each of the four parties receives">
-        <defs>
-          <marker id="arr" markerWidth="8" markerHeight="8" refX="5.5" refY="4" orient="auto">
-            <path d="M0,0 L8,4 L0,8 Z" fill="#c5f04a"/>
-          </marker>
-        </defs>
-
-        <!-- central engine -->
-        <circle cx="400" cy="250" r="86" fill="#212820" stroke="#c5f04a" stroke-width="2"/>
-        <text x="400" y="238" text-anchor="middle" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="22" font-weight="700">SN20</text>
-        <text x="400" y="258" text-anchor="middle" fill="#a4cc2f" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1.5">BREEDING GROUND</text>
-        <text x="400" y="274" text-anchor="middle" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="9.5">the flywheel</text>
-
+      <svg class="loop-svg" viewBox="0 0 860 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A diagram of the SN20 flywheel showing what each of the four parties receives">
         <!-- four radial connectors -->
-        <g stroke="#c5f04a" stroke-width="1.6" fill="none" stroke-dasharray="5 7" opacity="0.55">
-          <line x1="330" y1="200" x2="222" y2="124"/>
-          <line x1="470" y1="200" x2="578" y2="124"/>
-          <line x1="330" y1="300" x2="222" y2="376"/>
-          <line x1="470" y1="300" x2="578" y2="376"/>
-        </g>
-        <g fill="#c5f04a">
-          <circle cx="330" cy="200" r="3"/><circle cx="470" cy="200" r="3"/>
-          <circle cx="330" cy="300" r="3"/><circle cx="470" cy="300" r="3"/>
+        <g stroke="#c5f04a" stroke-width="2" fill="none" stroke-dasharray="5 7" opacity="0.5">
+          <line x1="360" y1="232" x2="300" y2="160"/>
+          <line x1="500" y1="232" x2="560" y2="160"/>
+          <line x1="360" y1="328" x2="300" y2="400"/>
+          <line x1="500" y1="328" x2="560" y2="400"/>
         </g>
 
         <!-- ===== party 1: SN20 the subnet (top-left) ===== -->
         <g>
-          <rect x="34" y="40" width="262" height="92" rx="6" fill="#1d231a" stroke="#6f8f56" stroke-width="1.5"/>
-          <text x="52" y="66" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.1em">PARTY_01</text>
-          <text x="52" y="86" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700">SN20 — the subnet</text>
-          <text x="52" y="106" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ multi-source permanent buy &amp; burn</text>
-          <text x="52" y="121" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ graduate subnet emissions</text>
+          <rect x="36" y="44" width="338" height="116" rx="9" fill="#1d231a" stroke="#6f8f56" stroke-width="2"/>
+          <text x="62" y="76" fill="#a4cc2f" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="0.1em" font-weight="700">PARTY_01</text>
+          <text x="62" y="103" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="19" font-weight="700">SN20 — the subnet</text>
+          <text x="62" y="128" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="13">→ multi-source permanent buy &amp; burn</text>
+          <text x="62" y="147" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="13">→ graduate subnet emissions</text>
         </g>
 
-        <!-- ===== party 2: token holders (top-right) ===== -->
+        <!-- ===== party 2: token holders (top-right, highlighted) ===== -->
         <g>
-          <rect x="504" y="40" width="262" height="92" rx="6" fill="#212820" stroke="#c5f04a" stroke-width="2"/>
-          <text x="522" y="66" fill="#a4cc2f" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.1em">PARTY_02 · THE ANGEL SEAT</text>
-          <text x="522" y="86" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700">SN20 token holders</text>
-          <text x="522" y="106" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ monthly airdrops from all graduates</text>
-          <text x="522" y="121" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ in perpetuity, no picking winners</text>
+          <rect x="486" y="44" width="338" height="116" rx="9" fill="#212820" stroke="#c5f04a" stroke-width="2.5"/>
+          <text x="508" y="76" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="0.08em" font-weight="700">PARTY_02 · THE ANGEL SEAT</text>
+          <text x="508" y="103" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="19" font-weight="700">SN20 token holders</text>
+          <text x="508" y="128" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="13">→ monthly airdrops from all graduates</text>
+          <text x="508" y="147" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="13">→ in perpetuity, no picking winners</text>
         </g>
 
         <!-- ===== party 3: crowd funders (bottom-left) ===== -->
         <g>
-          <rect x="34" y="368" width="262" height="92" rx="6" fill="#1d231a" stroke="#6f8f56" stroke-width="1.5"/>
-          <text x="52" y="394" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.1em">PARTY_03</text>
-          <text x="52" y="414" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700">Crowd funders</text>
-          <text x="52" y="434" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ permanent per-block emissions</text>
-          <text x="52" y="449" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ from the proven subnet they backed</text>
+          <rect x="36" y="400" width="338" height="116" rx="9" fill="#1d231a" stroke="#6f8f56" stroke-width="2"/>
+          <text x="62" y="432" fill="#a4cc2f" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="0.1em" font-weight="700">PARTY_03</text>
+          <text x="62" y="459" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="19" font-weight="700">Crowd funders</text>
+          <text x="62" y="484" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="13">→ permanent per-block emissions</text>
+          <text x="62" y="503" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="13">→ from the proven subnet they backed</text>
         </g>
 
         <!-- ===== party 4: incubation teams (bottom-right) ===== -->
         <g>
-          <rect x="504" y="368" width="262" height="92" rx="6" fill="#1d231a" stroke="#6f8f56" stroke-width="1.5"/>
-          <text x="522" y="394" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.1em">PARTY_04</text>
-          <text x="522" y="414" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700">Incubation teams</text>
-          <text x="522" y="434" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ slot, runway &amp; full program support</text>
-          <text x="522" y="449" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="10">→ crowdfunded launch at graduation</text>
+          <rect x="486" y="400" width="338" height="116" rx="9" fill="#1d231a" stroke="#6f8f56" stroke-width="2"/>
+          <text x="508" y="432" fill="#a4cc2f" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="0.1em" font-weight="700">PARTY_04</text>
+          <text x="508" y="459" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="19" font-weight="700">Incubation teams</text>
+          <text x="508" y="484" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="13">→ slot, runway &amp; full program support</text>
+          <text x="508" y="503" fill="#a8ad9c" font-family="'JetBrains Mono',monospace" font-size="13">→ crowdfunded launch at graduation</text>
         </g>
+
+        <!-- ===== central engine — solid lime hub ===== -->
+        <circle cx="430" cy="280" r="92" fill="#c5f04a"/>
+        <text x="430" y="268" text-anchor="middle" fill="#161a14" font-family="'JetBrains Mono',monospace" font-size="30" font-weight="700">SN20</text>
+        <text x="430" y="292" text-anchor="middle" fill="#161a14" font-family="'JetBrains Mono',monospace" font-size="11.5" letter-spacing="1.5" font-weight="700">BREEDING GROUND</text>
+        <text x="430" y="312" text-anchor="middle" fill="#161a14" font-family="'JetBrains Mono',monospace" font-size="10.5" opacity="0.65">the flywheel</text>
       </svg>
+      <div class="loop-mobile-note">↓ See each party in detail below</div>
       <div class="loop-legend">
         <div class="lg-item"><span class="lg-dot" style="background:#212820;border:1px solid #c5f04a"></span> SN20 engine &amp; token holders</div>
         <div class="lg-item"><span class="lg-dot" style="background:#1d231a;border:1px solid #6f8f56"></span> Participating party</div>
