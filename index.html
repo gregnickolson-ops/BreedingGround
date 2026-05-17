@@ -348,7 +348,7 @@
   @media (max-width: 880px) { .ftease-grid { grid-template-columns: 1fr; gap: 44px; } }
   .ftease-art { width: 100%; max-width: 480px; margin: 0 auto; }
   .ftease-art svg { width: 100%; height: auto; }
-  .ftw-spin { transform-origin: 200px 200px; animation: rot 46s linear infinite; }
+  .ftw-spin { transform-origin: 230px 230px; animation: rot 60s linear infinite; }
   @keyframes rot { to { transform: rotate(360deg); } }
 
   /* ---------- cta ---------- */
@@ -707,19 +707,60 @@
   <div class="wrap">
     <div class="ftease-grid">
       <div class="ftease-art reveal">
-        <svg viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A flywheel diagram showing value returning to four parties">
+        <svg viewBox="0 0 460 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A flywheel diagram: the SN20 engine returning value to four parties">
+          <defs>
+            <marker id="fwarr" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+              <path d="M0,0 L10,5 L0,10 Z" fill="#c5f04a"/>
+            </marker>
+          </defs>
+
+          <!-- rotating loop arc -->
           <g class="ftw-spin">
-            <circle cx="220" cy="220" r="186" stroke="rgba(233,231,218,0.1)" stroke-width="1.5" fill="none"/>
-            <circle cx="220" cy="220" r="186" stroke="#c5f04a" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-dasharray="140 1030"/>
-            <circle cx="406" cy="220" r="8" fill="#c5f04a"/>
-            <circle cx="220" cy="220" r="138" stroke="rgba(233,231,218,0.1)" stroke-width="1.5" fill="none"/>
-            <circle cx="220" cy="220" r="138" stroke="#6f8f56" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-dasharray="105 760" stroke-dashoffset="170"/>
-            <circle cx="82" cy="220" r="7" fill="#6f8f56"/>
+            <circle cx="230" cy="230" r="150" stroke="rgba(233,231,218,0.09)" stroke-width="1.5" fill="none"/>
+            <!-- bright directional arc with arrowhead, sitting in the gaps between nodes -->
+            <path d="M 283 90 A 150 150 0 1 1 110 165" stroke="#c5f04a" stroke-width="4.5"
+                  fill="none" stroke-linecap="round" marker-end="url(#fwarr)"/>
           </g>
-          <circle cx="220" cy="220" r="96" fill="#212820" stroke="rgba(233,231,218,0.14)" stroke-width="1.5"/>
-          <text x="220" y="208" text-anchor="middle" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="34" font-weight="700">SN20</text>
-          <text x="220" y="232" text-anchor="middle" fill="#a4cc2f" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="2">THE FLYWHEEL</text>
-          <text x="220" y="252" text-anchor="middle" fill="#6f7565" font-family="'Archivo',sans-serif" font-size="12">stronger each cycle</text>
+
+          <!-- connector spokes hub -> each node -->
+          <g stroke="rgba(197,240,74,0.28)" stroke-width="1.6" stroke-dasharray="4 6">
+            <line x1="230" y1="230" x2="230" y2="92"/>
+            <line x1="230" y1="230" x2="368" y2="230"/>
+            <line x1="230" y1="230" x2="230" y2="368"/>
+            <line x1="230" y1="230" x2="92" y2="230"/>
+          </g>
+
+          <!-- ===== four party nodes ===== -->
+          <!-- top: holders (highlighted) -->
+          <g>
+            <rect x="158" y="58" width="144" height="56" rx="9" fill="#212820" stroke="#c5f04a" stroke-width="2"/>
+            <text x="230" y="82" text-anchor="middle" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700">Token holders</text>
+            <text x="230" y="100" text-anchor="middle" fill="#a4cc2f" font-family="'JetBrains Mono',monospace" font-size="10.5">monthly airdrops</text>
+          </g>
+          <!-- right: crowd funders -->
+          <g>
+            <rect x="320" y="202" width="128" height="56" rx="9" fill="#1d231a" stroke="#6f8f56" stroke-width="1.8"/>
+            <text x="384" y="226" text-anchor="middle" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700">Crowd funders</text>
+            <text x="384" y="244" text-anchor="middle" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="10">per-block emissions</text>
+          </g>
+          <!-- bottom: incubation teams -->
+          <g>
+            <rect x="156" y="346" width="148" height="56" rx="9" fill="#1d231a" stroke="#6f8f56" stroke-width="1.8"/>
+            <text x="230" y="370" text-anchor="middle" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700">Incubation teams</text>
+            <text x="230" y="388" text-anchor="middle" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="10">slot · runway · launch</text>
+          </g>
+          <!-- left: the subnet -->
+          <g>
+            <rect x="12" y="202" width="128" height="56" rx="9" fill="#1d231a" stroke="#6f8f56" stroke-width="1.8"/>
+            <text x="76" y="226" text-anchor="middle" fill="#e9e7da" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700">SN20 subnet</text>
+            <text x="76" y="244" text-anchor="middle" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="10">buy &amp; burn</text>
+          </g>
+
+          <!-- ===== center hub ===== -->
+          <circle cx="230" cy="230" r="74" fill="#c5f04a"/>
+          <circle cx="230" cy="230" r="74" fill="none" stroke="#161a14" stroke-width="2" opacity="0.15"/>
+          <text x="230" y="222" text-anchor="middle" fill="#161a14" font-family="'JetBrains Mono',monospace" font-size="30" font-weight="700">SN20</text>
+          <text x="230" y="246" text-anchor="middle" fill="#161a14" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="1.5" opacity="0.7">THE ENGINE</text>
         </svg>
       </div>
       <div class="reveal">
