@@ -111,9 +111,9 @@
   @media (max-width: 940px) { .hero-inner { grid-template-columns: 1fr; gap: 40px; } }
   .hero h1 {
     font-family: var(--mono); font-weight: 700;
-    font-size: clamp(33px, 4.7vw, 60px); line-height: 1.12;
+    font-size: clamp(30px, 4.2vw, 54px); line-height: 1.13;
     letter-spacing: -0.045em; margin: 24px 0 24px;
-    max-width: 13ch;
+    max-width: 16ch;
   }
   .hero h1 em {
     font-style: normal; font-weight: 700; color: var(--lime);
@@ -167,7 +167,35 @@
   .drifter { animation: drift 6s ease-in-out infinite; }
   .glower { animation: glow 3.6s ease-in-out infinite; }
 
-  /* ---------- ticker ---------- */
+  /* ---------- two-audience fork ---------- */
+  .fork-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 820px) { .fork-grid { grid-template-columns: 1fr; } }
+  .fork-card {
+    border: 1px solid var(--line); border-radius: 16px; background: var(--bg-lift);
+    padding: clamp(28px,3.5vw,40px); display: flex; flex-direction: column;
+    transition: transform 0.2s, border-color 0.2s; position: relative; overflow: hidden;
+  }
+  .fork-card:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+  .fork-card .fork-tag {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--lime-deep); display: flex; align-items: center; gap: 9px;
+  }
+  .fork-card .fork-tag::before { content: ''; width: 7px; height: 7px; background: var(--lime); }
+  .fork-card h3 {
+    font-family: var(--mono); font-weight: 700; font-size: clamp(22px,2.6vw,30px);
+    letter-spacing: -0.035em; line-height: 1.15; margin: 16px 0 12px;
+  }
+  .fork-card > p { font-size: 15px; color: var(--ink-soft); margin-bottom: 22px; }
+  .fork-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 26px; }
+  .fork-list li {
+    font-size: 14px; color: var(--ink-soft);
+    display: grid; grid-template-columns: 20px minmax(0,1fr); gap: 10px; align-items: start;
+  }
+  .fork-list li svg { margin-top: 3px; }
+  .fork-list li b { color: var(--ink); font-weight: 600; }
+  .fork-card .btn { margin-top: auto; align-self: flex-start; }
+
+
   .ticker {
     border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
     padding: 16px 0; overflow: hidden; background: var(--bg-deep);
@@ -316,9 +344,9 @@
   .fig .l { margin-top: 11px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); letter-spacing: 0.04em; }
 
   /* ---------- flywheel teaser ---------- */
-  .ftease-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(36px,5vw,70px); align-items: center; }
-  @media (max-width: 880px) { .ftease-grid { grid-template-columns: 1fr; gap: 40px; } }
-  .ftease-art { width: 100%; max-width: 400px; margin: 0 auto; }
+  .ftease-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px,5vw,80px); align-items: center; }
+  @media (max-width: 880px) { .ftease-grid { grid-template-columns: 1fr; gap: 44px; } }
+  .ftease-art { width: 100%; max-width: 480px; margin: 0 auto; }
   .ftease-art svg { width: 100%; height: auto; }
   .ftw-spin { transform-origin: 200px 200px; animation: rot 46s linear infinite; }
   @keyframes rot { to { transform: rotate(360deg); } }
@@ -390,6 +418,7 @@
     <a href="index.html">/home</a>
     <a href="#how">/how-it-works</a>
     <a href="flywheel.html">/flywheel</a>
+    <a href="team.html">/team</a>
     <a href="#sides">/who-its-for</a>
     <a href="incubations.html">/cohort-01</a>
     <a href="apply.html">/apply</a>
@@ -406,8 +435,8 @@
   <div class="wrap hero-inner">
     <div>
       <span class="eyebrow reveal">SN20 · the subnet incubator</span>
-      <h1 class="reveal">We grow the subnets <em>Bittensor</em> needs next.<span class="cursor"></span></h1>
-      <p class="hero-sub reveal">SN20 is an on-chain accelerator. It funds, supports and launches the strongest new Bittensor subnets — and rewards everyone who holds SN20 along the way.</p>
+      <h1 class="reveal">Welcome to the Breeding Ground — we grow <em>Bittensor's</em> next generation of subnets.<span class="cursor"></span></h1>
+      <p class="hero-sub reveal">SN20 is an on-chain accelerator. It funds, supports and launches the strongest new Bittensor subnets — and rewards <em style="font-style:normal;color:var(--lime)">everyone</em> along the way.</p>
       <div class="hero-actions reveal">
         <a href="#how" class="btn btn-primary">See how it works <span class="arrow">→</span></a>
         <a href="flywheel.html" class="btn btn-ghost">The flywheel</a>
@@ -499,6 +528,48 @@
   </div>
 </div>
 
+<!-- ================= TWO-AUDIENCE FORK ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal" style="max-width:660px">
+      <span class="eyebrow">Find your place</span>
+      <h2>There are two ways to <em>stand</em> in the Breeding Ground.</h2>
+      <p>SN20 is built for two kinds of people — the teams who want to launch a subnet, and the people who want to grow with the ones who do. Pick your path.</p>
+    </div>
+    <div class="fork-grid">
+
+      <!-- builders -->
+      <div class="fork-card reveal">
+        <span class="fork-tag">I'm building a subnet</span>
+        <h3>The best on-ramp into Bittensor.</h3>
+        <p>Launching a subnet alone means fronting ~$1.2M, fighting for infrastructure, and hoping you're noticed. SN20 is the alternative: the runway, the rails, and the launch — without surrendering your idea or your upside.</p>
+        <ul class="fork-list">
+          <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg><span><b>No $1.2M to start</b> — the market funds your registration through a crowdloan.</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg><span><b>Infrastructure that already exists</b> — run on proven, maintained, bare-metal validation.</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg><span><b>You keep your subnet</b> — graduate into your own leased slot, not someone else's.</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg><span><b>Your idea stays private</b> — submissions are confidential from the first step.</span></li>
+        </ul>
+        <a href="apply.html" class="btn btn-primary">Apply to a cohort <span class="arrow">→</span></a>
+      </div>
+
+      <!-- community -->
+      <div class="fork-card reveal">
+        <span class="fork-tag">I want to back the flywheel</span>
+        <h3>One position. Every graduate.</h3>
+        <p>You don't have to pick winners. The SN20 flywheel is engineered so holders, backers and the network all compound together — back it once, and grow with everything it graduates.</p>
+        <ul class="fork-list">
+          <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg><span><b>Hold SN20</b> — and receive monthly airdrops from every subnet it graduates.</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg><span><b>Back a specific team</b> — lock TAO and earn its emissions directly.</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg><span><b>Built-in alignment</b> — every party compounds at the same time, by design.</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg><span><b>Be early</b> — to something built to compound for years, not to pump.</span></li>
+        </ul>
+        <a href="flywheel.html" class="btn btn-primary">See the flywheel <span class="arrow">→</span></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ================= PROBLEM ================= -->
 <section class="sec">
   <div class="wrap">
@@ -553,14 +624,14 @@
       <div class="hstep done reveal">
         <div class="hstep-top"><span class="hstep-ix">STAGE_01</span><span class="hstep-dot"></span></div>
         <h3>Plant</h3>
-        <p>Teams register their idea on the SN20 site. A hybrid community vote selects the cohort of eight.</p>
-        <div class="hstep-tag">→ 8 SLOTS PER COHORT</div>
+        <p>Teams <em style="font-style:normal;color:var(--lime)">privately</em> register their idea — submissions stay confidential. A hybrid community vote selects the cohort of eight.</p>
+        <div class="hstep-tag">→ PRIVATE SUBMISSION</div>
       </div>
       <div class="hstep done reveal">
         <div class="hstep-top"><span class="hstep-ix">STAGE_02</span><span class="hstep-dot"></span></div>
         <h3>Nurture</h3>
         <p>Selected teams get a temporary slot, infrastructure, validation, marketing and milestone funding.</p>
-        <div class="hstep-tag">→ 6–9 MONTH PROGRAM</div>
+        <div class="hstep-tag">→ 6 MONTH PROGRAM</div>
       </div>
       <div class="hstep done reveal">
         <div class="hstep-top"><span class="hstep-ix">STAGE_03</span><span class="hstep-dot"></span></div>
@@ -592,7 +663,7 @@
         <h3>Reach the network without chasing VC.</h3>
         <p>Bring the idea. SN20 provides the runway, the rails, and a fully funded launch.</p>
         <ul>
-          <li>6–9 months of infrastructure, validation &amp; marketing</li>
+          <li>6 months of infrastructure, validation &amp; marketing</li>
           <li>Milestone-based runway from the crowdloan pool</li>
           <li>Graduation into your own leased subnet</li>
         </ul>
@@ -625,7 +696,7 @@
 <section class="sec figures">
   <div class="wrap fig-grid">
     <div class="fig reveal"><div class="n">8</div><div class="l">TEAMS PER COHORT</div></div>
-    <div class="fig reveal"><div class="n">6–9<em>mo</em></div><div class="l">SEED TO GRADUATION</div></div>
+    <div class="fig reveal"><div class="n">6<em>mo</em></div><div class="l">SEED TO GRADUATION</div></div>
     <div class="fig reveal"><div class="n">~18<em>%</em></div><div class="l">OWNER EMISSIONS SHARED</div></div>
     <div class="fig reveal"><div class="n">∞</div><div class="l">GRADUATES FEEDING HOLDERS</div></div>
   </div>
@@ -636,25 +707,26 @@
   <div class="wrap">
     <div class="ftease-grid">
       <div class="ftease-art reveal">
-        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A flywheel diagram">
+        <svg viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A flywheel diagram showing value returning to four parties">
           <g class="ftw-spin">
-            <circle cx="200" cy="200" r="158" stroke="rgba(233,231,218,0.1)" stroke-width="1.5" fill="none"/>
-            <circle cx="200" cy="200" r="158" stroke="#c5f04a" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="118 875"/>
-            <circle cx="358" cy="200" r="7" fill="#c5f04a"/>
-            <circle cx="200" cy="200" r="114" stroke="rgba(233,231,218,0.1)" stroke-width="1.5" fill="none"/>
-            <circle cx="200" cy="200" r="114" stroke="#6f8f56" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="86 630" stroke-dashoffset="150"/>
-            <circle cx="86" cy="200" r="6" fill="#6f8f56"/>
+            <circle cx="220" cy="220" r="186" stroke="rgba(233,231,218,0.1)" stroke-width="1.5" fill="none"/>
+            <circle cx="220" cy="220" r="186" stroke="#c5f04a" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-dasharray="140 1030"/>
+            <circle cx="406" cy="220" r="8" fill="#c5f04a"/>
+            <circle cx="220" cy="220" r="138" stroke="rgba(233,231,218,0.1)" stroke-width="1.5" fill="none"/>
+            <circle cx="220" cy="220" r="138" stroke="#6f8f56" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-dasharray="105 760" stroke-dashoffset="170"/>
+            <circle cx="82" cy="220" r="7" fill="#6f8f56"/>
           </g>
-          <circle cx="200" cy="200" r="72" fill="#212820" stroke="rgba(233,231,218,0.12)" stroke-width="1"/>
-          <text x="200" y="192" text-anchor="middle" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="24" font-weight="500">SN20</text>
-          <text x="200" y="212" text-anchor="middle" fill="#6f7565" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="1.5">THE FLYWHEEL</text>
+          <circle cx="220" cy="220" r="96" fill="#212820" stroke="rgba(233,231,218,0.14)" stroke-width="1.5"/>
+          <text x="220" y="208" text-anchor="middle" fill="#c5f04a" font-family="'JetBrains Mono',monospace" font-size="34" font-weight="700">SN20</text>
+          <text x="220" y="232" text-anchor="middle" fill="#a4cc2f" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="2">THE FLYWHEEL</text>
+          <text x="220" y="252" text-anchor="middle" fill="#6f7565" font-family="'Archivo',sans-serif" font-size="12">stronger each cycle</text>
         </svg>
       </div>
       <div class="reveal">
         <span class="eyebrow">The engine</span>
-        <h2 style="font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.2vw,48px);line-height:1.05;letter-spacing:-0.025em;margin:16px 0 16px;">A flywheel that turns faster with every graduate.</h2>
-        <p style="color:var(--ink-soft);font-size:16.5px;margin-bottom:24px;">Each subnet SN20 grows sends fees, carry and emissions back through the system — funding the next cohort and rewarding everyone who holds SN20.</p>
-        <a href="flywheel.html" class="btn btn-primary">Explore the full flywheel <span class="arrow">→</span></a>
+        <h2 style="font-family:var(--serif);font-weight:600;font-size:clamp(34px,4.8vw,56px);line-height:1.05;letter-spacing:-0.025em;margin:18px 0 18px;">A flywheel that turns faster with every graduate.</h2>
+        <p style="color:var(--ink-soft);font-size:clamp(17px,1.7vw,20px);margin-bottom:28px;line-height:1.6;">Each subnet SN20 graduates sends fees, carry and emissions back through one engine — funding the next cohort and rewarding all four parties: the subnet, its token holders, its crowd funders, and its incubation teams.</p>
+        <a href="flywheel.html" class="btn btn-primary" style="font-size:16px;padding:16px 28px;">Explore the full flywheel <span class="arrow">→</span></a>
       </div>
     </div>
   </div>
