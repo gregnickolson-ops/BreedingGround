@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Apply to Cohort 01 — SN20 Breeding Ground</title>
+<title>Apply to Intake 01 — SN20 Breeding Ground</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -82,6 +82,34 @@
   .ex-item .exv { font-family: var(--mono); font-size: 19px; font-weight: 700; color: var(--ink); }
   .ex-item .exv em { font-style: normal; color: var(--lime); }
   .ex-item .exl { font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em; color: var(--ink-mute); margin-top: 4px; text-transform: uppercase; }
+
+  /* process + confidentiality */
+  .preprocess { padding: clamp(36px,5vw,64px) 0 clamp(8px,2vw,16px); }
+  .pp-head { max-width: 640px; margin-bottom: 36px; }
+  .pp-head .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--lime-deep); display: inline-flex; align-items: center; gap: 9px; }
+  .pp-head .eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--lime); }
+  .pp-head h2 { font-family: var(--mono); font-weight: 700; font-size: clamp(24px,3.2vw,36px); letter-spacing: -0.04em; margin: 14px 0 12px; line-height: 1.15; }
+  .pp-head p { color: var(--ink-soft); font-size: 15.5px; }
+  .pp-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 18px; }
+  @media (max-width: 760px) { .pp-steps { grid-template-columns: 1fr; } }
+  .pp-step { border: 1px solid var(--line); border-radius: 13px; background: var(--bg-lift); padding: 24px 24px; position: relative; }
+  .pp-step .pp-n {
+    font-family: var(--mono); font-weight: 700; font-size: 13px; color: var(--bg-deep);
+    background: var(--lime); width: 28px; height: 28px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+  }
+  .pp-step h3 { font-size: 17px; font-weight: 600; margin-bottom: 7px; }
+  .pp-step p { font-size: 13.5px; color: var(--ink-soft); }
+  .pp-step .pp-out { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .pp-step .pp-out b { color: var(--lime-deep); font-weight: 500; }
+  .confbar {
+    display: flex; gap: 14px; align-items: flex-start;
+    border: 1px solid var(--line-strong); border-left: 3px solid var(--lime);
+    border-radius: 11px; background: var(--bg-lift); padding: 20px 24px;
+  }
+  .confbar svg { flex-shrink: 0; margin-top: 2px; }
+  .confbar h4 { font-size: 14.5px; font-weight: 600; margin-bottom: 4px; }
+  .confbar p { font-size: 13.5px; color: var(--ink-soft); }
 
   /* layout: form + sticky progress */
   .apply-grid { display: grid; grid-template-columns: 1fr 248px; gap: 36px; padding: 40px 0 80px; align-items: start; }
@@ -234,9 +262,10 @@
   </a>
   <div class="nav-links" id="navLinks">
     <a href="index.html">/home</a>
-    <a href="index.html#how">/how-it-works</a>
     <a href="flywheel.html">/flywheel</a>
-    <a href="incubations.html">/cohort-01</a>
+    <a href="architecture.html">/architecture</a>
+    <a href="team.html">/team</a>
+    <a href="incubations.html">/intake-01</a>
     <a href="apply.html" class="active">/apply</a>
     <a href="incubations.html" class="cta">Back a team</a>
   </div>
@@ -251,12 +280,50 @@
   <div class="wrap ahero-inner">
     <span class="eyebrow reveal">Applications open</span>
     <h1 class="reveal">Apply to grow inside <em>SN20</em>.</h1>
-    <p class="reveal">Cohort 01 takes eight teams. Bring a real idea for a Bittensor subnet — we bring the runway, the infrastructure, the support, and a crowdfunded path to your own subnet. Strong applications get an interview.</p>
+    <p class="reveal">Intake 01 takes eight teams. Bring a real idea for a Bittensor subnet — we bring the support, the infrastructure, and a crowdfunded path to your own subnet. Strong applications get an interview.</p>
     <div class="expect reveal">
-      <div class="ex-item"><div class="exv">8</div><div class="exl">Slots in the cohort</div></div>
-      <div class="ex-item"><div class="exv">6–9<em>mo</em></div><div class="exl">Program length</div></div>
+      <div class="ex-item"><div class="exv">8</div><div class="exl">Slots in the intake</div></div>
+      <div class="ex-item"><div class="exv">6<em>mo</em></div><div class="exl">Program length</div></div>
       <div class="ex-item"><div class="exv">~15<em>min</em></div><div class="exl">To complete this form</div></div>
       <div class="ex-item"><div class="exv">June 11</div><div class="exl">Applications close</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS + CONFIDENTIALITY ================= -->
+<section class="preprocess">
+  <div class="wrap">
+    <div class="pp-head reveal">
+      <span class="eyebrow">How selection works</span>
+      <h2>Three steps, and you'll always know where you stand.</h2>
+      <p>No black box. Every team that applies hears back — here's exactly how the process runs.</p>
+    </div>
+    <div class="pp-steps">
+      <div class="pp-step reveal">
+        <div class="pp-n">1</div>
+        <h3>Apply</h3>
+        <p>You complete the application below — your idea, your incentive mechanism, your team and progress. It takes about 15 minutes.</p>
+        <div class="pp-out">→ <b>Outcome:</b> a confirmation, and your application enters review.</div>
+      </div>
+      <div class="pp-step reveal">
+        <div class="pp-n">2</div>
+        <h3>Assessment</h3>
+        <p>SN20's selection team reviews every application. You'll be told either that you weren't selected this round, or that you're moving forward to an interview.</p>
+        <div class="pp-out">→ <b>Outcome:</b> a clear yes-to-interview, or an honest no.</div>
+      </div>
+      <div class="pp-step reveal">
+        <div class="pp-n">3</div>
+        <h3>Interview</h3>
+        <p>A call with the selection team — a real discussion about your project. After it, you either take a slot in the intake, or join the waitlist for the next opening.</p>
+        <div class="pp-out">→ <b>Outcome:</b> a slot, or a place on the waitlist.</div>
+      </div>
+    </div>
+    <div class="confbar reveal">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+      <div>
+        <h4>Your idea stays yours.</h4>
+        <p>Every application is treated as confidential. Submissions are seen only by SN20's selection team for the purpose of review — they are not shared, published, or used to build competing work. Your idea is safe here.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -557,15 +624,15 @@
         '<p>This submission is simulated for the prototype — no data was sent. In the live product, your application would now be queued for review.</p>' +
         '<div class="modal-receipt">' +
           '<div class="mr-row"><span class="ml">Reference</span><span class="mv lime">' + ref + '</span></div>' +
-          '<div class="mr-row"><span class="ml">Cohort</span><span class="mv">Cohort 01</span></div>' +
+          '<div class="mr-row"><span class="ml">Intake</span><span class="mv">Intake 01</span></div>' +
           '<div class="mr-row"><span class="ml">Status</span><span class="mv">Queued for review</span></div>' +
           '<div class="mr-row"><span class="ml">Next step</span><span class="mv">Interview if shortlisted</span></div>' +
         '</div>' +
         '<button class="btn-modal" id="closeDone">Done</button>' +
-        '<button class="btn-modal ghost" id="goCohort">View Cohort 01</button>'
+        '<button class="btn-modal ghost" id="goIntake">View Intake 01</button>'
       );
       $('closeDone').addEventListener('click', closeModal);
-      $('goCohort').addEventListener('click', () => { window.location.href = 'incubations.html'; });
+      $('goIntake').addEventListener('click', () => { window.location.href = 'incubations.html'; });
     }, 1600);
   });
 
