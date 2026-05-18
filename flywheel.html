@@ -656,10 +656,10 @@
         <div class="ctrl">
           <div class="ctrl-top">
             <span class="ctrl-label">Avg. emissions / subnet / yr</span>
-            <span class="ctrl-val" id="v-emis">$2.0M</span>
+            <span class="ctrl-val" id="v-emis">6,500 τ</span>
           </div>
-          <input type="range" id="emis" min="500000" max="6000000" step="250000" value="2000000" />
-          <div class="ctrl-hint">Total yearly emissions a typical graduated subnet produces.</div>
+          <input type="range" id="emis" min="1500" max="20000" step="500" value="6500" />
+          <div class="ctrl-hint">Yearly emissions a typical graduated subnet produces, in TAO. Dollar value scales with the TAO price below.</div>
         </div>
         <div class="ctrl">
           <div class="ctrl-top"><span class="ctrl-label">TAO price assumption</span></div>
@@ -807,14 +807,15 @@
   function compute() {
     const grads = +$('grads').value;
     let payers = Math.min(+$('payers').value, grads);
-    const emis = +$('emis').value;
+    const emisTao = +$('emis').value;          // emissions per subnet, in TAO
+    const emis = emisTao * tao;                 // converted to USD at current TAO price
 
     $('v-grads').textContent = grads;
     $('v-payers').textContent = payers;
-    $('v-emis').textContent = '$' + (emis/1e6).toFixed(1) + 'M';
+    $('v-emis').textContent = emisTao.toLocaleString() + ' \u03c4';
 
     const nonPayers = grads - payers;
-    // selection: $50K fee, half burned
+    // selection: $50K fee, half burned (fixed USD fee)
     const feeBurn = payers * 50000 * 0.50;
     // graduation: SN20 holds 15% carry (fee-payers) or 25% (non-payers) of the new subnet's emissions
     const carryValue = (payers * emis * 0.15) + (nonPayers * emis * 0.25);
