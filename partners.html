@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Partners — SN20 Breeding Ground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #161a14; --bg-lift: #1d231a; --bg-panel: #212820; --bg-deep: #11150f;
+    --ink: #e9e7da; --ink-soft: #a8ad9c; --ink-mute: #6f7565;
+    --lime: #c5f04a; --lime-deep: #a4cc2f; --moss: #6f8f56; --sage: #4a5c3c;
+    --clay: #d98841;
+    --line: rgba(233,231,218,0.1); --line-soft: rgba(233,231,218,0.055); --line-strong: rgba(233,231,218,0.2);
+    --serif: 'Fraunces', Georgia, serif; --sans: 'Archivo', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--lime); color: var(--bg); }
+
+  .proto { background: var(--bg-deep); color: var(--ink-mute); text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 16px; border-bottom: 1px solid var(--line-soft); }
+  .proto b { color: var(--lime-deep); font-weight: 500; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(20px, 4vw, 56px);
+    background: rgba(22,26,20,0.92); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-mark { width: 34px; height: 34px; flex-shrink: 0; }
+  .brand-txt { line-height: 1.1; }
+  .brand-txt .bn { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; }
+  .brand-txt .bs { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; color: var(--ink-mute); display: block; }
+  .nav-links { display: flex; align-items: center; gap: 6px; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 13px; color: var(--ink-soft);
+    padding: 8px 12px; border-radius: 7px; transition: color 0.15s, background 0.15s;
+  }
+  .nav-links a:hover { color: var(--ink); background: var(--line-soft); }
+  .nav-links a.active { color: var(--lime); }
+  .nav-links a.cta {
+    background: var(--lime); color: var(--bg-deep); font-weight: 700;
+  }
+  .nav-links a.cta:hover { background: #d4fb63; color: var(--bg-deep); }
+  .nav-toggle { display: none; background: none; border: none; color: var(--ink); cursor: pointer; }
+  @media (max-width: 820px) {
+    .nav-toggle { display: block; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 2px;
+      background: var(--bg); border-bottom: 1px solid var(--line);
+      padding: 12px clamp(20px,4vw,56px) 18px; display: none;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 11px 12px; }
+  }
+
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--lime-deep);
+  }
+  .eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--lime-deep); }
+
+  /* ---------- hero ---------- */
+  .phero { position: relative; padding: clamp(54px,8vw,96px) 0 clamp(40px,5vw,60px); overflow: hidden; }
+  .phero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 55% at 72% 18%, rgba(197,240,74,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 12% 90%, rgba(111,143,86,0.08) 0%, transparent 72%);
+    pointer-events: none;
+  }
+  .phero-inner { position: relative; max-width: 820px; }
+  .phero h1 {
+    font-family: var(--mono); font-weight: 700; font-size: clamp(32px,4.7vw,58px);
+    line-height: 1.1; letter-spacing: -0.045em; margin: 20px 0 20px; max-width: 18ch;
+  }
+  .phero h1 em { font-style: normal; color: var(--lime); }
+  .phero p { font-size: clamp(16px,1.7vw,19px); color: var(--ink-soft); max-width: 60ch; }
+
+  /* ---------- section frame ---------- */
+  .sec { padding: clamp(50px,7vw,92px) 0; position: relative; }
+  .sec.alt { background: var(--bg-deep); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .sec-head { max-width: 700px; margin-bottom: 42px; }
+  .sec-head h2 { font-family: var(--mono); font-weight: 700; font-size: clamp(26px,3.5vw,40px); line-height: 1.14; letter-spacing: -0.04em; margin: 15px 0 14px; }
+  .sec-head h2 em { font-style: normal; color: var(--lime); }
+  .sec-head p { color: var(--ink-soft); font-size: 16.5px; }
+
+  /* ---------- two-tier overview ---------- */
+  .tier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 760px) { .tier-grid { grid-template-columns: 1fr; } }
+  .tier {
+    border: 1px solid var(--line-strong); border-radius: 16px; background: var(--bg-lift);
+    padding: clamp(26px,3.4vw,38px); position: relative; overflow: hidden;
+  }
+  .tier::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .tier.core::before { background: var(--lime); }
+  .tier.strat::before { background: var(--clay); }
+  .tier-tag {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.11em; text-transform: uppercase;
+    font-weight: 700; padding: 5px 11px; border-radius: 5px; display: inline-block;
+  }
+  .tier.core .tier-tag { background: var(--lime); color: var(--bg-deep); }
+  .tier.strat .tier-tag { background: rgba(217,136,65,0.16); color: var(--clay); border: 1px solid rgba(217,136,65,0.4); }
+  .tier h3 { font-family: var(--serif); font-size: clamp(24px,3vw,32px); font-weight: 600; letter-spacing: -0.015em; margin: 16px 0 8px; }
+  .tier > p { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 20px; }
+  .tier-rows { display: flex; flex-direction: column; }
+  .tier-row {
+    display: grid; grid-template-columns: 92px minmax(0,1fr); gap: 14px;
+    padding: 11px 0; border-top: 1px solid var(--line);
+  }
+  .tier-row .tr-k { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-mute); padding-top: 2px; }
+  .tier-row .tr-v { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* one-line distinction band */
+  .distinct {
+    margin-top: 20px; border: 1px solid var(--line-strong); border-radius: 13px;
+    background: var(--bg-panel); padding: 22px clamp(20px,3vw,30px); text-align: center;
+  }
+  .distinct p { font-size: clamp(15px,1.7vw,18px); color: var(--ink); max-width: 70ch; margin: 0 auto; }
+  .distinct .ck { color: var(--lime); font-weight: 700; }
+  .distinct .sk { color: var(--clay); font-weight: 700; }
+
+  /* ---------- core partner cards ---------- */
+  .lanes-note {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mute);
+    border: 1px dashed var(--line-strong); border-radius: 9px; padding: 12px 16px; margin-bottom: 26px;
+  }
+  .lanes-note b { color: var(--lime-deep); font-weight: 500; }
+  .core-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 760px) { .core-grid { grid-template-columns: 1fr; } }
+  .corecard {
+    border: 1px solid var(--line); border-radius: 15px; background: var(--bg-lift);
+    padding: 30px 28px; position: relative; transition: border-color 0.18s, transform 0.18s;
+  }
+  .corecard:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+  .corecard.filled { border-color: var(--lime); background: var(--bg-panel); }
+  .cc-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+  .cc-lane { font-family: var(--mono); font-size: 11px; color: var(--lime-deep); letter-spacing: 0.04em; }
+  .cc-status {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.09em; text-transform: uppercase;
+    padding: 4px 9px; border-radius: 5px; font-weight: 500;
+  }
+  .cc-status.open { color: var(--ink-mute); border: 1px solid var(--line-strong); }
+  .cc-status.locked { background: var(--lime); color: var(--bg-deep); font-weight: 700; }
+  .cc-mark {
+    width: 46px; height: 46px; border-radius: 11px; background: var(--bg-panel);
+    border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
+    color: var(--lime); margin-bottom: 16px;
+  }
+  .corecard.filled .cc-mark { border-style: solid; }
+  .corecard:not(.filled) .cc-mark { border-style: dashed; color: var(--ink-mute); }
+  .corecard h3 { font-family: var(--serif); font-size: 22px; font-weight: 600; margin-bottom: 7px; letter-spacing: -0.01em; }
+  .corecard > p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 16px; }
+  .cc-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .cc-list li { font-size: 13px; color: var(--ink-soft); display: grid; grid-template-columns: 16px minmax(0,1fr); gap: 8px; }
+  .cc-list li::before { content: '→'; color: var(--moss); font-weight: 700; }
+
+  /* Rizzo proof stats inside the Core Partner card */
+  .cc-stats {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
+    margin-top: 18px; border: 1px solid var(--line); border-radius: 9px;
+    background: var(--line); overflow: hidden;
+  }
+  @media (max-width: 420px) { .cc-stats { grid-template-columns: 1fr 1fr; } }
+  .cc-stat { background: var(--bg-deep); padding: 12px 10px; text-align: center; }
+  .cc-stat .csv { font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--lime); }
+  .cc-stat .csl { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mute); margin-top: 3px; }
+
+  /* ---------- strategic model band ---------- */
+  .deal-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  @media (max-width: 800px) { .deal-grid { grid-template-columns: 1fr; } }
+  .deal {
+    border: 1px solid var(--line); border-radius: 13px; background: var(--bg-lift); padding: 24px 24px;
+    border-top: 3px solid var(--clay);
+  }
+  .deal-ix { font-family: var(--mono); font-size: 11px; color: var(--clay); letter-spacing: 0.05em; }
+  .deal h4 { font-family: var(--sans); font-size: 16px; font-weight: 600; margin: 10px 0 8px; }
+  .deal p { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* strategic category grid */
+  .scat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 8px; }
+  @media (max-width: 800px) { .scat-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .scat-grid { grid-template-columns: 1fr; } }
+  .scat {
+    border: 1px solid var(--line); border-radius: 12px; background: var(--bg-lift); padding: 20px 20px;
+  }
+  .scat-ic {
+    width: 36px; height: 36px; border-radius: 9px; background: var(--bg-panel);
+    border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
+    color: var(--clay); margin-bottom: 12px;
+  }
+  .scat h4 { font-size: 14.5px; font-weight: 600; margin-bottom: 4px; }
+  .scat p { font-size: 12.5px; color: var(--ink-mute); line-height: 1.5; }
+  .scat .scat-open { font-family: var(--mono); font-size: 10px; color: var(--moss); letter-spacing: 0.06em; margin-top: 9px; display: block; }
+
+  /* ---------- boundary callout ---------- */
+  .boundary {
+    border: 1px solid var(--line-strong); border-left: 3px solid var(--clay); border-radius: 12px;
+    background: var(--bg-lift); padding: 24px clamp(22px,3vw,32px); margin-top: 26px;
+  }
+  .boundary h4 { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay); margin-bottom: 10px; }
+  .boundary p { font-size: 14px; color: var(--ink-soft); max-width: 80ch; }
+
+  /* ---------- intake form ---------- */
+  .intake-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 800px) { .intake-grid { grid-template-columns: 1fr; } }
+
+  .form-card {
+    border: 1px solid var(--line); border-radius: 16px; background: var(--bg-lift);
+    padding: clamp(26px,3.6vw,40px);
+  }
+  .field { margin-bottom: 18px; }
+  .field:last-of-type { margin-bottom: 0; }
+  .field label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .field label .req { font-family: var(--mono); font-size: 10px; color: var(--clay); font-weight: 500; letter-spacing: 0.04em; }
+  .field label .opt { font-family: var(--mono); font-size: 10px; color: var(--ink-mute); font-weight: 400; letter-spacing: 0.04em; }
+  .input, .textarea {
+    width: 100%; background: var(--bg-deep); border: 1px solid var(--line-strong);
+    border-radius: 9px; padding: 12px 14px; color: var(--ink);
+    font-family: var(--sans); font-size: 14.5px; outline: none; transition: border-color 0.15s;
+  }
+  .input::placeholder, .textarea::placeholder { color: var(--ink-mute); }
+  .input:focus, .textarea:focus { border-color: var(--lime); }
+  .textarea { resize: vertical; min-height: 96px; line-height: 1.55; }
+  .cat-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .cat-chip {
+    font-family: var(--mono); font-size: 12px; padding: 8px 13px; border-radius: 999px;
+    border: 1px solid var(--line-strong); background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 0.14s;
+  }
+  .cat-chip:hover { border-color: var(--ink-soft); }
+  .cat-chip.on { background: var(--lime); color: var(--bg-deep); border-color: var(--lime); font-weight: 500; }
+  .form-foot {
+    margin-top: 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 18px; flex-wrap: wrap; padding-top: 22px; border-top: 1px solid var(--line);
+  }
+  .form-foot p { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); max-width: 38ch; }
+  .btn-submit {
+    background: var(--lime); color: var(--bg-deep); border: none; border-radius: 999px;
+    padding: 14px 28px; cursor: pointer; font-family: var(--sans); font-weight: 700; font-size: 15px;
+    display: inline-flex; align-items: center; gap: 9px; transition: background 0.18s, transform 0.15s; white-space: nowrap;
+  }
+  .btn-submit:hover { background: #d4fb63; transform: translateY(-1px); }
+  .btn-submit .arrow { transition: transform 0.2s; }
+  .btn-submit:hover .arrow { transform: translateX(3px); }
+
+  /* side rail on intake */
+  .intake-aside { display: flex; flex-direction: column; gap: 14px; }
+  .aside-card {
+    border: 1px solid var(--line); border-radius: 13px; background: var(--bg-panel); padding: 24px 24px;
+  }
+  .aside-card h4 { font-size: 14.5px; font-weight: 600; margin-bottom: 9px; display: flex; align-items: center; gap: 9px; }
+  .aside-card h4 svg { color: var(--lime); flex-shrink: 0; }
+  .aside-card p { font-size: 13px; color: var(--ink-soft); }
+  .aside-card ol { margin: 8px 0 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+  .aside-card ol li { font-size: 13px; color: var(--ink-soft); }
+  .aside-card ol li::marker { color: var(--lime-deep); font-family: var(--mono); font-size: 12px; }
+  .aside-mail {
+    border: 1px solid var(--line-strong); border-left: 3px solid var(--lime); border-radius: 12px;
+    background: var(--bg-lift); padding: 22px 24px;
+  }
+  .aside-mail h4 { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; }
+  .aside-mail p { font-size: 13px; color: var(--ink-soft); margin-bottom: 12px; }
+  .aside-mail a.maillink {
+    font-family: var(--mono); font-size: 13px; color: var(--lime);
+    display: inline-flex; align-items: center; gap: 7px; word-break: break-all;
+  }
+  .aside-mail a.maillink:hover { text-decoration: underline; }
+
+  /* ---------- cta ---------- */
+  .cta-box {
+    border: 1px solid var(--line-strong); border-radius: 20px; background: var(--bg-lift);
+    padding: clamp(38px,5vw,64px); text-align: center;
+  }
+  .cta-box .eyebrow { justify-content: center; }
+  .cta-box h2 { font-family: var(--mono); font-weight: 700; font-size: clamp(25px,3.4vw,40px); letter-spacing: -0.04em; margin: 15px auto 14px; max-width: 22ch; line-height: 1.16; }
+  .cta-box p { font-size: 16px; color: var(--ink-soft); max-width: 52ch; margin: 0 auto 28px; }
+  .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--sans); font-weight: 600; font-size: 15px; border-radius: 999px;
+    padding: 13px 26px; display: inline-flex; align-items: center; gap: 9px; cursor: pointer;
+    transition: background 0.18s, transform 0.15s, border-color 0.18s;
+  }
+  .btn .arrow { transition: transform 0.2s; }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .btn-primary { background: var(--lime); color: var(--bg-deep); border: 1px solid var(--lime); }
+  .btn-primary:hover { background: #d4fb63; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--ink-soft); }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 36px 0; }
+  .foot-grid { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  footer p { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-mute); }
+
+  /* ---------- reveal animation ---------- */
+  .js-anim .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .js-anim .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="proto">SN20 Breeding Ground &nbsp;·&nbsp; <b>concept demonstration</b> &nbsp;·&nbsp; prototype</div>
+
+<nav>
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="34" height="34" rx="8" fill="#c5f04a"/><path d="M17 26V13M17 17C13 14.5 9.5 16 9.5 16M17 19.5C21 17 24.5 18.5 24.5 18.5" stroke="#161a14" stroke-width="2.1" stroke-linecap="round"/><circle cx="17" cy="10.5" r="2.6" fill="#161a14"/></svg>
+    <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">/home</a>
+    <a href="index.html#how">/how-it-works</a>
+    <a href="for-teams.html">/for-teams</a>
+    <a href="for-backers.html">/for-backers</a>
+    <a href="partners.html" class="active">/partners</a>
+    <a href="incubations.html">/intake-01</a>
+    <a href="apply.html" class="cta">Apply</a>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="phero">
+  <div class="phero-bg"></div>
+  <div class="wrap phero-inner">
+    <span class="eyebrow reveal">Partners</span>
+    <h1 class="reveal">Two ways to build <em>this</em> with us.</h1>
+    <p class="reveal">An incubator is only as strong as the people behind it. SN20 Breeding Ground is built on two distinct kinds of partner — a small group who co-own the program, and a wider roster who supply the teams inside it. This page explains both, and how to join.</p>
+  </div>
+</section>
+
+<!-- ================= TWO TIERS ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The structure</span>
+      <h2>Core Partners and <em>Strategic Partners</em>.</h2>
+      <p>Behind the program are two kinds of partner. Core Partners co-own Breeding Ground and are accountable for it. Strategic Partners supply the teams inside it. Here is how each one works — and what it means for a team in the program.</p>
+    </div>
+
+    <div class="tier-grid">
+      <div class="tier core reveal">
+        <span class="tier-tag">Core Partner</span>
+        <h3>Co-own the program</h3>
+        <p>A small group of 3–4 established organizations — Rizzo included — that own SN20 Breeding Ground and are accountable for its success.</p>
+        <div class="tier-rows">
+          <div class="tier-row"><span class="tr-k">Who</span><span class="tr-v">Established organizations, each chosen for a capability a young subnet needs.</span></div>
+          <div class="tier-row"><span class="tr-k">Role</span><span class="tr-v">They co-own the program, govern selection, and share its risk — real skin in the game.</span></div>
+          <div class="tier-row"><span class="tr-k">How many</span><span class="tr-v">Few — deliberately capped at 3–4, so each partner is genuinely committed.</span></div>
+          <div class="tier-row"><span class="tr-k">For a team</span><span class="tr-v">It means the people backing the program are accountable for whether you succeed.</span></div>
+        </div>
+      </div>
+
+      <div class="tier strat reveal">
+        <span class="tier-tag">Strategic Partner</span>
+        <h3>Supply the teams</h3>
+        <p>A wider roster of specialist firms whose service is built into the program — covering legal, compute, security, and more for the incubation teams, in exchange for a graduate-customer pipeline.</p>
+        <div class="tier-rows">
+          <div class="tier-row"><span class="tr-k">Who</span><span class="tr-v">Specialist firms — legal, compute, security, accounting, marketing, and more.</span></div>
+          <div class="tier-row"><span class="tr-k">Role</span><span class="tr-v">Their service is part of the program; in return they win those teams as customers at graduation.</span></div>
+          <div class="tier-row"><span class="tr-k">How many</span><span class="tr-v">Many — one partner per service category, expandable over time.</span></div>
+          <div class="tier-row"><span class="tr-k">For a team</span><span class="tr-v">It means real professional services are included in the program, at no extra cost to you.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="distinct reveal">
+      <p><span class="ck">A Core Partner buys into the program.</span> &nbsp;<span class="sk">A Strategic Partner invests in the pipeline.</span> One takes ownership; the other takes a future customer base. Neither is paid by the program in cash.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CORE PARTNERS ================= -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Core Partners</span>
+      <h2>Serious partners, <em>chosen on purpose</em>.</h2>
+      <p>Breeding Ground is backed by a small group of established organizations — and they were not assembled at random. Each one was chosen to cover a specific thing a young subnet needs to succeed, so that a team in the program is never missing a critical piece.</p>
+    </div>
+
+    <div class="lanes-note reveal">
+      <b>// the point:</b> infrastructure, capital, deal flow, distribution — between Rizzo and its Core Partners, every component a team needs to reach a successful launch is already on the table.
+    </div>
+
+    <div class="core-grid">
+      <!-- Rizzo: filled -->
+      <div class="corecard filled reveal">
+        <div class="cc-head">
+          <span class="cc-lane">Infrastructure &amp; operations</span>
+          <span class="cc-status locked">Lead partner</span>
+        </div>
+        <div class="cc-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5v.01M7 16.5v.01"/></svg>
+        </div>
+        <h3>Team Rizzo</h3>
+        <p>The operator of SN20. A team builds on infrastructure that already runs at scale — not a promise that one will be built.</p>
+        <ul class="cc-list">
+          <li>Bare-metal infrastructure, kept alive 24/7</li>
+          <li>Validation a team can trust from day one</li>
+          <li>In-house AI/ML engineers to lean on</li>
+          <li>Operators who run live subnets every day</li>
+        </ul>
+        <div class="cc-stats">
+          <div class="cc-stat"><div class="csv">128</div><div class="csl">Subnets validated</div></div>
+          <div class="cc-stat"><div class="csv">2</div><div class="csl">Subnets operated</div></div>
+          <div class="cc-stat"><div class="csv">24/7</div><div class="csl">Maintenance</div></div>
+          <div class="cc-stat"><div class="csv">Bare&nbsp;metal</div><div class="csl">Own hardware</div></div>
+        </div>
+      </div>
+
+      <!-- Capital & Liquidity: open -->
+      <div class="corecard reveal">
+        <div class="cc-head">
+          <span class="cc-lane">Capital &amp; liquidity</span>
+          <span class="cc-status open">In discussion</span>
+        </div>
+        <div class="cc-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2v20M6 7l6-5 6 5M4 13h16"/></svg>
+        </div>
+        <h3>A capital partner</h3>
+        <p>So a team is funded through the program — and so its token has real market depth the day it launches.</p>
+        <ul class="cc-list">
+          <li>Operating runway and registration support</li>
+          <li>Real liquidity for a graduate's token</li>
+          <li>Guidance on allocations and token design</li>
+          <li>Credibility that serious capital is behind the program</li>
+        </ul>
+      </div>
+
+      <!-- Deal Flow & Advisory: open -->
+      <div class="corecard reveal">
+        <div class="cc-head">
+          <span class="cc-lane">Advisory &amp; ecosystem</span>
+          <span class="cc-status open">In discussion</span>
+        </div>
+        <div class="cc-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="9" cy="9" r="5"/><circle cx="16" cy="16" r="5"/></svg>
+        </div>
+        <h3>An advisory partner</h3>
+        <p>So a team gets the judgment that turns a working prototype into a subnet that survives — and a way into the wider ecosystem.</p>
+        <ul class="cc-list">
+          <li>Senior advice on incentive and subnet design</li>
+          <li>Help avoiding the mistakes that kill new subnets</li>
+          <li>Introductions across the Bittensor ecosystem</li>
+          <li>A strong, vetted pipeline of teams alongside you</li>
+        </ul>
+      </div>
+
+      <!-- Distribution & Custody: open -->
+      <div class="corecard reveal">
+        <div class="cc-head">
+          <span class="cc-lane">Distribution &amp; custody</span>
+          <span class="cc-status open">In discussion</span>
+        </div>
+        <div class="cc-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>A distribution partner</h3>
+        <p>So a graduating subnet reaches real markets and institutional investors — not just the people who already know Bittensor.</p>
+        <ul class="cc-list">
+          <li>A listing and distribution path at graduation</li>
+          <li>Institutional-grade custody for backers</li>
+          <li>An on-ramp for serious, regulated capital</li>
+          <li>Reach beyond the existing Bittensor audience</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STRATEGIC PARTNERS ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Strategic Partners</span>
+      <h2>Serve them now. <em>Win the customer later.</em></h2>
+      <p>A Strategic Partner's service is built into the program — delivered to the eight incubation teams at no cost to them, and no cash from the program. The return is structural: the graduate-customer pipeline.</p>
+    </div>
+
+    <div class="deal-grid">
+      <div class="deal reveal">
+        <span class="deal-ix">// you contribute</span>
+        <h4>A capped, defined service</h4>
+        <p>A set block of hours, credits, or capacity — your service, made part of the program for each incubation team, at no cost to them.</p>
+      </div>
+      <div class="deal reveal">
+        <span class="deal-ix">// you get</span>
+        <h4>A graduate-customer pipeline</h4>
+        <p>The inside track to become the paid provider for each team as it graduates into a real, revenue-generating subnet — plus visible association with a credible incubator.</p>
+      </div>
+      <div class="deal reveal">
+        <span class="deal-ix">// the program gives</span>
+        <h4>Structured access &amp; a warm handoff</h4>
+        <p>Access to eight vetted teams per cohort, a "preferred provider" designation, and a warm introduction to each team at graduation.</p>
+      </div>
+    </div>
+
+    <div class="boundary reveal">
+      <h4>The boundary that keeps it fair</h4>
+      <p>A Strategic Partner is never promised exclusivity over a graduate, and graduates are never required to use them — the program provides a warm, default introduction only. A firm that wants guaranteed ownership of the relationship, or wants to be paid by the program, is describing a Core Partner or a paid vendor instead.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STRATEGIC CATEGORIES ================= -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Open categories</span>
+      <h2>Where a Strategic Partner <em>fits</em>.</h2>
+      <p>One partner per category. If your firm sells something a graduated subnet genuinely needs to buy, there is a place for you here.</p>
+    </div>
+
+    <div class="scat-grid">
+      <div class="scat reveal">
+        <div class="scat-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 7h18M3 12h18M3 17h12"/></svg></div>
+        <h4>Legal</h4>
+        <p>Entity structuring, initial contracts, and early advice — then retained counsel at graduation.</p>
+        <span class="scat-open">// slot open</span>
+      </div>
+      <div class="scat reveal">
+        <div class="scat-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h2M7 13h6"/></svg></div>
+        <h4>Compute &amp; hosting</h4>
+        <p>Compute or hosting credits that lower each team's operating cost during incubation.</p>
+        <span class="scat-open">// slot open</span>
+      </div>
+      <div class="scat reveal">
+        <div class="scat-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></div>
+        <h4>Security &amp; audit</h4>
+        <p>A subnet review or audit per team — then the graduate's ongoing security vendor.</p>
+        <span class="scat-open">// slot open</span>
+      </div>
+      <div class="scat reveal">
+        <div class="scat-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 19V5M4 19h16M8 16v-5M13 16V8M18 16v-9"/></svg></div>
+        <h4>Accounting</h4>
+        <p>Bookkeeping and financial setup for a newly graduated entity.</p>
+        <span class="scat-open">// slot open</span>
+      </div>
+      <div class="scat reveal">
+        <div class="scat-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11l18-8-8 18-2-8z"/></svg></div>
+        <h4>Brand &amp; marketing</h4>
+        <p>Identity, positioning, and launch support for the graduating subnet.</p>
+        <span class="scat-open">// in discussion</span>
+      </div>
+      <div class="scat reveal">
+        <div class="scat-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
+        <h4>RPC, data &amp; tooling</h4>
+        <p>Infrastructure or data access during incubation — then the graduate's paid plan.</p>
+        <span class="scat-open">// slot open</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STRATEGIC INTAKE FORM ================= -->
+<section class="sec" id="strategic-intake">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Offer support</span>
+      <h2>Become a <em>Strategic Partner</em>.</h2>
+      <p>Tell us what your firm can offer the incubation teams. Strong fits are contacted to scope a partner agreement — a defined, capped commitment, not an equity deal.</p>
+    </div>
+
+    <div class="intake-grid">
+      <!-- form -->
+      <form class="form-card reveal" id="stratForm" autocomplete="off" onsubmit="return false;">
+        <div class="field">
+          <label>Organization name <span class="req">REQUIRED</span></label>
+          <input class="input" type="text" id="f-org" placeholder="e.g. your firm or company" />
+        </div>
+
+        <div class="field">
+          <label>Service category <span class="req">REQUIRED</span></label>
+          <div class="cat-chips" id="cats">
+            <button type="button" class="cat-chip">Legal</button>
+            <button type="button" class="cat-chip">Compute &amp; hosting</button>
+            <button type="button" class="cat-chip">Security &amp; audit</button>
+            <button type="button" class="cat-chip">Accounting</button>
+            <button type="button" class="cat-chip">Brand &amp; marketing</button>
+            <button type="button" class="cat-chip">RPC, data &amp; tooling</button>
+            <button type="button" class="cat-chip">Other</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>What you can contribute to each team <span class="req">REQUIRED</span></label>
+          <textarea class="textarea" id="f-offer" placeholder="The specific, capped resource you'd provide to each incubation team. e.g. '20 hours of legal work per team' or 'a fixed monthly compute allocation per team for the program duration.'"></textarea>
+        </div>
+
+        <div class="field">
+          <label>How you'd want to work with graduates <span class="opt">OPTIONAL</span></label>
+          <textarea class="textarea" id="f-grad" placeholder="What the paid relationship could look like once a team graduates — the pipeline you're hoping to build."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Contact name &amp; email <span class="req">REQUIRED</span></label>
+          <input class="input" type="text" id="f-contact" placeholder="Name · you@firm.com" />
+        </div>
+
+        <div class="form-foot">
+          <p>This prototype sends your details by email — nothing is stored here.</p>
+          <button type="button" class="btn-submit" id="stratSubmit">Send to the team <span class="arrow">→</span></button>
+        </div>
+      </form>
+
+      <!-- side rail -->
+      <aside class="intake-aside">
+        <div class="aside-card reveal">
+          <h4>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/></svg>
+            What happens next
+          </h4>
+          <ol>
+            <li>We review your offer against the open categories.</li>
+            <li>If it's a fit, we scope a capped, per-cohort commitment with you.</li>
+            <li>You're named the preferred provider for that category.</li>
+            <li>At graduation, each team is warmly introduced to you.</li>
+          </ol>
+        </div>
+
+        <div class="aside-card reveal">
+          <h4>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 6"/></svg>
+            A good fit looks like
+          </h4>
+          <p>You sell something a graduated subnet needs to buy, the contribution is realistic for you to make, and eight warm leads per cohort is worth it.</p>
+        </div>
+
+        <div class="aside-mail reveal">
+          <h4>Prefer to just reach out?</h4>
+          <p>Skip the form and email us directly — we read every message.</p>
+          <a class="maillink" id="directMail" href="mailto:partners@sn20.example?subject=Strategic%20Partner%20%E2%80%94%20SN20%20Breeding%20Ground">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            partners@sn20.example
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <span class="eyebrow">Build with us</span>
+      <h2>There's a place for your firm in the pipeline.</h2>
+      <p>Strategic Partner slots are open now — one per service category. Tell us what you can offer the incubation teams.</p>
+      <div class="cta-actions">
+        <a href="#strategic-intake" class="btn btn-primary">Become a Strategic Partner <span class="arrow">→</span></a>
+        <a href="apply.html" class="btn btn-ghost">Apply as a team</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="34" height="34" rx="8" fill="#c5f04a"/><path d="M17 26V13M17 17C13 14.5 9.5 16 9.5 16M17 19.5C21 17 24.5 18.5 24.5 18.5" stroke="#161a14" stroke-width="2.1" stroke-linecap="round"/><circle cx="17" cy="10.5" r="2.6" fill="#161a14"/></svg>
+      <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+    </a>
+    <p>© 2026 SN20 BREEDING GROUND · OPERATED BY TEAM RIZZO · PROTOTYPE</p>
+  </div>
+</footer>
+
+<script>
+  document.body.classList.add('js-anim');
+
+  /* scroll reveal */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        const sibs = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = Math.max(0, sibs.indexOf(e.target));
+        e.target.style.transitionDelay = (idx * 0.07) + 's';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -7% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
+
+  /* close mobile nav on click */
+  document.querySelectorAll('#navLinks a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+
+  /* category chips — single select */
+  document.querySelectorAll('#cats .cat-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#cats .cat-chip').forEach(c => c.classList.remove('on'));
+      chip.classList.add('on');
+    });
+  });
+
+  /* ---- strategic intake: build a mailto from the form ----
+     PROTOTYPE: opens the visitor's email client pre-filled.
+     The dev team can later swap this for a real form endpoint. */
+  const PARTNER_EMAIL = 'partners@sn20.example'; // <-- dev: set the real address here
+
+  document.getElementById('stratSubmit').addEventListener('click', () => {
+    const org = (document.getElementById('f-org').value || '').trim();
+    const cat = (document.querySelector('#cats .cat-chip.on') || {}).textContent || 'Not specified';
+    const offer = (document.getElementById('f-offer').value || '').trim();
+    const grad = (document.getElementById('f-grad').value || '').trim();
+    const contact = (document.getElementById('f-contact').value || '').trim();
+
+    if (!org || !offer || !contact) {
+      alert('Please add your organization, what you can offer, and a contact before sending.');
+      return;
+    }
+
+    const subject = 'Strategic Partner — ' + org;
+    const body =
+      'STRATEGIC PARTNER ENQUIRY — SN20 Breeding Ground\n' +
+      '----------------------------------------\n\n' +
+      'Organization:  ' + org + '\n' +
+      'Service category:  ' + cat + '\n\n' +
+      'What they can contribute to each team:\n' + offer + '\n\n' +
+      'How they\u2019d work with graduates:\n' + (grad || '(not provided)') + '\n\n' +
+      'Contact:\n' + contact + '\n';
+
+    window.location.href = 'mailto:' + PARTNER_EMAIL +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+  });
+</script>
+
+</body>
+</html>

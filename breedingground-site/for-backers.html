@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Backers — SN20 Breeding Ground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #161a14; --bg-lift: #1d231a; --bg-panel: #212820; --bg-deep: #11150f;
+    --ink: #e9e7da; --ink-soft: #a8ad9c; --ink-mute: #6f7565;
+    --lime: #c5f04a; --lime-deep: #a4cc2f; --moss: #6f8f56; --sage: #4a5c3c;
+    --clay: #d98841;
+    --line: rgba(233,231,218,0.1); --line-soft: rgba(233,231,218,0.055); --line-strong: rgba(233,231,218,0.2);
+    --serif: 'Fraunces', Georgia, serif; --sans: 'Archivo', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--lime); color: var(--bg); }
+
+  .proto { background: var(--bg-deep); color: var(--ink-mute); text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 16px; border-bottom: 1px solid var(--line-soft); }
+  .proto b { color: var(--lime-deep); font-weight: 500; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(20px, 4vw, 56px);
+    background: rgba(22,26,20,0.92); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-mark { width: 34px; height: 34px; flex-shrink: 0; }
+  .brand-txt { line-height: 1.1; }
+  .brand-txt .bn { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; }
+  .brand-txt .bs { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; color: var(--ink-mute); display: block; }
+  .nav-links { display: flex; align-items: center; gap: 2px; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 13px; color: var(--ink-soft);
+    padding: 8px 13px; border-radius: 6px; transition: background 0.16s, color 0.16s;
+  }
+  .nav-links a:hover { background: var(--bg-panel); color: var(--ink); }
+  .nav-links a.active { color: var(--lime); }
+  .nav-links a.cta {
+    background: var(--lime); color: var(--bg-deep); font-weight: 500;
+    margin-left: 8px; border-radius: 999px; padding: 9px 18px;
+  }
+  .nav-links a.cta:hover { background: #d4fb63; }
+  .nav-toggle { display: none; background: none; border: 1px solid var(--line); color: var(--ink); cursor: pointer; padding: 8px; border-radius: 6px; }
+  @media (max-width: 940px) {
+    .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 2px; background: var(--bg-lift); padding: 12px; border-bottom: 1px solid var(--line); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; }
+    .nav-links a.cta { margin-left: 0; text-align: center; margin-top: 6px; }
+    .nav-toggle { display: block; }
+  }
+
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+  .wrap-narrow { max-width: 860px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--lime-deep);
+  }
+  .eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--lime-deep); }
+
+  /* ---------- hero ---------- */
+  .bhero { position: relative; padding: clamp(54px,8vw,100px) 0 clamp(40px,5vw,58px); overflow: hidden; }
+  .bhero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 58% 56% at 76% 16%, rgba(197,240,74,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 52% 50% at 10% 92%, rgba(111,143,86,0.09) 0%, transparent 72%);
+  }
+  .bhero-inner { position: relative; max-width: 880px; }
+  .bhero h1 {
+    font-family: var(--mono); font-weight: 700; font-size: clamp(33px,4.9vw,62px);
+    line-height: 1.08; letter-spacing: -0.045em; margin: 20px 0 22px; max-width: 17ch;
+  }
+  .bhero h1 em { font-style: normal; color: var(--lime); }
+  .bhero .lede { font-size: clamp(16px,1.8vw,20px); color: var(--ink-soft); max-width: 60ch; }
+  .bhero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+
+  /* buttons */
+  .btn {
+    font-family: var(--sans); font-weight: 600; font-size: 15px; border-radius: 999px;
+    padding: 13px 26px; display: inline-flex; align-items: center; gap: 9px; cursor: pointer;
+    transition: background 0.18s, transform 0.15s, border-color 0.18s;
+  }
+  .btn .arrow { transition: transform 0.2s; }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .btn-primary { background: var(--lime); color: var(--bg-deep); border: 1px solid var(--lime); }
+  .btn-primary:hover { background: #d4fb63; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--ink-soft); }
+
+  /* ---------- section frame ---------- */
+  .sec { padding: clamp(50px,7vw,94px) 0; position: relative; }
+  .sec.alt { background: var(--bg-deep); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .sec-head { max-width: 720px; margin-bottom: 44px; }
+  .sec-head h2 { font-family: var(--mono); font-weight: 700; font-size: clamp(26px,3.5vw,40px); line-height: 1.14; letter-spacing: -0.04em; margin: 15px 0 14px; }
+  .sec-head h2 em { font-style: normal; color: var(--lime); }
+  .sec-head p { color: var(--ink-soft); font-size: 16.5px; }
+
+  /* ---------- framing band ---------- */
+  .frame {
+    border: 1px solid var(--lime); border-radius: 18px; background: var(--bg-panel);
+    padding: clamp(30px,4.4vw,52px); position: relative; overflow: hidden;
+  }
+  .frame .eyebrow { color: var(--lime); }
+  .frame h2 {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(25px,3.4vw,40px);
+    line-height: 1.18; letter-spacing: -0.02em; margin: 16px 0 14px; max-width: 24ch;
+  }
+  .frame h2 em { font-style: italic; color: var(--lime); }
+  .frame p { font-size: 16px; color: var(--ink-soft); max-width: 64ch; }
+  .frame p + p { margin-top: 12px; }
+  .frame p strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- two ways to back ---------- */
+  .ways-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 800px) { .ways-grid { grid-template-columns: 1fr; } }
+  .way {
+    border: 1px solid var(--line); border-radius: 16px; background: var(--bg-lift);
+    padding: clamp(26px,3.2vw,38px); position: relative; overflow: hidden;
+  }
+  .way::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--lime); }
+  .way-tag {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 700; padding: 5px 11px; border-radius: 5px; display: inline-block;
+    background: var(--lime); color: var(--bg-deep);
+  }
+  .way h3 { font-family: var(--serif); font-size: clamp(23px,2.9vw,30px); font-weight: 600; letter-spacing: -0.015em; margin: 15px 0 6px; }
+  .way .way-sub { font-size: 14px; color: var(--ink-mute); margin-bottom: 22px; }
+  .way-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+  .way-row { display: grid; grid-template-columns: 22px minmax(0,1fr); gap: 11px; align-items: start; }
+  .way-row .way-ic { margin-top: 2px; flex-shrink: 0; }
+  .way-row p { font-size: 14px; color: var(--ink-soft); }
+  .way-row p b { color: var(--ink); font-weight: 600; }
+  .way-foot {
+    margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 12.5px; line-height: 1.6; color: var(--lime-deep);
+  }
+
+  /* ---------- how it pays ---------- */
+  .pays-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  @media (max-width: 860px) { .pays-grid { grid-template-columns: 1fr; } }
+  .pays {
+    border: 1px solid var(--line); border-radius: 13px; background: var(--bg-lift);
+    padding: 26px 26px; transition: border-color 0.18s, transform 0.18s;
+  }
+  .pays:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+  .pays-ic {
+    width: 40px; height: 40px; border-radius: 10px; background: var(--bg-panel);
+    border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
+    color: var(--lime); margin-bottom: 14px;
+  }
+  .pays h4 { font-family: var(--sans); font-size: 16px; font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
+  .pays p { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* ---------- timeline of a backer position ---------- */
+  .blife { display: flex; flex-direction: column; }
+  .blife-item {
+    display: grid; grid-template-columns: 150px minmax(0,1fr); gap: clamp(16px,3vw,38px);
+    padding: 24px 0; border-top: 1px solid var(--line);
+  }
+  .blife-item:first-child { border-top: none; }
+  @media (max-width: 680px) { .blife-item { grid-template-columns: 1fr; gap: 8px; } }
+  .blife-when { font-family: var(--mono); font-size: 12px; color: var(--lime-deep); letter-spacing: 0.04em; padding-top: 4px; }
+  .blife-body h3 { font-family: var(--serif); font-size: 20px; font-weight: 600; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .blife-body p { font-size: 14.5px; color: var(--ink-soft); max-width: 62ch; }
+
+  /* ---------- alignment band ---------- */
+  .align-band {
+    border: 1px solid var(--line-strong); border-radius: 18px; background: var(--bg-lift);
+    padding: clamp(32px,4.6vw,56px); text-align: center;
+  }
+  .align-band .eyebrow { justify-content: center; }
+  .align-band h2 {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(26px,3.6vw,42px);
+    line-height: 1.16; letter-spacing: -0.02em; margin: 16px auto 16px; max-width: 22ch;
+  }
+  .align-band h2 em { font-style: italic; color: var(--lime); }
+  .align-band > p { font-size: 16px; color: var(--ink-soft); max-width: 60ch; margin: 0 auto 30px; }
+  .align-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; text-align: left; }
+  @media (max-width: 760px) { .align-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 460px) { .align-grid { grid-template-columns: 1fr; } }
+  .align-card { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-panel); padding: 20px 20px; }
+  .align-card .ac-who { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lime-deep); margin-bottom: 8px; }
+  .align-card p { font-size: 13px; color: var(--ink-soft); }
+
+  /* ---------- honest risks ---------- */
+  .risks {
+    border: 1px solid var(--line-strong); border-left: 3px solid var(--clay);
+    border-radius: 14px; background: var(--bg-lift); padding: clamp(26px,3.4vw,40px);
+  }
+  .risks .eyebrow { color: var(--clay); }
+  .risks .eyebrow::before { background: var(--clay); }
+  .risks h3 { font-family: var(--serif); font-size: clamp(22px,2.9vw,30px); font-weight: 600; margin: 14px 0 18px; letter-spacing: -0.015em; }
+  .risk-rows { display: flex; flex-direction: column; }
+  .risk-row {
+    display: grid; grid-template-columns: 200px minmax(0,1fr); gap: clamp(14px,2.5vw,28px);
+    padding: 15px 0; border-top: 1px solid var(--line);
+  }
+  .risk-row:first-child { border-top: none; padding-top: 0; }
+  @media (max-width: 600px) { .risk-row { grid-template-columns: 1fr; gap: 5px; } }
+  .risk-what { font-family: var(--mono); font-size: 13px; color: var(--clay); font-weight: 500; }
+  .risk-why { font-size: 14px; color: var(--ink-soft); }
+  .risk-why b { color: var(--ink); font-weight: 600; }
+  .risk-close {
+    margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-size: 14.5px; color: var(--ink);
+  }
+
+  /* ---------- cta ---------- */
+  .cta-box {
+    border: 1px solid var(--line-strong); border-radius: 20px; background: var(--bg-lift);
+    padding: clamp(38px,5vw,66px); text-align: center;
+  }
+  .cta-box .eyebrow { justify-content: center; }
+  .cta-box h2 { font-family: var(--mono); font-weight: 700; font-size: clamp(25px,3.4vw,42px); letter-spacing: -0.04em; margin: 15px auto 14px; max-width: 20ch; line-height: 1.15; }
+  .cta-box p { font-size: 16px; color: var(--ink-soft); max-width: 52ch; margin: 0 auto 28px; }
+  .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cta-meta { margin-top: 22px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); letter-spacing: 0.04em; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 36px 0; }
+  .foot-grid { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  footer p { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-mute); }
+
+  /* ---------- reveal ---------- */
+  .js-anim .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .js-anim .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .js-anim .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+
+<div class="proto">Prototype preview &nbsp;·&nbsp; <b>concept demonstration</b> &nbsp;·&nbsp; figures illustrative, not financial advice</div>
+
+<nav>
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="34" height="34" rx="8" fill="#c5f04a"/>
+      <path d="M17 26V13M17 17C13 14.5 9.5 16 9.5 16M17 19.5C21 17 24.5 18.5 24.5 18.5" stroke="#161a14" stroke-width="2.1" stroke-linecap="round"/>
+      <circle cx="17" cy="10.5" r="2.6" fill="#161a14"/>
+    </svg>
+    <span class="brand-txt">
+      <span class="bn">SN20</span>
+      <span class="bs">BREEDING&nbsp;GROUND</span>
+    </span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">/home</a>
+    <a href="index.html#how">/how-it-works</a>
+    <a href="for-teams.html">/for-teams</a>
+    <a href="for-backers.html" class="active">/for-backers</a>
+    <a href="partners.html">/partners</a>
+    <a href="incubations.html">/intake-01</a>
+    <a href="apply.html" class="cta">Apply</a>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="bhero">
+  <div class="bhero-bg"></div>
+  <div class="wrap bhero-inner">
+    <span class="eyebrow reveal">For backers</span>
+    <h1 class="reveal">Back the engine — <em>not a single bet</em>.</h1>
+    <p class="lede reveal">Most ways into early Bittensor ask you to pick one project and hope. Breeding Ground is built differently: one position can give you exposure to every subnet the program graduates. Here is how backing works, what it pays, and what can go wrong.</p>
+    <div class="bhero-actions reveal">
+      <a href="flywheel.html" class="btn btn-primary">Model the flywheel <span class="arrow">→</span></a>
+      <a href="#two-ways" class="btn btn-ghost">The two ways to back</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHAT BACKING IS ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="frame reveal">
+      <span class="eyebrow">What you're really backing</span>
+      <h2>You're not betting on one subnet. <em>You're backing how they're made.</em></h2>
+      <p>Early-stage crypto usually forces a choice: study a dozen projects, pick one, and absorb the full risk if you are wrong. It rewards luck as much as judgment.</p>
+      <p>Breeding Ground turns that around. SN20 is the program that funds, supports, and launches new Bittensor subnets — and it is engineered so that <strong>the people who back it grow with every subnet it graduates</strong>. You can still back a single team if you have conviction. But you can also simply back the engine, and let a whole portfolio of graduates compound behind one position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TWO WAYS TO BACK ================= -->
+<section class="sec alt" id="two-ways">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The two ways to back</span>
+      <h2>Hold the engine, or <em>back a team</em>.</h2>
+      <p>There are two distinct ways to take a position. They are not mutually exclusive — many backers will do both.</p>
+    </div>
+
+    <div class="ways-grid">
+      <!-- hold SN20 -->
+      <div class="way reveal">
+        <span class="way-tag">Way 01 · Hold SN20</span>
+        <h3>Back the whole program</h3>
+        <div class="way-sub">One position. Exposure to every graduate.</div>
+        <ul class="way-list">
+          <li class="way-row">
+            <span class="way-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p><b>Airdrops from every graduate.</b> A share of the program's carry is distributed to SN20 holders — across every subnet it graduates, as the portfolio grows.</p>
+          </li>
+          <li class="way-row">
+            <span class="way-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p><b>Buy-and-burn pressure.</b> Selection fees and program carry continuously buy SN20 on-market and destroy it — a structural reduction in supply.</p>
+          </li>
+          <li class="way-row">
+            <span class="way-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p><b>No picking winners.</b> You do not have to be right about any one team — your exposure is the program's whole output.</p>
+          </li>
+        </ul>
+        <div class="way-foot">// For backers who want broad, hands-off exposure to the program.</div>
+      </div>
+
+      <!-- back a team -->
+      <div class="way reveal">
+        <span class="way-tag">Way 02 · Back a team</span>
+        <h3>Stand behind one team</h3>
+        <div class="way-sub">Conviction in a specific subnet.</div>
+        <ul class="way-list">
+          <li class="way-row">
+            <span class="way-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p><b>Lock TAO into a team's crowdloan.</b> You back a specific team you have watched perform inside the program.</p>
+          </li>
+          <li class="way-row">
+            <span class="way-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p><b>A permanent share of emissions.</b> When the team graduates, the native crowdloan gives you a pro-rata, on-chain share of the new subnet's emissions.</p>
+          </li>
+          <li class="way-row">
+            <span class="way-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p><b>You back proof, not a pitch.</b> Teams reach their crowdloan after months of public, scored progress inside SN20.</p>
+          </li>
+        </ul>
+        <div class="way-foot">// For backers with conviction in a particular subnet.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW A POSITION PAYS ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">How a position pays</span>
+      <h2>Three ways value <em>comes back</em>.</h2>
+      <p>Whichever way you back, the return is on-chain and mechanical — not a promise. Here is where it comes from.</p>
+    </div>
+    <div class="pays-grid">
+      <div class="pays reveal">
+        <div class="pays-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 7H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <h4>Per-block emissions</h4>
+        <p>Back a team's crowdloan, and the graduated subnet pays you a continuous, on-chain emissions stream from launch.</p>
+      </div>
+      <div class="pays reveal">
+        <div class="pays-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21.4 8 14 2 9.4h7.6z"/></svg></div>
+        <h4>Airdrops from graduates</h4>
+        <p>Hold SN20, and a share of the program's carry across every graduate is airdropped to you — a diversifying stream that grows with each intake.</p>
+      </div>
+      <div class="pays reveal">
+        <div class="pays-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8M21 7v6h-6"/></svg></div>
+        <h4>Buy-and-burn pressure</h4>
+        <p>Selection fees and program carry are used to buy SN20 on-market and burn it — structural, recurring pressure on supply.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LIFE OF A BACKER POSITION ================= -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The arc</span>
+      <h2>The life of a <em>backer position</em>.</h2>
+      <p>Backing a team is not a blind early bet. It happens after a team has proven itself — and the on-chain mechanics protect you if a crowdloan falls short.</p>
+    </div>
+    <div class="blife">
+      <div class="blife-item reveal">
+        <div class="blife-when">During incubation</div>
+        <div class="blife-body">
+          <h3>You watch before you commit</h3>
+          <p>Every incubation team has a public dashboard — milestones, progress, and scoring. You see months of real performance before any crowdloan opens.</p>
+        </div>
+      </div>
+      <div class="blife-item reveal">
+        <div class="blife-when">At graduation</div>
+        <div class="blife-body">
+          <h3>You lock TAO into the crowdloan</h3>
+          <p>When a team is ready to graduate, a native Bittensor crowdloan opens to fund its subnet registration. You contribute TAO and receive a pro-rata, on-chain share of the new subnet.</p>
+        </div>
+      </div>
+      <div class="blife-item reveal">
+        <div class="blife-when">If the target is missed</div>
+        <div class="blife-body">
+          <h3>You are refunded</h3>
+          <p>If a crowdloan does not reach its target, the native pallet refunds contributors in full. Your TAO is not stranded — the team simply does not graduate on that schedule.</p>
+        </div>
+      </div>
+      <div class="blife-item reveal">
+        <div class="blife-when">After launch</div>
+        <div class="blife-body">
+          <h3>You earn from a live subnet</h3>
+          <p>Once the subnet is live, your lease share pays emissions per block — from a graduated, validated subnet, for as long as it runs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ALIGNMENT ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="align-band reveal">
+      <span class="eyebrow">Why it's built this way</span>
+      <h2>A backer only wins when <em>everyone</em> does.</h2>
+      <p>The flywheel was engineered on one rule: no party profits at another's expense. That is what makes a backer position durable rather than extractive.</p>
+      <div class="align-grid">
+        <div class="align-card">
+          <div class="ac-who">Teams</div>
+          <p>Get runway, support, and a launch — so they build real subnets worth backing.</p>
+        </div>
+        <div class="align-card">
+          <div class="ac-who">Backers</div>
+          <p>Get emissions and airdrops — from subnets that were proven before launch.</p>
+        </div>
+        <div class="align-card">
+          <div class="ac-who">SN20 holders</div>
+          <p>Get burns and airdrops — that compound as the graduate portfolio grows.</p>
+        </div>
+        <div class="align-card">
+          <div class="ac-who">The network</div>
+          <p>Gets a pipeline of vetted subnets — instead of register-and-pray launches.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HONEST RISKS ================= -->
+<section class="sec alt">
+  <div class="wrap-narrow">
+    <div class="risks reveal">
+      <span class="eyebrow">Backed by honesty</span>
+      <h3>What can go wrong — said plainly.</h3>
+      <div class="risk-rows">
+        <div class="risk-row">
+          <div class="risk-what">Subnets can fail</div>
+          <div class="risk-why">A graduated subnet can underperform or be deregistered. Emissions and airdrop value depend on real, ongoing subnet performance — <b>not every graduate will thrive</b>.</div>
+        </div>
+        <div class="risk-row">
+          <div class="risk-what">Crowdloans can fall short</div>
+          <div class="risk-why">If a team's crowdloan target is not met, contributors are <b>fully refunded</b> by the native pallet — but that team does not graduate on schedule.</div>
+        </div>
+        <div class="risk-row">
+          <div class="risk-what">Registration cost is dynamic</div>
+          <div class="risk-why">The TAO burn to register a subnet moves with network demand. Crowdloan targets are sized with a live buffer, which means the <b>target itself can move</b>.</div>
+        </div>
+        <div class="risk-row">
+          <div class="risk-what">Models are not forecasts</div>
+          <div class="risk-why">The flywheel calculator is an illustrative tool. Real returns depend on intake quality, subnet emissions, and the TAO price — <b>none of which are guaranteed</b>.</div>
+        </div>
+      </div>
+      <p class="risk-close">Backing early-stage anything carries risk. What Breeding Ground changes is the shape of it — you back proven teams, the mechanics are on-chain, and a missed crowdloan refunds you. It does not remove the risk; it makes it honest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <span class="eyebrow">Get involved</span>
+      <h2>Back the engine that grows Bittensor's next subnets.</h2>
+      <p>Model what a year of graduations returns, or look at the teams already in the program.</p>
+      <div class="cta-actions">
+        <a href="flywheel.html" class="btn btn-primary">Model the flywheel <span class="arrow">→</span></a>
+        <a href="incubations.html" class="btn btn-ghost">See Intake 01 teams</a>
+      </div>
+      <div class="cta-meta">INTAKE_01 · APPLICATIONS OPEN 2026.06.11</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="8" fill="#c5f04a"/>
+        <path d="M17 26V13M17 17C13 14.5 9.5 16 9.5 16M17 19.5C21 17 24.5 18.5 24.5 18.5" stroke="#161a14" stroke-width="2.1" stroke-linecap="round"/>
+        <circle cx="17" cy="10.5" r="2.6" fill="#161a14"/>
+      </svg>
+      <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+    </a>
+    <p>© 2026 SN20 BREEDING GROUND · BUILT FOR BITTENSOR · PROTOTYPE — FIGURES ILLUSTRATIVE</p>
+  </div>
+</footer>
+
+<script>
+  document.body.classList.add('js-anim');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        const sibs = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = Math.max(0, sibs.indexOf(e.target));
+        e.target.style.transitionDelay = (idx * 0.07) + 's';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -7% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
+  document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+</script>
+
+</body>
+</html>

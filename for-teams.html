@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Teams — SN20 Breeding Ground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #161a14; --bg-lift: #1d231a; --bg-panel: #212820; --bg-deep: #11150f;
+    --ink: #e9e7da; --ink-soft: #a8ad9c; --ink-mute: #6f7565;
+    --lime: #c5f04a; --lime-deep: #a4cc2f; --moss: #6f8f56; --sage: #4a5c3c;
+    --clay: #d98841;
+    --line: rgba(233,231,218,0.1); --line-soft: rgba(233,231,218,0.055); --line-strong: rgba(233,231,218,0.2);
+    --serif: 'Fraunces', Georgia, serif; --sans: 'Archivo', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--lime); color: var(--bg); }
+
+  .proto { background: var(--bg-deep); color: var(--ink-mute); text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 16px; border-bottom: 1px solid var(--line-soft); }
+  .proto b { color: var(--lime-deep); font-weight: 500; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(20px, 4vw, 56px);
+    background: rgba(22,26,20,0.92); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-mark { width: 34px; height: 34px; flex-shrink: 0; }
+  .brand-txt { line-height: 1.1; }
+  .brand-txt .bn { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; }
+  .brand-txt .bs { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; color: var(--ink-mute); display: block; }
+  .nav-links { display: flex; align-items: center; gap: 6px; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 13px; color: var(--ink-soft);
+    padding: 8px 12px; border-radius: 7px; transition: color 0.15s, background 0.15s;
+  }
+  .nav-links a:hover { color: var(--ink); background: var(--line-soft); }
+  .nav-links a.active { color: var(--lime); }
+  .nav-links a.cta { background: var(--lime); color: var(--bg-deep); font-weight: 700; }
+  .nav-links a.cta:hover { background: #d4fb63; color: var(--bg-deep); }
+  .nav-toggle { display: none; background: none; border: none; color: var(--ink); cursor: pointer; }
+  @media (max-width: 880px) {
+    .nav-toggle { display: block; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 2px;
+      background: var(--bg); border-bottom: 1px solid var(--line);
+      padding: 12px clamp(20px,4vw,56px) 18px; display: none;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 11px 12px; }
+  }
+
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+  .wrap-narrow { max-width: 860px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--lime-deep);
+  }
+  .eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--lime-deep); }
+
+  /* ---------- hero ---------- */
+  .fhero { position: relative; padding: clamp(54px,8vw,100px) 0 clamp(40px,5vw,58px); overflow: hidden; }
+  .fhero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 58% 56% at 76% 16%, rgba(197,240,74,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 52% 50% at 10% 92%, rgba(111,143,86,0.09) 0%, transparent 72%);
+  }
+  .fhero-inner { position: relative; max-width: 880px; }
+  .fhero h1 {
+    font-family: var(--mono); font-weight: 700; font-size: clamp(33px,4.9vw,62px);
+    line-height: 1.08; letter-spacing: -0.045em; margin: 20px 0 22px; max-width: 17ch;
+  }
+  .fhero h1 em { font-style: normal; color: var(--lime); }
+  .fhero .lede { font-size: clamp(16px,1.8vw,20px); color: var(--ink-soft); max-width: 60ch; }
+  .fhero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+
+  /* buttons */
+  .btn {
+    font-family: var(--sans); font-weight: 600; font-size: 15px; border-radius: 999px;
+    padding: 13px 26px; display: inline-flex; align-items: center; gap: 9px; cursor: pointer;
+    transition: background 0.18s, transform 0.15s, border-color 0.18s;
+  }
+  .btn .arrow { transition: transform 0.2s; }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .btn-primary { background: var(--lime); color: var(--bg-deep); border: 1px solid var(--lime); }
+  .btn-primary:hover { background: #d4fb63; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--ink-soft); }
+
+  /* ---------- section frame ---------- */
+  .sec { padding: clamp(50px,7vw,94px) 0; position: relative; }
+  .sec.alt { background: var(--bg-deep); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .sec-head { max-width: 720px; margin-bottom: 44px; }
+  .sec-head h2 { font-family: var(--mono); font-weight: 700; font-size: clamp(26px,3.5vw,40px); line-height: 1.14; letter-spacing: -0.04em; margin: 15px 0 14px; }
+  .sec-head h2 em { font-style: normal; color: var(--lime); }
+  .sec-head p { color: var(--ink-soft); font-size: 16.5px; }
+
+  /* ---------- "what you're applying for" framing band ---------- */
+  .frame {
+    border: 1px solid var(--lime); border-radius: 18px; background: var(--bg-panel);
+    padding: clamp(30px,4.4vw,52px); position: relative; overflow: hidden;
+  }
+  .frame .eyebrow { color: var(--lime); }
+  .frame h2 {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(25px,3.4vw,40px);
+    line-height: 1.18; letter-spacing: -0.02em; margin: 16px 0 14px; max-width: 24ch;
+  }
+  .frame h2 em { font-style: italic; color: var(--lime); }
+  .frame p { font-size: 16px; color: var(--ink-soft); max-width: 64ch; }
+  .frame p + p { margin-top: 12px; }
+  .frame p strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- comparison: direct vs breeding ground ---------- */
+  .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 800px) { .vs-grid { grid-template-columns: 1fr; } }
+  .vs-col {
+    border: 1px solid var(--line); border-radius: 16px; background: var(--bg-lift);
+    padding: clamp(26px,3.2vw,36px); position: relative; overflow: hidden;
+  }
+  .vs-col.bg { border-color: var(--lime); background: var(--bg-panel); }
+  .vs-col::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .vs-col.direct::before { background: var(--ink-mute); }
+  .vs-col.bg::before { background: var(--lime); }
+  .vs-tag {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 700; padding: 5px 11px; border-radius: 5px; display: inline-block;
+  }
+  .vs-col.direct .vs-tag { color: var(--ink-mute); border: 1px solid var(--line-strong); }
+  .vs-col.bg .vs-tag { background: var(--lime); color: var(--bg-deep); }
+  .vs-col h3 { font-family: var(--serif); font-size: clamp(23px,2.9vw,30px); font-weight: 600; letter-spacing: -0.015em; margin: 15px 0 6px; }
+  .vs-col .vs-sub { font-size: 14px; color: var(--ink-mute); margin-bottom: 22px; }
+  .vs-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+  .vs-row { display: grid; grid-template-columns: 22px minmax(0,1fr); gap: 11px; align-items: start; }
+  .vs-row .vs-ic { margin-top: 2px; flex-shrink: 0; }
+  .vs-row p { font-size: 14px; color: var(--ink-soft); }
+  .vs-row p b { color: var(--ink); font-weight: 600; }
+  .vs-foot {
+    margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 12.5px; line-height: 1.6;
+  }
+  .vs-col.direct .vs-foot { color: var(--ink-mute); }
+  .vs-col.bg .vs-foot { color: var(--lime-deep); }
+
+  .vs-note {
+    margin-top: 18px; font-family: var(--mono); font-size: 12px; color: var(--ink-mute);
+    text-align: center; max-width: 70ch; margin-left: auto; margin-right: auto;
+  }
+
+  /* ---------- timeline ---------- */
+  .tl { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .tl-item {
+    display: grid; grid-template-columns: 132px minmax(0,1fr); gap: clamp(16px,3vw,38px);
+    padding: 26px 0; border-top: 1px solid var(--line); position: relative;
+  }
+  .tl-item:first-child { border-top: none; }
+  @media (max-width: 680px) { .tl-item { grid-template-columns: 1fr; gap: 8px; } }
+  .tl-when {
+    font-family: var(--mono); font-size: 12px; color: var(--lime-deep);
+    letter-spacing: 0.04em; padding-top: 4px;
+  }
+  .tl-when .tl-phase { display: block; color: var(--ink-mute); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px; }
+  .tl-body h3 { font-family: var(--serif); font-size: 21px; font-weight: 600; margin-bottom: 7px; letter-spacing: -0.01em; }
+  .tl-body p { font-size: 14.5px; color: var(--ink-soft); max-width: 60ch; }
+  .tl-gate {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 11px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--lime);
+    border: 1px solid var(--line-strong); border-radius: 6px; padding: 5px 10px;
+  }
+  .tl-gate svg { flex-shrink: 0; }
+
+  /* ---------- credential band ---------- */
+  .cred-band {
+    border: 1px solid var(--line-strong); border-radius: 18px; background: var(--bg-lift);
+    padding: clamp(32px,4.6vw,58px); text-align: center;
+  }
+  .cred-band .eyebrow { justify-content: center; }
+  .cred-band h2 {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(26px,3.7vw,44px);
+    line-height: 1.15; letter-spacing: -0.02em; margin: 16px auto 16px; max-width: 20ch;
+  }
+  .cred-band h2 em { font-style: italic; color: var(--lime); }
+  .cred-band > p { font-size: 16px; color: var(--ink-soft); max-width: 58ch; margin: 0 auto 32px; }
+  .cred-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; text-align: left; }
+  @media (max-width: 760px) { .cred-grid { grid-template-columns: 1fr; } }
+  .cred-card { border: 1px solid var(--line); border-radius: 13px; background: var(--bg-panel); padding: 24px 24px; }
+  .cred-ic {
+    width: 38px; height: 38px; border-radius: 9px; background: var(--bg-deep);
+    border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
+    color: var(--lime); margin-bottom: 13px;
+  }
+  .cred-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .cred-card p { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* ---------- benefits grid ---------- */
+  .ben-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  @media (max-width: 860px) { .ben-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .ben-grid { grid-template-columns: 1fr; } }
+  .ben {
+    border: 1px solid var(--line); border-radius: 13px; background: var(--bg-lift);
+    padding: 24px 24px; transition: border-color 0.18s, transform 0.18s;
+  }
+  .ben:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+  .ben-ix { font-family: var(--mono); font-size: 11px; color: var(--lime-deep); }
+  .ben h4 { font-family: var(--sans); font-size: 16px; font-weight: 600; margin: 11px 0 8px; line-height: 1.3; }
+  .ben p { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* ---------- the honest trade ---------- */
+  .trade {
+    border: 1px solid var(--line-strong); border-left: 3px solid var(--clay);
+    border-radius: 14px; background: var(--bg-lift); padding: clamp(26px,3.4vw,40px);
+  }
+  .trade .eyebrow { color: var(--clay); }
+  .trade .eyebrow::before { background: var(--clay); }
+  .trade h3 { font-family: var(--serif); font-size: clamp(22px,2.9vw,30px); font-weight: 600; margin: 14px 0 18px; letter-spacing: -0.015em; }
+  .trade-rows { display: flex; flex-direction: column; }
+  .trade-row {
+    display: grid; grid-template-columns: 168px minmax(0,1fr); gap: clamp(14px,2.5vw,28px);
+    padding: 16px 0; border-top: 1px solid var(--line);
+  }
+  .trade-row:first-child { border-top: none; padding-top: 0; }
+  @media (max-width: 600px) { .trade-row { grid-template-columns: 1fr; gap: 5px; } }
+  .trade-cost { font-family: var(--mono); font-size: 13px; color: var(--clay); font-weight: 500; }
+  .trade-why { font-size: 14px; color: var(--ink-soft); }
+  .trade-why b { color: var(--ink); font-weight: 600; }
+  .trade-close {
+    margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-size: 14.5px; color: var(--ink);
+  }
+
+  /* ---------- buyback callout ---------- */
+  .buyback {
+    border: 1px solid var(--lime); border-radius: 18px; background: var(--bg-panel);
+    padding: clamp(30px,4.2vw,50px); position: relative; overflow: hidden;
+  }
+  .buyback .eyebrow { color: var(--lime); }
+  .buyback h2 {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(25px,3.4vw,40px);
+    line-height: 1.18; letter-spacing: -0.02em; margin: 16px 0 14px; max-width: 22ch;
+  }
+  .buyback h2 em { font-style: italic; color: var(--lime); }
+  .buyback > p { font-size: 16px; color: var(--ink-soft); max-width: 64ch; }
+  .buyback > p + p { margin-top: 12px; }
+  .buyback > p strong { color: var(--ink); font-weight: 600; }
+  .bb-example {
+    display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: start;
+    margin-top: 24px; border: 1px solid var(--line-strong); border-radius: 12px;
+    background: var(--bg-deep); padding: 22px 24px;
+  }
+  @media (max-width: 540px) { .bb-example { grid-template-columns: 1fr; } }
+  .bb-example-ic {
+    width: 48px; height: 48px; border-radius: 11px; background: var(--bg-panel);
+    border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
+    color: var(--lime);
+  }
+  .bb-example .bb-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime-deep); margin-bottom: 6px; }
+  .bb-example p { font-size: 14.5px; color: var(--ink-soft); }
+  .bb-example p b { color: var(--ink); font-weight: 600; }
+  .bb-note { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); margin-top: 16px; }
+
+  /* ---------- funded-team note ---------- */
+  .funded {
+    border: 1px solid var(--line); border-radius: 14px; background: var(--bg-panel);
+    padding: clamp(24px,3.2vw,36px); display: grid; grid-template-columns: 44px 1fr; gap: 18px;
+  }
+  @media (max-width: 560px) { .funded { grid-template-columns: 1fr; } }
+  .funded-ic {
+    width: 44px; height: 44px; border-radius: 11px; background: var(--bg-deep);
+    border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
+    color: var(--lime);
+  }
+  .funded h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .funded p { font-size: 14px; color: var(--ink-soft); }
+  .funded p + p { margin-top: 9px; }
+
+  /* ---------- eligibility ---------- */
+  .elig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .elig-grid { grid-template-columns: 1fr; } }
+  .elig {
+    border: 1px solid var(--line); border-radius: 14px; background: var(--bg-lift); padding: 28px 28px;
+  }
+  .elig h3 { font-size: 16px; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 9px; }
+  .elig.fit h3 { color: var(--lime); }
+  .elig.nofit h3 { color: var(--ink-soft); }
+  .elig ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .elig li { font-size: 14px; color: var(--ink-soft); display: grid; grid-template-columns: 18px minmax(0,1fr); gap: 9px; }
+  .elig.fit li::before { content: '✓'; color: var(--lime); font-weight: 700; }
+  .elig.nofit li::before { content: '—'; color: var(--ink-mute); font-weight: 700; }
+
+  /* ---------- cta ---------- */
+  .cta-box {
+    border: 1px solid var(--line-strong); border-radius: 20px; background: var(--bg-lift);
+    padding: clamp(38px,5vw,66px); text-align: center;
+  }
+  .cta-box .eyebrow { justify-content: center; }
+  .cta-box h2 { font-family: var(--mono); font-weight: 700; font-size: clamp(25px,3.4vw,42px); letter-spacing: -0.04em; margin: 15px auto 14px; max-width: 20ch; line-height: 1.15; }
+  .cta-box p { font-size: 16px; color: var(--ink-soft); max-width: 50ch; margin: 0 auto 28px; }
+  .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cta-meta { margin-top: 22px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); letter-spacing: 0.04em; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 36px 0; }
+  .foot-grid { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  footer p { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-mute); }
+
+  /* ---------- reveal ---------- */
+  .js-anim .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .js-anim .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="proto">SN20 Breeding Ground &nbsp;·&nbsp; <b>concept demonstration</b> &nbsp;·&nbsp; prototype</div>
+
+<nav>
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="34" height="34" rx="8" fill="#c5f04a"/><path d="M17 26V13M17 17C13 14.5 9.5 16 9.5 16M17 19.5C21 17 24.5 18.5 24.5 18.5" stroke="#161a14" stroke-width="2.1" stroke-linecap="round"/><circle cx="17" cy="10.5" r="2.6" fill="#161a14"/></svg>
+    <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">/home</a>
+    <a href="index.html#how">/how-it-works</a>
+    <a href="for-teams.html" class="active">/for-teams</a>
+    <a href="for-backers.html">/for-backers</a>
+    <a href="partners.html">/partners</a>
+    <a href="incubations.html">/intake-01</a>
+    <a href="apply.html" class="cta">Apply</a>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="fhero">
+  <div class="fhero-bg"></div>
+  <div class="wrap fhero-inner">
+    <span class="eyebrow reveal">For teams</span>
+    <h1 class="reveal">Anyone can register a subnet. <em>Far fewer survive one.</em></h1>
+    <p class="lede reveal">Breeding Ground is not a grant and it is not a shortcut. It is a six-month program that takes a serious team and makes it a launch the market has already decided to back. If you could fund your own subnet tomorrow — this page is written for you.</p>
+    <div class="fhero-actions reveal">
+      <a href="apply.html" class="btn btn-primary">Apply to the intake <span class="arrow">→</span></a>
+      <a href="#compare" class="btn btn-ghost">Why not just go direct?</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHAT YOU'RE APPLYING FOR ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="frame reveal">
+      <span class="eyebrow">What you're really applying for</span>
+      <h2>A subnet is the <em>finish line</em> — not the program.</h2>
+      <p>It is easy to read "incubator" as "help getting a subnet." That undersells it. The subnet registration is the last step, and it is the easy step — it is a transaction anyone with the capital can complete.</p>
+      <p>What you are applying for is the <strong>six months before that transaction</strong>: a structured program that pressure-tests your incentive design, builds you a real miner and validator community, gives you operating runway, and puts you in front of the market — so that when you do register, you launch as a <strong>proven subnet</strong> instead of a hopeful one. And you graduate with something you cannot buy: the Breeding Ground credential.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DIRECT VS BREEDING GROUND ================= -->
+<section class="sec alt" id="compare">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The real decision</span>
+      <h2>Register alone, or <em>graduate</em>.</h2>
+      <p>Both paths end with your own subnet. They are not the same launch. Here is the honest comparison — including what each path costs you.</p>
+    </div>
+
+    <div class="vs-grid">
+      <!-- direct -->
+      <div class="vs-col direct reveal">
+        <span class="vs-tag">Path A · Register direct</span>
+        <h3>You launch alone</h3>
+        <div class="vs-sub">Fund the registration yourself and go live.</div>
+        <ul class="vs-list">
+          <li class="vs-row">
+            <span class="vs-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a8ad9c" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></span>
+            <p><b>You keep 100%.</b> No carry, no program. The whole subnet is yours.</p>
+          </li>
+          <li class="vs-row">
+            <span class="vs-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6f7565" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2 18a2 2 0 001.7 3h16.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg></span>
+            <p>You spend <b>~$1M+ of your own capital</b> to find out if the design works — before anyone has validated it.</p>
+          </li>
+          <li class="vs-row">
+            <span class="vs-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6f7565" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2 18a2 2 0 001.7 3h16.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg></span>
+            <p>You hit the <b>cold-start problem</b> live: no miners, no validators, no liquidity, in public.</p>
+          </li>
+          <li class="vs-row">
+            <span class="vs-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6f7565" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2 18a2 2 0 001.7 3h16.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg></span>
+            <p>Your incentive mechanism meets real adversaries with <b>no prior review</b>. Most design flaws surface here.</p>
+          </li>
+          <li class="vs-row">
+            <span class="vs-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6f7565" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2 18a2 2 0 001.7 3h16.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg></span>
+            <p>You launch as <b>an unknown</b> — no track record, no signal that tells backers you are worth the risk.</p>
+          </li>
+        </ul>
+        <div class="vs-foot">// Outcome: a subnet, and every hard problem at once.</div>
+      </div>
+
+      <!-- breeding ground -->
+      <div class="vs-col bg reveal">
+        <span class="vs-tag">Path B · Graduate from Breeding Ground</span>
+        <h3>You launch validated</h3>
+        <div class="vs-sub">Six months of de-risking, then your own subnet.</div>
+        <ul class="vs-list">
+          <li class="vs-row">
+            <span class="vs-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p>Your incentive design is <b>reviewed and hardened</b> inside SN20 before it ever carries real weight.</p>
+          </li>
+          <li class="vs-row">
+            <span class="vs-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p>You solve <b>cold-start during incubation</b> — running on proven infrastructure, with miners and validators already engaged.</p>
+          </li>
+          <li class="vs-row">
+            <span class="vs-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p>You earn <b>operating runway as a miner</b> in your own slot — Bittensor-native capital, not a depleting bank account.</p>
+          </li>
+          <li class="vs-row">
+            <span class="vs-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p>You launch <b>market-funded</b>: backers watched you perform for six months and put real TAO behind you.</p>
+          </li>
+          <li class="vs-row">
+            <span class="vs-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5f04a" stroke-width="2.4"><path d="M5 12l5 5L20 6"/></svg></span>
+            <p>You graduate <b>with the credential</b> — a public signal that you were vetted, you performed, and you cleared every gate.</p>
+          </li>
+        </ul>
+        <div class="vs-foot">// Outcome: a subnet the market has already decided to back.</div>
+      </div>
+    </div>
+
+    <p class="vs-note reveal">Path B is not free. You give the program a carry on the graduated subnet and you spend six months in it — see "The honest trade" below. But the carry is not necessarily permanent: your contract includes an option to buy half of it back at a fixed price. The question is whether de-risked, validated, and funded is worth the trade. For most teams, it is.</p>
+  </div>
+</section>
+
+<!-- ================= THE CREDENTIAL ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="cred-band reveal">
+      <span class="eyebrow">Why graduation matters</span>
+      <h2>"They came through Breeding Ground" should <em>mean</em> something.</h2>
+      <p>The strongest reason to choose this path has nothing to do with money. It is what graduation signals to everyone you will need after launch — backers, validators, miners, exchanges.</p>
+      <div class="cred-grid">
+        <div class="cred-card">
+          <div class="cred-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21.4 8 14 2 9.4h7.6z"/></svg></div>
+          <h4>Vetted, not assumed</h4>
+          <p>You were selected from a competitive intake and judged at every milestone gate. Graduation is earned — and that is exactly what makes it worth something.</p>
+        </div>
+        <div class="cred-card">
+          <div class="cred-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8M21 7v6h-6"/></svg></div>
+          <h4>Proven, not promised</h4>
+          <p>Your subnet ran for six months and produced real results before launch. Backers are funding evidence, not a pitch deck.</p>
+        </div>
+        <div class="cred-card">
+          <div class="cred-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM22 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8"/></svg></div>
+          <h4>Backed, not alone</h4>
+          <p>You launch attached to a program of operators and partners. The ecosystem reads that as a reason to take you seriously.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TIMELINE ================= -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The full timeline</span>
+      <h2>From application to your <em>own subnet</em>.</h2>
+      <p>The selection process is three steps. The program itself is longer — here is the whole arc, so you know exactly what you are committing to.</p>
+    </div>
+
+    <div class="tl">
+      <div class="tl-item reveal">
+        <div class="tl-when">Week 0<span class="tl-phase">Apply</span></div>
+        <div class="tl-body">
+          <h3>You apply</h3>
+          <p>You submit your idea, incentive mechanism, team, and progress. About fifteen minutes. Every applicant hears back.</p>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">Weeks 1–3<span class="tl-phase">Select</span></div>
+        <div class="tl-body">
+          <h3>Selection &amp; agreement</h3>
+          <p>Review, then an interview with the selection team. Selected teams choose a funding tier and sign a selection agreement — carry terms and milestone schedule are set in writing before anything starts.</p>
+          <span class="tl-gate"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg> Gate: a slot in the intake</span>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">Months 1–2<span class="tl-phase">Incubate</span></div>
+        <div class="tl-body">
+          <h3>Onboard &amp; build</h3>
+          <p>Your incubation slot inside SN20 goes live. Infrastructure, validation, and incentive-design review switch on. Your public team page goes up, and you begin earning runway as a miner in your own slot.</p>
+          <span class="tl-gate"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg> Gate: subnet design live &amp; validated</span>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">Months 2–8<span class="tl-phase">Incubate</span></div>
+        <div class="tl-body">
+          <h3>Hit milestones &amp; attract backers</h3>
+          <p>You execute against your milestone schedule, scored publicly on your dashboard. Marketing runs under both your brand and the Breeding Ground banner. Backers lock TAO behind you as you prove the work.</p>
+          <span class="tl-gate"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg> Gate: graduation-readiness</span>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">Month 6–9<span class="tl-phase">Graduate</span></div>
+        <div class="tl-body">
+          <h3>Graduate &amp; launch</h3>
+          <p>A native Bittensor crowdloan funds your subnet's registration. You get your own netuid — fully yours to run. Backers receive their share of emissions; the program keeps its carry.</p>
+          <span class="tl-gate"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg> Gate: independent subnet live</span>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">Months 1–10+<span class="tl-phase">Hand-off</span></div>
+        <div class="tl-body">
+          <h3>Tapered hand-off</h3>
+          <p>Support steps down on a schedule you know in advance: full support for months 1–3, advisory for months 4–9, fully independent from month 10. You are never dropped, and never held longer than you need.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHAT YOU GET ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">What you get</span>
+      <h2>Six months of things that are <em>hard to buy</em>.</h2>
+      <p>Capital is the easy part. These are the inputs that actually move your odds of survival — and most of them cannot be bought at any price as a solo team.</p>
+    </div>
+    <div class="ben-grid">
+      <div class="ben reveal">
+        <span class="ben-ix">01</span>
+        <h4>A proving ground, before the stakes are real</h4>
+        <p>An incubation slot inside SN20 where your mechanism runs, is scored, and is hardened — without a live subnet's consequences.</p>
+      </div>
+      <div class="ben reveal">
+        <span class="ben-ix">02</span>
+        <h4>Infrastructure that already exists</h4>
+        <p>Bare-metal compute, 24/7 operation, and validation run by Rizzo. You build on a foundation, not a promise.</p>
+      </div>
+      <div class="ben reveal">
+        <span class="ben-ix">03</span>
+        <h4>Runway you earn, not burn</h4>
+        <p>You mine your own slot for Bittensor-native operating capital — instead of draining a bank account to stay alive.</p>
+      </div>
+      <div class="ben reveal">
+        <span class="ben-ix">04</span>
+        <h4>Dual marketing</h4>
+        <p>Promoted under your own brand and the Breeding Ground banner — a live public dashboard, content, and ecosystem reach.</p>
+      </div>
+      <div class="ben reveal">
+        <span class="ben-ix">05</span>
+        <h4>A market-funded launch</h4>
+        <p>A native crowdloan funds your registration. You do not front ~$1M+ alone, and the raise itself is proof of demand.</p>
+      </div>
+      <div class="ben reveal">
+        <span class="ben-ix">06</span>
+        <h4>Operators and partners around you</h4>
+        <p>Advisory from teams who run live subnets, plus strategic partners covering legal, compute, security and more — all part of the program.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THE HONEST TRADE ================= -->
+<section class="sec alt">
+  <div class="wrap-narrow">
+    <div class="trade reveal">
+      <span class="eyebrow">The honest trade</span>
+      <h3>What it costs you — said plainly.</h3>
+      <div class="trade-rows">
+        <div class="trade-row">
+          <div class="trade-cost">A carry on the subnet</div>
+          <div class="trade-why">The program keeps <b>15% of owner emissions</b> if you pay the selection fee, or <b>25%</b> if it funds your registration — the price of the program having real skin in your outcome. It is not necessarily forever: see the buyback option below.</div>
+        </div>
+        <div class="trade-row">
+          <div class="trade-cost">Six to nine months</div>
+          <div class="trade-why">You could register tomorrow. Instead you spend the program proving the design first. The time <b>is</b> the de-risking — it is not a delay, it is the work.</div>
+        </div>
+        <div class="trade-row">
+          <div class="trade-cost">Milestone accountability</div>
+          <div class="trade-why">You are scored at every gate, in public, on your dashboard. A team that misses a gate is held, re-scoped, or exits. <b>Graduation is earned</b> — which is the only reason it signals anything.</div>
+        </div>
+      </div>
+      <p class="trade-close">If those costs feel steep, that is the point — they are what make the credential real. A program anyone walks out of with a subnet would not be worth graduating from.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BUYBACK ================= -->
+<section class="sec">
+  <div class="wrap-narrow">
+    <div class="buyback reveal">
+      <span class="eyebrow">The buyback option</span>
+      <h2>The carry isn't a forever-tax. <em>You can buy half of it back.</em></h2>
+      <p>Every incubation team signs a contract with the program. Built into that contract is a <strong>buyback right</strong>: once your subnet is live, you have the option to repurchase <strong>half of the equity you gave up</strong> — at a fixed price, set in advance, inside a defined window after launch.</p>
+      <p>It changes what the carry is. Instead of a permanent share, it becomes <strong>convertible support</strong> — the program backs you when the risk is highest, and if you succeed, you have a known, pre-agreed path to take a large part of that stake back. The program keeps the other half, so it stays aligned with you for the long run. A program that offers a buyback is telling you something: it expects you to do well enough to want one.</p>
+      <div class="bb-example">
+        <div class="bb-example-ic">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 12a9 9 0 0115-6.7L21 8M21 3v5h-5M21 12a9 9 0 01-15 6.7L3 16M3 21v-5h5"/></svg>
+        </div>
+        <div>
+          <div class="bb-label">For example</div>
+          <p>Within the first <b>12 months</b> of your subnet going live, you could buy back <b>half of the program's equity</b> for a fixed sum — for instance, on the order of <b>$100k</b>. The exact price and window are set in your selection agreement.</p>
+        </div>
+      </div>
+      <p class="bb-note">// Buyback price and window are set per agreement. The figures above are illustrative — your contract defines the committed terms.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ALREADY FUNDED ================= -->
+<section class="sec alt">
+  <div class="wrap-narrow">
+    <div class="funded reveal">
+      <div class="funded-ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      </div>
+      <div>
+        <h3>"We can already fund our own subnet."</h3>
+        <p>Then you are exactly the kind of team this program wants — and you should still apply. The program does not change for funded teams: you run the same six months, hit the same gates, and graduate with the same credential. What changes is the crowdloan — for a well-capitalised team it becomes a smaller raise, or a confidence signal, rather than a necessity.</p>
+        <p>And the relationship runs both ways. When a team performs, the program backs it — that can include the program and its partners investing directly. The carry is not a tax on a team that has options: with the buyback right, a well-capitalised team can take half of it back at a fixed price once live. Going through Breeding Ground is how a team with options arrives at launch already de-risked, already validated, and already backed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= IS THIS FOR YOU ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Is this for you</span>
+      <h2>An honest fit check.</h2>
+      <p>Breeding Ground is built for a specific kind of team. It is better to know now.</p>
+    </div>
+    <div class="elig-grid">
+      <div class="elig fit reveal">
+        <h3>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12l5 5L20 6"/></svg>
+          A strong fit if you
+        </h3>
+        <ul>
+          <li>Have a real, specific idea for a Bittensor subnet — not just an intent to build one</li>
+          <li>Can name how miners are rewarded and how validators score them</li>
+          <li>Want your launch de-risked, even though it means a carry and six months</li>
+          <li>See the value in a credential the market recognises</li>
+          <li>Are ready to be measured, in public, at every milestone</li>
+        </ul>
+      </div>
+      <div class="elig nofit reveal">
+        <h3>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          Probably not yet if you
+        </h3>
+        <ul>
+          <li>Want capital with no program, no gates, and no accountability</li>
+          <li>Are not willing to share any carry on the graduated subnet</li>
+          <li>Need to launch in weeks, not months</li>
+          <li>Have an intent to build but no concrete subnet design yet</li>
+          <li>Would rather not be evaluated against milestones in public</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <span class="eyebrow">Apply</span>
+      <h2>Launch as a proven subnet — not a hopeful one.</h2>
+      <p>The intake is eight teams. The application takes about fifteen minutes, and every team that applies hears back.</p>
+      <div class="cta-actions">
+        <a href="apply.html" class="btn btn-primary">Apply to the intake <span class="arrow">→</span></a>
+        <a href="incubations.html" class="btn btn-ghost">See teams already in</a>
+      </div>
+      <div class="cta-meta">8 SLOTS · 6-MONTH PROGRAM · APPLICATIONS CLOSE JUNE 11</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="34" height="34" rx="8" fill="#c5f04a"/><path d="M17 26V13M17 17C13 14.5 9.5 16 9.5 16M17 19.5C21 17 24.5 18.5 24.5 18.5" stroke="#161a14" stroke-width="2.1" stroke-linecap="round"/><circle cx="17" cy="10.5" r="2.6" fill="#161a14"/></svg>
+      <span class="brand-txt"><span class="bn">SN20</span><span class="bs">BREEDING&nbsp;GROUND</span></span>
+    </a>
+    <p>© 2026 SN20 BREEDING GROUND · OPERATED BY TEAM RIZZO · PROTOTYPE</p>
+  </div>
+</footer>
+
+<script>
+  document.body.classList.add('js-anim');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        const sibs = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = Math.max(0, sibs.indexOf(e.target));
+        e.target.style.transitionDelay = (idx * 0.07) + 's';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -7% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
+  document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+</script>
+
+</body>
+</html>
