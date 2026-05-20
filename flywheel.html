@@ -365,6 +365,18 @@
     cursor: pointer; border: 2px solid var(--bg-deep);
   }
   .ctrl-hint { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); margin-top: 9px; }
+  .calc-assumptions {
+    margin-top: 22px; padding-top: 18px; border-top: 1px dashed var(--line);
+  }
+  .calc-assumptions .ca-hd {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--ink-mute);
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .calc-assumptions ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .calc-assumptions li {
+    font-family: var(--mono); font-size: 11px; line-height: 1.5; color: var(--ink-mute);
+  }
+  .calc-assumptions li b { color: var(--ink-soft); font-weight: 600; }
   .seg { display: flex; gap: 6px; }
   .seg button {
     flex: 1; padding: 9px 6px; border-radius: 7px; cursor: pointer;
@@ -723,14 +735,6 @@
         </div>
         <div class="ctrl">
           <div class="ctrl-top">
-            <span class="ctrl-label">Teams paying the $50K fee</span>
-            <span class="ctrl-val" id="v-payers">6</span>
-          </div>
-          <input type="range" id="payers" min="0" max="24" step="1" value="6" />
-          <div class="ctrl-hint">Fee-payers give SN20 a 15% emission share; non-payers give 25%.</div>
-        </div>
-        <div class="ctrl">
-          <div class="ctrl-top">
             <span class="ctrl-label">Avg. emissions / subnet / yr</span>
             <span class="ctrl-val" id="v-emis">6,500 τ</span>
           </div>
@@ -744,6 +748,13 @@
             <button data-tao="310" class="on">$310</button>
             <button data-tao="500">$500</button>
           </div>
+        </div>
+        <div class="calc-assumptions">
+          <div class="ca-hd">// assumptions baked in</div>
+          <ul>
+            <li><b>20% blended emission share</b> — midpoint of the 15% (fee-paying teams) / 25% (non-paying teams) range.</li>
+            <li><b>~Half the teams pay the $50K selection fee</b> — the rest take the higher-share tier.</li>
+          </ul>
         </div>
       </div>
       <div class="calc-results">
@@ -890,19 +901,22 @@
 
   function compute() {
     const grads = +$('grads').value;
-    let payers = Math.min(+$('payers').value, grads);
     const emisTao = +$('emis').value;          // emissions per subnet, in TAO
     const emis = emisTao * tao;                 // converted to USD at current TAO price
 
     $('v-grads').textContent = grads;
-    $('v-payers').textContent = payers;
     $('v-emis').textContent = emisTao.toLocaleString() + ' \u03c4';
 
-    const nonPayers = grads - payers;
-    // selection: $50K fee, half burned (fixed USD fee)
-    const feeBurn = payers * 50000 * 0.50;
-    // graduation: SN20 holds 15% share (fee-payers) or 25% (non-payers) of the new subnet's emissions
-    const fullYearShare = (payers * emis * 0.15) + (nonPayers * emis * 0.25);
+    // ---- blended assumptions ----
+    // SN20's emission share is 15% (fee-payers) or 25% (non-payers). We assume an
+    // even mix → blended 20% share. Fee burn assumes ~half of teams paid the $50K fee.
+    const BLENDED_SHARE = 0.20;
+    const FEE_PAY_RATIO = 0.50;
+
+    // selection: $50K fee, half of that burned, applied to assumed fee-payer count
+    const feeBurn = grads * FEE_PAY_RATIO * 50000 * 0.50;
+    // graduation: SN20 holds 20% blended emission share of every graduated subnet
+    const fullYearShare = grads * emis * BLENDED_SHARE;
     // the share splits: 50% kept, 40% to holders, 10% sold to burn
     const fullYearAirdrop = fullYearShare * 0.40;
     const fullYearBurn = fullYearShare * 0.10;
@@ -921,21 +935,17 @@
     // Year 1: only ~half the year produces grads (months 7-12), and those new grads
     // average ~3 months of earning during Y1. Effective Y1 = grads * 0.25 of fullYearShare.
     // Year 2+: every prior cohort earns full year (1.0); new grads average 0.5 (rolling in).
-    // Selection fees are paid as teams enter — so Y1 sees ~24 entries (cap) but we
-    // simplify by mapping fee count to the user's "grads" input as a proxy for activity.
     const bars = [];
     let cumulative = 0;
     let stackedShare = 0; // accumulated fully-earning subnets going into each year
     for (let y = 1; y <= 4; y++) {
       let yearShare;
       if (y === 1) {
-        // partial year of partial grads
         yearShare = fullYearShare * 0.25;
         stackedShare = fullYearShare * 1.0;
       } else {
-        // all previously stacked at full + this year's new at 0.5 (rolling)
         yearShare = stackedShare + (fullYearShare * 0.5);
-        stackedShare += fullYearShare; // they're fully online for next year
+        stackedShare += fullYearShare;
       }
       const yearAir = yearShare * 0.40;
       const yearBurn = feeBurn + (yearShare * 0.10);
@@ -945,19 +955,19 @@
     const max = Math.max(...bars, 1);
     $('bars').innerHTML = bars.map((v, i) => {
       const h = Math.max(6, (v / max) * 100);
-      return '<div class="bar-col"><div class="bar ' + (i === 3 ? 'peak' : '') + '" style="height:' + h + '%"></div><div class="bar-tag">Y' + (i+1) + ' · ' + fmt(v) + '</div></div>';
+      return '<div class="bar-col"><div class="bar ' + (i === 3 ? 'peak' : '') + '" style="height:' + h + '%"></div><div class="bar-tag">Y' + (i+1) + ' \u00b7 ' + fmt(v) + '</div></div>';
     }).join('');
 
     if (total > 8000000) {
-      $('r-note').textContent = '// strongly self-reinforcing — value to holders compounds well beyond the cost of running the program.';
+      $('r-note').textContent = '// strongly self-reinforcing \u2014 value to holders compounds well beyond the cost of running the program.';
     } else if (grads <= 3) {
-      $('r-note').textContent = '// a lean scenario — even a few graduations start the airdrop and the burn. the wheel turns slowly until volume builds.';
+      $('r-note').textContent = '// a lean scenario \u2014 even a few graduations start the airdrop and the burn. the wheel turns slowly until volume builds.';
     } else {
       $('r-note').textContent = '// each year stacks on every year before it \u2014 year 4 collects from years 1 through 4 at once.';
     }
   }
 
-  ['grads','payers','emis'].forEach(id => $(id).addEventListener('input', compute));
+  ['grads','emis'].forEach(id => $(id).addEventListener('input', compute));
   document.querySelectorAll('#tao-seg button').forEach(b => {
     b.addEventListener('click', () => {
       document.querySelectorAll('#tao-seg button').forEach(x => x.classList.remove('on'));
