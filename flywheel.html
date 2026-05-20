@@ -147,10 +147,11 @@
   .party {
     border: 1px solid var(--line); border-radius: 14px;
     background: var(--bg-lift); padding: 28px 26px;
-    transition: transform 0.2s, border-color 0.2s;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
-  .party:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+  .party:hover { transform: translateY(-3px); border-color: var(--lime); }
   .party.holder { border-color: var(--lime); background: var(--bg-panel); }
+  .party.holder:hover { transform: translateY(-4px); border-color: var(--lime); }
   .party-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
   .party-ix { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; color: var(--ink-mute); }
   .party.holder .party-ix { color: var(--lime-deep); }
@@ -218,8 +219,11 @@
   .event-card {
     border: 1px solid var(--line); border-radius: 16px; background: var(--bg-lift);
     padding: clamp(26px,3vw,36px);
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
+  .event-card:hover { transform: translateY(-3px); border-color: var(--lime); }
   .event-card.hl { border-color: var(--lime); background: var(--bg-panel); }
+  .event-card.hl:hover { transform: translateY(-4px); }
   .event-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
   .event-ix {
     font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em;
@@ -401,7 +405,9 @@
   .res-card {
     background: var(--bg-lift); border: 1px solid var(--line);
     border-radius: 10px; padding: 16px;
+    transition: border-color 0.2s ease;
   }
+  .res-card:hover { border-color: var(--line-strong); }
   .res-card .rc-l { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px; }
   .res-card .rc-n { font-family: var(--mono); font-size: 21px; font-weight: 700; color: var(--ink); }
   .res-card .rc-n.lime { color: var(--lime); }
@@ -446,9 +452,10 @@
   @media (max-width: 860px) { .proof-grid { grid-template-columns: 1fr; } }
   .pcard {
     border: 1px solid var(--line); border-radius: 14px; padding: 28px 26px;
-    background: var(--bg-lift); transition: transform 0.2s, border-color 0.2s;
+    background: var(--bg-lift);
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
-  .pcard:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+  .pcard:hover { transform: translateY(-3px); border-color: var(--lime); }
   .pcard-ix { font-family: var(--mono); font-size: 11px; color: var(--lime-deep); }
   .pcard h3 { font-family: var(--sans); font-size: 19px; font-weight: 600; margin: 12px 0 10px; line-height: 1.2; }
   .pcard p { font-size: 14px; color: var(--ink-soft); }
@@ -509,11 +516,25 @@
   @media (prefers-reduced-motion: reduce) {
     .js-anim .reveal { opacity: 1; transform: none; transition: none; }
     .flowdash, .loop-spin { animation: none !important; }
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+    *:hover { transform: none !important; }
   }
 
   /* loop animation */
   @keyframes dash { to { stroke-dashoffset: -200; } }
   .flowdash { stroke-dasharray: 7 11; animation: dash 3.4s linear infinite; }
+
+  /* hover-motion-respects-prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+    *:hover { transform: none !important; }
+  }
 </style>
 </head>
 <body>

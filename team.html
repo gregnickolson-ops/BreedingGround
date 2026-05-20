@@ -128,7 +128,9 @@
   .partner {
     border: 1px solid var(--line); border-radius: 14px; background: var(--bg-lift);
     padding: 30px 28px; position: relative;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
+  .partner:hover { transform: translateY(-3px); border-color: var(--lime); }
   .partner-tag {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--ink-mute); border: 1px solid var(--line-strong); border-radius: 5px;
@@ -148,7 +150,11 @@
   /* why it matters */
   .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
   @media (max-width: 860px) { .why-grid { grid-template-columns: 1fr; } }
-  .why-card { border: 1px solid var(--line); border-radius: 14px; background: var(--bg-lift); padding: 28px 26px; }
+  .why-card {
+    border: 1px solid var(--line); border-radius: 14px; background: var(--bg-lift); padding: 28px 26px;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
+  }
+  .why-card:hover { transform: translateY(-3px); border-color: var(--lime); }
   .why-ix { font-family: var(--mono); font-size: 11px; color: var(--lime-deep); }
   .why-card h3 { font-family: var(--sans); font-size: 18px; font-weight: 600; margin: 12px 0 9px; line-height: 1.25; }
   .why-card p { font-size: 14px; color: var(--ink-soft); }
@@ -190,6 +196,15 @@
   .js-anim .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s cubic-bezier(.2,.6,.2,1), transform 0.7s cubic-bezier(.2,.6,.2,1); }
   .js-anim .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) { .js-anim .reveal { opacity: 1; transform: none; transition: none; } }
+
+  /* hover-motion-respects-prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+    *:hover { transform: none !important; }
+  }
 </style>
 </head>
 <body>

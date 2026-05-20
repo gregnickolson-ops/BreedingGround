@@ -126,7 +126,9 @@
   .layer {
     border: 1px solid var(--line); border-radius: 12px; background: var(--bg-lift);
     padding: 22px 24px; display: grid; grid-template-columns: 48px 1fr; gap: 18px; align-items: start;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
+  .layer:hover { transform: translateY(-2px); border-color: var(--lime); }
   .layer-n {
     width: 48px; height: 48px; border-radius: 11px; background: var(--bg-panel);
     border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
@@ -142,7 +144,11 @@
   /* constraint honesty cards */
   .truth-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
   @media (max-width: 860px) { .truth-grid { grid-template-columns: 1fr; } }
-  .truth { border: 1px solid var(--line); border-radius: 14px; background: var(--bg-lift); padding: 26px 24px; }
+  .truth {
+    border: 1px solid var(--line); border-radius: 14px; background: var(--bg-lift); padding: 26px 24px;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
+  }
+  .truth:hover { transform: translateY(-3px); border-color: var(--lime); }
   .truth .truth-tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--moss); }
   .truth h3 { font-size: 17px; font-weight: 600; margin: 11px 0 8px; line-height: 1.25; }
   .truth p { font-size: 13.5px; color: var(--ink-soft); }
@@ -186,6 +192,15 @@
   .js-anim .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s cubic-bezier(.2,.6,.2,1), transform 0.7s cubic-bezier(.2,.6,.2,1); }
   .js-anim .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) { .js-anim .reveal { opacity: 1; transform: none; transition: none; } }
+
+  /* hover-motion-respects-prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+    *:hover { transform: none !important; }
+  }
 </style>
 </head>
 <body>

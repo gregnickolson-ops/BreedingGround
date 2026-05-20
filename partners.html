@@ -182,7 +182,9 @@
   .deal {
     border: 1px solid var(--line); border-radius: 13px; background: var(--bg-lift); padding: 24px 24px;
     border-top: 3px solid var(--clay);
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
+  .deal:hover { transform: translateY(-3px); border-color: var(--lime); border-top-color: var(--clay); }
   .deal-ix { font-family: var(--mono); font-size: 11px; color: var(--clay); letter-spacing: 0.05em; }
   .deal h4 { font-family: var(--sans); font-size: 16px; font-weight: 600; margin: 10px 0 8px; }
   .deal p { font-size: 13.5px; color: var(--ink-soft); }
@@ -193,7 +195,9 @@
   @media (max-width: 520px) { .scat-grid { grid-template-columns: 1fr; } }
   .scat {
     border: 1px solid var(--line); border-radius: 12px; background: var(--bg-lift); padding: 20px 20px;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
+  .scat:hover { transform: translateY(-2px); border-color: var(--lime); }
   .scat-ic {
     width: 36px; height: 36px; border-radius: 9px; background: var(--bg-panel);
     border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
@@ -257,7 +261,9 @@
   .intake-aside { display: flex; flex-direction: column; gap: 14px; }
   .aside-card {
     border: 1px solid var(--line); border-radius: 13px; background: var(--bg-panel); padding: 24px 24px;
+    transition: border-color 0.2s ease;
   }
+  .aside-card:hover { border-color: var(--line-strong); }
   .aside-card h4 { font-size: 14.5px; font-weight: 600; margin-bottom: 9px; display: flex; align-items: center; gap: 9px; }
   .aside-card h4 svg { color: var(--lime); flex-shrink: 0; }
   .aside-card p { font-size: 13px; color: var(--ink-soft); }
@@ -305,6 +311,15 @@
   /* ---------- reveal animation ---------- */
   .js-anim .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .js-anim .reveal.in { opacity: 1; transform: none; }
+
+  /* hover-motion-respects-prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+    *:hover { transform: none !important; }
+  }
 </style>
 </head>
 <body>

@@ -173,9 +173,10 @@
   .fork-card {
     border: 1px solid var(--line); border-radius: 16px; background: var(--bg-lift);
     padding: clamp(28px,3.5vw,40px); display: flex; flex-direction: column;
-    transition: transform 0.2s, border-color 0.2s; position: relative; overflow: hidden;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
+    position: relative; overflow: hidden;
   }
-  .fork-card:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+  .fork-card:hover { transform: translateY(-3px); border-color: var(--lime); }
   .fork-card .fork-tag {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase;
     color: var(--lime-deep); display: flex; align-items: center; gap: 9px;
@@ -295,9 +296,10 @@
   .side {
     background: var(--bg-lift); border: 1px solid var(--line);
     border-radius: 14px; padding: 30px 28px;
-    display: flex; flex-direction: column; transition: transform 0.2s, border-color 0.2s;
+    display: flex; flex-direction: column;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
-  .side:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+  .side:hover { transform: translateY(-3px); border-color: var(--lime); }
   .side.feature {
     background: var(--bg-panel); border-color: var(--lime);
   }
@@ -396,6 +398,15 @@
   @media (prefers-reduced-motion: reduce) {
     .js-anim .reveal { opacity: 1; transform: none; transition: none; }
     .branch, .node, .drifter, .glower, .ftw-spin, .ticker-track { animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; }
+  }
+
+  /* hover-motion-respects-prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+    *:hover { transform: none !important; }
   }
 </style>
 </head>

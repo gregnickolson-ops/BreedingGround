@@ -128,7 +128,10 @@
   .vs-col {
     border: 1px solid var(--line); border-radius: 16px; background: var(--bg-lift);
     padding: clamp(26px,3.2vw,36px); position: relative; overflow: hidden;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
+  .vs-col.direct:hover { transform: translateY(-3px); border-color: var(--ink-soft); }
+  .vs-col.bg:hover { transform: translateY(-4px); }
   .vs-col.bg { border-color: var(--lime); background: var(--bg-panel); }
   .vs-col::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
   .vs-col.direct::before { background: var(--ink-mute); }
@@ -194,7 +197,11 @@
   .cred-band > p { font-size: 16px; color: var(--ink-soft); max-width: 58ch; margin: 0 auto 32px; }
   .cred-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; text-align: left; }
   @media (max-width: 760px) { .cred-grid { grid-template-columns: 1fr; } }
-  .cred-card { border: 1px solid var(--line); border-radius: 13px; background: var(--bg-panel); padding: 24px 24px; }
+  .cred-card {
+    border: 1px solid var(--line); border-radius: 13px; background: var(--bg-panel); padding: 24px 24px;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
+  }
+  .cred-card:hover { transform: translateY(-2px); border-color: var(--lime); }
   .cred-ic {
     width: 38px; height: 38px; border-radius: 9px; background: var(--bg-deep);
     border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
@@ -209,9 +216,10 @@
   @media (max-width: 560px) { .ben-grid { grid-template-columns: 1fr; } }
   .ben {
     border: 1px solid var(--line); border-radius: 13px; background: var(--bg-lift);
-    padding: 24px 24px; transition: border-color 0.18s, transform 0.18s;
+    padding: 24px 24px;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
-  .ben:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+  .ben:hover { border-color: var(--lime); transform: translateY(-2px); }
   .ben-ix { font-family: var(--mono); font-size: 11px; color: var(--lime-deep); }
   .ben h4 { font-family: var(--sans); font-size: 16px; font-weight: 600; margin: 11px 0 8px; line-height: 1.3; }
   .ben p { font-size: 13.5px; color: var(--ink-soft); }
@@ -289,7 +297,10 @@
   @media (max-width: 700px) { .elig-grid { grid-template-columns: 1fr; } }
   .elig {
     border: 1px solid var(--line); border-radius: 14px; background: var(--bg-lift); padding: 28px 28px;
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
   }
+  .elig.fit:hover { transform: translateY(-3px); border-color: var(--lime); }
+  .elig.nofit:hover { border-color: var(--ink-soft); }
   .elig h3 { font-size: 16px; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 9px; }
   .elig.fit h3 { color: var(--lime); }
   .elig.nofit h3 { color: var(--ink-soft); }
@@ -317,6 +328,15 @@
   /* ---------- reveal ---------- */
   .js-anim .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .js-anim .reveal.in { opacity: 1; transform: none; }
+
+  /* hover-motion-respects-prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+    *:hover { transform: none !important; }
+  }
 </style>
 </head>
 <body>
