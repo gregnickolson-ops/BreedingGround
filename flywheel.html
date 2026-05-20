@@ -210,6 +210,72 @@
   .sflow .a { color: var(--lime); }
   .sflow .end { color: var(--lime-deep); }
 
+  /* ---------- two events (lead block) ---------- */
+  .two-events {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 22px;
+  }
+  @media (max-width: 860px) { .two-events { grid-template-columns: 1fr; } }
+  .event-card {
+    border: 1px solid var(--line); border-radius: 16px; background: var(--bg-lift);
+    padding: clamp(26px,3vw,36px);
+  }
+  .event-card.hl { border-color: var(--lime); background: var(--bg-panel); }
+  .event-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .event-ix {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em;
+    color: var(--lime-deep); font-weight: 700;
+  }
+  .event-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-mute); border: 1px solid var(--line-strong); border-radius: 4px;
+    padding: 3px 8px;
+  }
+  .event-card h3 {
+    font-family: var(--sans); font-size: clamp(22px,2.4vw,28px); font-weight: 600;
+    letter-spacing: -0.015em; margin-bottom: 12px; line-height: 1.2;
+  }
+  .event-card > p { font-size: 15px; color: var(--ink-soft); line-height: 1.6; }
+  .event-card > p b { color: var(--ink); font-weight: 600; }
+  .event-flow {
+    margin-top: 18px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft);
+    border: 1px solid var(--line-strong); border-radius: 8px; padding: 11px 14px;
+    display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
+  }
+  .event-flow .ef-arrow { color: var(--lime); }
+  .event-flow .ef-end { color: var(--lime-deep); }
+  .event-split { list-style: none; margin-top: 18px; display: flex; flex-direction: column; gap: 12px; }
+  .event-split li {
+    display: grid; grid-template-columns: 54px 1fr; gap: 14px; align-items: center;
+    padding: 12px 14px; border: 1px solid var(--line); border-radius: 9px; background: var(--bg-deep);
+  }
+  .event-split .es-pct {
+    font-family: var(--mono); font-weight: 700; font-size: 22px; color: var(--lime);
+    line-height: 1; letter-spacing: -0.03em; text-align: center;
+  }
+  .event-split .es-pct.dim { color: var(--ink-mute); }
+  .event-split li div { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+  .event-split li div b { color: var(--ink); font-weight: 600; }
+
+  .and-it-stacks {
+    display: grid; grid-template-columns: 56px 1fr; gap: 18px; align-items: center;
+    border: 1px solid var(--line-strong); border-radius: 14px; background: var(--bg-panel);
+    padding: 22px clamp(22px,3vw,32px);
+  }
+  @media (max-width: 620px) { .and-it-stacks { grid-template-columns: 1fr; gap: 8px; } }
+  .stacks-mark {
+    width: 56px; height: 56px; border-radius: 12px; background: var(--bg-deep);
+    border: 1px solid var(--lime); color: var(--lime);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 28px; font-weight: 700;
+  }
+  .and-it-stacks h4 {
+    font-family: var(--sans); font-size: 17px; font-weight: 600;
+    margin-bottom: 5px; letter-spacing: -0.01em;
+  }
+  .and-it-stacks p { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+  .and-it-stacks p b { color: var(--ink); font-weight: 600; }
+
   /* ---------- carry split (graduation) ---------- */
   .carry-split {
     border: 1px solid var(--line); border-radius: 14px; background: var(--bg-lift);
@@ -331,7 +397,28 @@
     margin-top: 14px; background: var(--bg-lift); border: 1px solid var(--line);
     border-radius: 10px; padding: 18px;
   }
-  .compound-l { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 16px; }
+  .compound-l { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .cl-tip {
+    position: relative; display: inline-flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1px solid var(--line-strong); background: var(--bg-deep);
+    color: var(--ink-mute); font-size: 10px; cursor: help; outline: none;
+  }
+  .cl-tip:hover, .cl-tip:focus { color: var(--lime); border-color: var(--lime); }
+  .cl-tipbox {
+    visibility: hidden; opacity: 0; transition: opacity 0.15s, visibility 0.15s;
+    position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%);
+    width: 280px; padding: 14px 16px; z-index: 50;
+    background: var(--bg-panel); border: 1px solid var(--lime); border-radius: 9px;
+    font-family: var(--sans); font-size: 12.5px; line-height: 1.5;
+    color: var(--ink-soft); text-transform: none; letter-spacing: 0; text-align: left;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .cl-tipbox b { color: var(--ink); font-weight: 600; }
+  .cl-tip:hover .cl-tipbox, .cl-tip:focus .cl-tipbox { visibility: visible; opacity: 1; }
+  @media (max-width: 520px) {
+    .cl-tipbox { left: auto; right: 0; transform: none; width: min(280px, calc(100vw - 48px)); }
+  }
   .bars { display: flex; align-items: flex-end; gap: 8px; height: 96px; }
   .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 7px; height: 100%; justify-content: flex-end; }
   .bar { width: 100%; background: var(--moss); border-radius: 3px 3px 0 0; transition: height 0.5s cubic-bezier(.2,.7,.2,1); min-height: 3px; }
@@ -435,7 +522,7 @@
     <a href="for-teams.html">/for-teams</a>
     <a href="for-backers.html">/for-backers</a>
     <a href="partners.html">/partners</a>
-    <a href="incubations.html">/intake-01</a>
+    <a href="incubations.html">/live-teams</a>
     <a href="apply.html" class="cta">Apply</a>
   </div>
   <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
@@ -447,9 +534,48 @@
 <section class="fhero">
   <div class="fhero-bg"></div>
   <div class="wrap fhero-inner">
-    <span class="eyebrow reveal">The SN20 engine</span>
-    <h1 class="reveal">One engine. <em>Four winners</em>.</h1>
-    <p class="reveal">SN20 isn't a one-time launch. Every subnet it graduates feeds a single self-reinforcing engine — and that engine pays out to four distinct parties at once: the subnet, its holders, its crowd funders, and its incubation teams.</p>
+    <span class="eyebrow reveal">How the engine works</span>
+    <h1 class="reveal">Two events. <em>One growing wheel</em>.</h1>
+    <p class="reveal">SN20 makes money for the people who hold it in two simple events. One when a team gets selected. One when a team graduates. Each turn of the wheel pays out — and the wheel only spins faster as more teams come through.</p>
+  </div>
+</section>
+
+<!-- ================= TWO EVENTS ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="two-events">
+      <div class="event-card reveal">
+        <div class="event-hd">
+          <span class="event-ix">EVENT_01</span>
+          <span class="event-tag">selection</span>
+        </div>
+        <h3>A team gets selected.</h3>
+        <p>They pay a <b>$50,000 selection fee</b>. Half of that is used to buy SN20 on the market and burn it. Supply shrinks. Every existing holder owns a slightly bigger slice of the network.</p>
+        <div class="event-flow">
+          <span>$50K fee</span><span class="ef-arrow">→</span><span>½ buys SN20</span><span class="ef-arrow">→</span><span class="ef-end">burned</span>
+        </div>
+      </div>
+      <div class="event-card hl reveal">
+        <div class="event-hd">
+          <span class="event-ix">EVENT_02</span>
+          <span class="event-tag">graduation</span>
+        </div>
+        <h3>A team graduates.</h3>
+        <p>About six months later, the team launches its own subnet on Bittensor and starts earning emissions. SN20 keeps a <b>15–25% share of those emissions, forever</b>. That share splits three ways:</p>
+        <ul class="event-split">
+          <li><span class="es-pct">40%</span><div><b>To SN20 token holders.</b> Distributed block by block, every day, from every graduated subnet.</div></li>
+          <li><span class="es-pct">10%</span><div><b>Buy &amp; burn.</b> More SN20 bought on-market and destroyed. Supply keeps shrinking.</div></li>
+          <li><span class="es-pct dim">50%</span><div><b>To the program.</b> Funds validation, infrastructure, and the next intake.</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="and-it-stacks reveal">
+      <div class="stacks-mark">↑</div>
+      <div>
+        <h4>And it stacks.</h4>
+        <p>Up to two new teams enter the program every month — as many as <b>24 a year</b>. Each graduate stacks on top of every graduate before it. By year three, the wheel is paying holders from dozens of subnets at the same time.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -534,8 +660,8 @@
         </div>
         <h3>SN20 — the subnet</h3>
         <ul class="party-list">
-          <li><span><b>Multi-source permanent buy &amp; burn</b> — selection fees and graduate carry continuously buy SN20 on-market and destroy it.</span></li>
-          <li><span><b>Graduate subnet emissions</b> — SN20's carry position in every graduate pays emissions back to the engine, forever.</span></li>
+          <li><span><b>Multi-source permanent buy &amp; burn</b> — selection fees and a share of every graduate's emissions continuously buy SN20 on-market and destroy it.</span></li>
+          <li><span><b>Graduate subnet emissions</b> — SN20's share in every graduate pays emissions back to the engine, forever.</span></li>
         </ul>
       </div>
       <div class="party holder reveal">
@@ -545,7 +671,7 @@
         </div>
         <h3>SN20 token holders</h3>
         <ul class="party-list">
-          <li><span><b>Airdrops from every graduate</b> — distributions from all graduating subnets land directly with holders.</span></li>
+          <li><span><b>Airdrops from every graduate</b> — distributed block by block, every day, from every graduating subnet.</span></li>
           <li><span><b>In perpetuity</b> — the airdrops never stop, and the portfolio of graduates only grows.</span></li>
           <li><span><b>No picking winners</b> — one position is exposure to every subnet the program ever graduates.</span></li>
         </ul>
@@ -576,55 +702,6 @@
   </div>
 </section>
 
-<!-- ================= STREAMS ================= -->
-<section class="sec streams">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">The mechanics</span>
-      <h2>Two events. Where the <em>value goes</em>.</h2>
-      <p>The engine is fed at two distinct moments — when a team is selected, and when a team graduates. Here is exactly what happens at each.</p>
-    </div>
-
-    <div class="stream-rows reveal">
-      <div class="srow">
-        <div class="spct">$25K</div>
-        <div class="sbody">
-          <h3>Selection → buy &amp; burn</h3>
-          <p>When a team is selected and pays the $50K selection fee, half of it — $25K — buys SN20 on-market and destroys it. A permanent reduction in supply, every time a slot is filled.</p>
-        </div>
-        <div class="sflow"><span>$50K fee</span><span class="a">→</span><span>½ buys SN20</span><span class="a">→</span><span class="end">burn</span></div>
-      </div>
-    </div>
-
-    <div class="carry-split reveal">
-      <div class="cs-head">
-        <div class="spct">15–25%</div>
-        <div>
-          <h3>Graduation → the carry splits three ways</h3>
-          <p>When a team graduates, SN20 holds a 15–25% share of the new subnet's emissions. That carry is split into three streams — one kept, two returned to the ecosystem.</p>
-        </div>
-      </div>
-      <div class="cs-grid">
-        <div class="cs-item">
-          <div class="cs-pct">50%</div>
-          <div class="cs-l">Kept by SN20</div>
-          <p>Half the carry sustains the operation — the validation, the infrastructure, the next intake.</p>
-        </div>
-        <div class="cs-item hl">
-          <div class="cs-pct">40%</div>
-          <div class="cs-l">Airdropped to holders</div>
-          <p>Forty percent goes straight to SN20 token holders as airdrops from every subnet it graduates.</p>
-        </div>
-        <div class="cs-item">
-          <div class="cs-pct">10%</div>
-          <div class="cs-l">Sold to buy &amp; burn</div>
-          <p>The final tenth is sold to buy SN20 on-market and destroy it — more permanent supply reduction.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= CALCULATOR ================= -->
 <section class="sec">
   <div class="wrap">
@@ -639,18 +716,18 @@
         <div class="ctrl">
           <div class="ctrl-top">
             <span class="ctrl-label">Graduating subnets / year</span>
-            <span class="ctrl-val" id="v-grads">6</span>
+            <span class="ctrl-val" id="v-grads">12</span>
           </div>
-          <input type="range" id="grads" min="1" max="8" step="1" value="6" />
-          <div class="ctrl-hint">A full intake is 8. Not every team graduates — model conservatively.</div>
+          <input type="range" id="grads" min="1" max="24" step="1" value="12" />
+          <div class="ctrl-hint">Up to 24 a year at full capacity. Not every team graduates — model conservatively.</div>
         </div>
         <div class="ctrl">
           <div class="ctrl-top">
             <span class="ctrl-label">Teams paying the $50K fee</span>
-            <span class="ctrl-val" id="v-payers">4</span>
+            <span class="ctrl-val" id="v-payers">6</span>
           </div>
-          <input type="range" id="payers" min="0" max="8" step="1" value="4" />
-          <div class="ctrl-hint">Fee-payers give SN20 a 15% carry; non-payers give 25%.</div>
+          <input type="range" id="payers" min="0" max="24" step="1" value="6" />
+          <div class="ctrl-hint">Fee-payers give SN20 a 15% emission share; non-payers give 25%.</div>
         </div>
         <div class="ctrl">
           <div class="ctrl-top">
@@ -686,10 +763,18 @@
           </div>
         </div>
         <div class="compound">
-          <div class="compound-l">Cumulative value to holders — years 1–4 (carry compounds as graduates stack)</div>
+          <div class="compound-l">
+            Cumulative value to holders — years 1–4
+            <span class="cl-tip" tabindex="0" aria-label="Why year 1 looks lean">
+              ⓘ
+              <span class="cl-tipbox">
+                <b>Why year 1 looks lean.</b> Incubation runs six months, so the first graduates only appear in month seven. Year 1 sees roughly half a year of partial-year graduations. Year 2 onward, the wheel runs at full speed — and the share from every prior year keeps paying.
+              </span>
+            </span>
+          </div>
           <div class="bars" id="bars"></div>
         </div>
-        <div class="res-note" id="r-note">// carry from every prior intake keeps paying — year 4 collects from years 1 through 4 at once.</div>
+        <div class="res-note" id="r-note">// each year stacks on every year before it — year 4 collects from years 1 through 4 at once.</div>
       </div>
     </div>
   </div>
@@ -707,12 +792,12 @@
       <div class="pcard reveal">
         <div class="pcard-ix">01 — CAPITAL EFFICIENCY</div>
         <h3>The market funds registration, not SN20.</h3>
-        <p>Investor crowdloans cover each subnet's registration cost. SN20 captures carry and upside without fronting the network's most expensive line item.</p>
+        <p>Investor crowdloans cover each subnet's registration cost. SN20 captures its 15–25% emission share without fronting the network's most expensive line item.</p>
       </div>
       <div class="pcard reveal">
         <div class="pcard-ix">02 — COMPOUNDING</div>
-        <h3>Carry stacks; it never resets.</h3>
-        <p>Every graduate adds a permanent 15–25% carry position. Year four collects from every subnet of years one through four — at once.</p>
+        <h3>Each year stacks on the last.</h3>
+        <p>Every graduate adds a permanent 15–25% emission share. Year four collects from every subnet of years one through four — at once.</p>
       </div>
       <div class="pcard reveal">
         <div class="pcard-ix">03 — ALIGNED INCENTIVES</div>
@@ -734,7 +819,7 @@
           <span class="rd"></span>
           <div>
             <h4>Subnets can fail</h4>
-            <p>Graduated subnets can underperform or be deregistered. Carry and airdrop value depend on real emissions.</p>
+            <p>Graduated subnets can underperform or be deregistered. Emission-share and airdrop value depend on real emissions.</p>
           </div>
         </div>
         <div class="risk-item">
@@ -816,26 +901,45 @@
     const nonPayers = grads - payers;
     // selection: $50K fee, half burned (fixed USD fee)
     const feeBurn = payers * 50000 * 0.50;
-    // graduation: SN20 holds 15% carry (fee-payers) or 25% (non-payers) of the new subnet's emissions
-    const carryValue = (payers * emis * 0.15) + (nonPayers * emis * 0.25);
-    // the carry splits: 50% kept, 40% to holders, 10% sold to burn
-    const airdrop = carryValue * 0.40;
-    const carryBurn = carryValue * 0.10;
-    const totalBurn = feeBurn + carryBurn;
+    // graduation: SN20 holds 15% share (fee-payers) or 25% (non-payers) of the new subnet's emissions
+    const fullYearShare = (payers * emis * 0.15) + (nonPayers * emis * 0.25);
+    // the share splits: 50% kept, 40% to holders, 10% sold to burn
+    const fullYearAirdrop = fullYearShare * 0.40;
+    const fullYearBurn = fullYearShare * 0.10;
+
+    // headline number = steady-state full-year value (post-cold-start)
+    const airdrop = fullYearAirdrop;
+    const totalBurn = feeBurn + fullYearBurn;
     const total = airdrop + totalBurn;
 
     $('r-total').textContent = fmt(total);
-    $('r-total-sub').textContent = fmt(airdrop) + ' airdrop + ' + fmt(totalBurn) + ' burn, per year';
+    $('r-total-sub').textContent = fmt(airdrop) + ' airdrop + ' + fmt(totalBurn) + ' burn, per year at steady state';
     $('r-air').textContent = fmt(airdrop);
     $('r-burn').textContent = fmt(totalBurn);
 
+    // ---- cumulative-by-year, rolling model ----
+    // Year 1: only ~half the year produces grads (months 7-12), and those new grads
+    // average ~3 months of earning during Y1. Effective Y1 = grads * 0.25 of fullYearShare.
+    // Year 2+: every prior cohort earns full year (1.0); new grads average 0.5 (rolling in).
+    // Selection fees are paid as teams enter — so Y1 sees ~24 entries (cap) but we
+    // simplify by mapping fee count to the user's "grads" input as a proxy for activity.
     const bars = [];
     let cumulative = 0;
+    let stackedShare = 0; // accumulated fully-earning subnets going into each year
     for (let y = 1; y <= 4; y++) {
-      const activeCarry = carryValue * y;
-      const activeBurn = feeBurn + (activeCarry * 0.10);
-      const activeAir = activeCarry * 0.40;
-      cumulative += activeBurn + activeAir;
+      let yearShare;
+      if (y === 1) {
+        // partial year of partial grads
+        yearShare = fullYearShare * 0.25;
+        stackedShare = fullYearShare * 1.0;
+      } else {
+        // all previously stacked at full + this year's new at 0.5 (rolling)
+        yearShare = stackedShare + (fullYearShare * 0.5);
+        stackedShare += fullYearShare; // they're fully online for next year
+      }
+      const yearAir = yearShare * 0.40;
+      const yearBurn = feeBurn + (yearShare * 0.10);
+      cumulative += yearAir + yearBurn;
       bars.push(cumulative);
     }
     const max = Math.max(...bars, 1);
@@ -844,12 +948,12 @@
       return '<div class="bar-col"><div class="bar ' + (i === 3 ? 'peak' : '') + '" style="height:' + h + '%"></div><div class="bar-tag">Y' + (i+1) + ' · ' + fmt(v) + '</div></div>';
     }).join('');
 
-    if (total > 4000000) {
-      $('r-note').textContent = '// strongly self-reinforcing — value to holders compounds well beyond the cost of running each new intake.';
-    } else if (grads <= 2) {
-      $('r-note').textContent = '// a lean year — even 1\u20132 graduations start the airdrop and the burn. the wheel turns slowly until volume builds.';
+    if (total > 8000000) {
+      $('r-note').textContent = '// strongly self-reinforcing — value to holders compounds well beyond the cost of running the program.';
+    } else if (grads <= 3) {
+      $('r-note').textContent = '// a lean scenario — even a few graduations start the airdrop and the burn. the wheel turns slowly until volume builds.';
     } else {
-      $('r-note').textContent = '// carry from every prior intake keeps paying \u2014 year 4 collects from years 1 through 4 at once.';
+      $('r-note').textContent = '// each year stacks on every year before it \u2014 year 4 collects from years 1 through 4 at once.';
     }
   }
 
