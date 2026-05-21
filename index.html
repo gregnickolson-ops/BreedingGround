@@ -452,7 +452,7 @@
         <a href="flywheel.html" class="btn btn-ghost">The flywheel</a>
       </div>
       <div class="hero-meta reveal">
-        <span class="live-dot"></span> INTAKE_01 — APPLICATIONS OPEN 2026.06.11
+        <span class="live-dot"></span> <span id="hero-countdown">LAUNCHING — 2026.06.11</span>
       </div>
     </div>
 
@@ -533,8 +533,8 @@
 <!-- ================= TICKER ================= -->
 <div class="ticker">
   <div class="ticker-track">
-    <span><b>An incubator for subnets</b><i>///</i><b>Market-funded launches</b><i>///</i><b>Native Bittensor crowdloans</b><i>///</i><b>8 teams per intake</b><i>///</i><b>Real emissions from block one</b><i>///</i><b>Hold SN20, grow with every graduate</b><i>///</i></span>
-    <span aria-hidden="true"><b>An incubator for subnets</b><i>///</i><b>Market-funded launches</b><i>///</i><b>Native Bittensor crowdloans</b><i>///</i><b>8 teams per intake</b><i>///</i><b>Real emissions from block one</b><i>///</i><b>Hold SN20, grow with every graduate</b><i>///</i></span>
+    <span><b>An incubator for subnets</b><i>///</i><b>Market-funded launches</b><i>///</i><b>Native Bittensor crowdloans</b><i>///</i><b>Up to 24 graduates a year</b><i>///</i><b>Real emissions from block one</b><i>///</i><b>Hold SN20, grow with every graduate</b><i>///</i></span>
+    <span aria-hidden="true"><b>An incubator for subnets</b><i>///</i><b>Market-funded launches</b><i>///</i><b>Native Bittensor crowdloans</b><i>///</i><b>Up to 24 graduates a year</b><i>///</i><b>Real emissions from block one</b><i>///</i><b>Hold SN20, grow with every graduate</b><i>///</i></span>
   </div>
 </div>
 
@@ -820,6 +820,26 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
   document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+
+  // live countdown to launch
+  (function() {
+    const el = document.getElementById('hero-countdown');
+    if (!el) return;
+    const LAUNCH = new Date('2026-06-11T00:00:00');
+    function update() {
+      const now = new Date();
+      const ms = LAUNCH - now;
+      const days = Math.ceil(ms / 86400000);
+      let text;
+      if (days > 1) text = 'LAUNCHING IN ' + days + ' DAYS \u2014 2026.06.11';
+      else if (days === 1) text = 'LAUNCHING TOMORROW \u2014 2026.06.11';
+      else if (days === 0) text = 'LAUNCHING TODAY \u2014 2026.06.11';
+      else text = 'LIVE NOW \u2014 LAUNCHED 2026.06.11';
+      el.textContent = text;
+    }
+    update();
+    setInterval(update, 60000); // refresh every minute
+  })();
 </script>
 
 </body>
