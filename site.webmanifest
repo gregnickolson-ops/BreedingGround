@@ -1,0 +1,20 @@
+{
+  "name": "SN20 — Breeding Ground",
+  "short_name": "SN20",
+  "description": "We grow Bittensor's next generation of subnets.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#161a14",
+  "background_color": "#161a14",
+  "display": "standalone"
+}
